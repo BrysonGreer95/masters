@@ -11,11 +11,11 @@
             :page-input-position="inputPosition"
             :debounce-page-input="inputDebounce">
 
-            <b-table-column field="user.first_name" label="First Name" sortable v-slot="props">
+            <b-table-column :default-sort-direction="asc" field="user.first_name" label="First Name" sortable v-slot="props">
                 {{ props.row.user.first_name }}
             </b-table-column>
 
-            <b-table-column field="user.last_name" label="Last Name" sortable v-slot="props">
+            <b-table-column :default-sort-direction="asc" field="user.last_name" label="Last Name" sortable v-slot="props">
                 {{ props.row.user.last_name }}
             </b-table-column>
 
