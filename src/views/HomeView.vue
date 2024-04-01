@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Masters logo" src="../assets/masters.png">
-    <LeaderBoard/>
+    <LeaderBoard id="leaderboard"/>
   </div>
 </template>
 
@@ -20,4 +20,14 @@ export default {
 <style>
 img {
   width: 8rem;
-}</style>
+}
+
+div {
+  align-items: center;
+  text-align: center;
+}
+
+#leaderboard {
+  padding-top: 2rem;
+}
+</style>

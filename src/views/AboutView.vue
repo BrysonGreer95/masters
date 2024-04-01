@@ -91,8 +91,8 @@ Points for PGA tour Road to the Masters:
 </template>
 
 <style>
-div {
-  padding: 3rem
+.about {
+  padding: 3rem;
 }
 h1 { 
   font-size: 2rem;
