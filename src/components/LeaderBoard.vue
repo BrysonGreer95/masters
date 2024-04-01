@@ -2,6 +2,7 @@
     <section>   
 
         <b-table
+						:key="tableDataKey"
             :data="data"
             :default-sort-direction="defaultSortDirection"
             :sort-icon="sortIcon"
@@ -46,8 +47,12 @@
     const data = require('../assets/data.json')
 
     export default {
+				created() {
+					this.tableDataKey++
+				},
         data() {
             return {
+								tableDataKey: 0,
                 data,
                 defaultSortDirection: 'asc',
                 sortIcon: 'arrow-up',
