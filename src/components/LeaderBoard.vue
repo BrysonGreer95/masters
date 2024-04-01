@@ -49,7 +49,7 @@
         data() {
             return {
                 data,
-                defaultSortDirection: 'desc',
+                defaultSortDirection: 'asc',
                 sortIcon: 'arrow-up',
                 sortIconSize: 'is-small',
                 hasInput: false,
