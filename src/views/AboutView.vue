@@ -15,8 +15,7 @@
 
     <section>
       <h3 class="title is-3">
-        Friday, April 12th, 7:00pm<br />First Street Tavern, Clayton (location
-        may change)
+        Friday, April 12th, 7:00pm<br />First Street Tavern, Clayton
       </h3>
       <p class="subtitle is-4">Golden Tee (best score)</p>
       <h4 class="title is-5">
