@@ -7,34 +7,76 @@
     rel="stylesheet"
     href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
   />
+  <img
+    alt="Masters logo"
+    src="../src/assets/masters.png"
+    @click="isImageModalActive = true"
+  />
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/scramble">Scramble Information</router-link>
   </nav>
   <router-view />
+
+  <b-modal v-model="isImageModalActive">
+    <p class="image is-4by3">
+      <img src="../src/assets/pimento.png" />
+    </p>
+  </b-modal>
 </template>
 
 <style lang="scss">
 #app {
+  padding: 2rem;
   @import "~bulma/sass/utilities/_all";
-  $primary: #076652;
+  @import "~bulma";
+  @import "~buefy/src/scss/buefy";
+  $primary: #005e28;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #076652;
+  color: #005e28;
 
-  @import "~bulma";
-  @import "~buefy/src/scss/buefy";
+  a {
+    color: #005e28;
+
+    &:hover {
+      color: #faf400;
+    }
+  }
+
+  .router-link-active {
+    text-decoration: underline;
+    text-decoration-color: #005e28;
+  }
+
+  button {
+    background-color: #005e28;
+  }
+
+  .button.is-primary {
+    background-color: #005e28;
+
+    &:hover {
+      background-color: #005e28;
+    }
+
+    &:active {
+      background-color: #005e28;
+      box-shadow: 0 0 0 0.125rem #faf400;
+    }
+
+    &:focus {
+      background-color: #005e28;
+      box-shadow: 0 0 0 0.125rem #faf400;
+    }
+  }
 }
 
 nav {
   padding: 30px;
-}
-
-button {
-  background-color: #076652;
 }
 
 nav a {
@@ -46,3 +88,20 @@ nav a.router-link-exact-active {
   color: #076652;
 }
 </style>
+
+<script setup>
+import { ref } from "vue";
+
+// eslint-disable-next-line no-unused-vars
+const counter = ref(0);
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      isImageModalActive: false,
+    };
+  },
+};
+</script>

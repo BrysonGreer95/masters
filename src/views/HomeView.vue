@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Masters logo" src="../assets/masters.png" />
     <LeaderBoard id="leaderboard" />
   </div>
 </template>
