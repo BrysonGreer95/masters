@@ -66,6 +66,10 @@ export default {
           field: "member_2",
           label: "Member 2",
         },
+				{
+          field: "tee_time",
+          label: "Tee Time",
+        },
       ],
     };
   },
