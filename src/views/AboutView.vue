@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
   <div class="about">
-    <h1 class="title is-2">Ultimate Master's Competition</h1>
+    <h1 class="title is-2">Ultimate Masters Competition</h1>
     <br />
     <hr />
     <p>
-      The Ultimate Master’s Competition is our way of adding an extra layer of
-      fun to the already exciting week of the Master’s! We hope that you’ll join
+      The Ultimate Masters Competition is our way of adding an extra layer of
+      fun to the already exciting week of the Masters! We hope that you’ll join
       us in a multi- event competition, focused around various aspects of the
       game of golf and a celebration on Sunday.
     </p>
@@ -107,10 +107,10 @@
       <br />
       <h4 class="title is-5">ADDRESS: 27 EASTLAND CT, SMITHFIELD, NC 27577</h4>
       <br />
-      We will be watching the Master’s tournament and having Master’s themed
+      We will be watching the Masters tournament and having Master’s themed
       snacks. There will likely be a small putting green, corn hole, (possibly a
       chipping contest), and an additional TV with Xbox set up with the game PGA
-      Tour, Road to the Master’s. If you’d like additional points, you can play
+      Tour, Road to the Masters. If you’d like additional points, you can play
       9 holes on the game and log your score. 4 players at a time, should take
       about 20-30 minutes for 9 holes.
 
@@ -119,7 +119,7 @@
       <b-collapse :open="false" aria-id="contentIdForA11y1">
         <template #trigger="props">
           <b-button
-            label="Points for Master's Bet"
+            label="Points for Masters Bet"
             type="is-primary"
             aria-controls="contentIdForA11y1"
             :aria-expanded="props.open"
