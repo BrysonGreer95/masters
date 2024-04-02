@@ -1,23 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Masters logo" src="../assets/masters.png">
-    <LeaderBoard id="leaderboard"/>
+    <img alt="Masters logo" src="../assets/masters.png" />
+    <LeaderBoard id="leaderboard" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import LeaderBoard from '@/components/LeaderBoard.vue';
+import LeaderBoard from "@/components/LeaderBoard.vue";
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
-    LeaderBoard
-  }
-}
+    LeaderBoard,
+  },
+};
 </script>
 
-<style>
+<style lang="scss">
 img {
   width: 8rem;
 }

@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "user": {
             "first_name": "Bryson",
             "last_name": "Greer"
@@ -7,10 +8,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
+        "id": 2,
         "user": {
             "first_name": "Steven",
             "last_name": "Welsh"
@@ -18,10 +19,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
+        "id": 3,
         "user": {
             "first_name": "Andy",
             "last_name": "Jones"
@@ -29,21 +30,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
-        "user": {
-            "first_name": "Markell",
-            "last_name": "Quinn"
-        },
-        "golden_tee": 0,
-        "scramble": 0,
-        "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
-    },
-    {
+        "id": 4,
         "user": {
             "first_name": "Blake",
             "last_name": "Jones"
@@ -51,10 +41,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
+        "id": 5,
         "user": {
             "first_name": "Brad",
             "last_name": "Barbour"
@@ -62,10 +52,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0  
     },
     {
+        "id": 6,
         "user": {
             "first_name": "Lee",
             "last_name": "Chatham"
@@ -73,10 +63,21 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
+        "id": 7,
+        "user": {
+            "first_name": "Markell",
+            "last_name": "Quinn"
+        },
+        "golden_tee": 0,
+        "scramble": 0,
+        "masters_bet": 0,
+        "rttm": 0
+    },
+    {
+        "id": 8,
         "user": {
             "first_name": "Wyatt",
             "last_name": "Dershem"
@@ -84,10 +85,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
+        "id": 9,
         "user": {
             "first_name": "Eric",
             "last_name": "Leon"
@@ -95,10 +96,10 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     },
     {
+        "id": 10,
         "user": {
             "first_name": "Brandon",
             "last_name": "Massie"
@@ -106,7 +107,6 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
-        "total": 0
+        "rttm": 0
     }
 ]

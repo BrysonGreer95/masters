@@ -38,7 +38,7 @@
         sortable
         v-slot="props"
       >
-        {{ props.row.total }}
+        {{ props.row.golden_tee + props.row.scramble + props.row.masters_bet + props.row.rttm }}
       </b-table-column>
 
       <b-table-column
