@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <b-table :data="data" :columns="columns"></b-table>
+  <div id="scramble_table">
+    <b-table :data="data" :columns="columns"></b-table>
+  </div>
 </template>
 
 <script>
@@ -70,3 +72,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+#scramble_table {
+  padding: 5px;
+}
+</style>

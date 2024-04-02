@@ -27,7 +27,6 @@ div {
 }
 
 #leaderboard {
-  padding-top: 2rem;
-  padding: 2rem;
+  padding: 5px;
 }
 </style>
