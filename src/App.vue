@@ -28,7 +28,8 @@
 
 <style lang="scss">
 #app {
-  padding: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   @import "~bulma/sass/utilities/_all";
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
