@@ -48,6 +48,10 @@
     }
   }
 
+  .b-table .table th .th-wrap {
+    display: block;
+  }
+
   .router-link-active {
     text-decoration: underline;
     text-decoration-color: #005e28;
