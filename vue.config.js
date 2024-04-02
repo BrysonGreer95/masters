@@ -1,13 +1,18 @@
 const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 
-module.exports = defineConfig({
-  transpileDependencies: true,
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      // load which style file you want to import globally
-      patterns: [path.resolve(__dirname, './src/styles/_variables.scss')],
-    },
-  }
-})
+export default defineConfig({
+    transpileDependencies: true,
+      css: {
+        preprocessorOptions: {
+          scss: {
+            additionalData: `
+              @import "./src/styles/_animations.scss";
+              @import "./src/styles/_variables.scss";
+              @import "./src/styles/_mixins.scss";
+              @import "./src/styles/_helpers.scss";
+            `
+          }
+        }
+      }
+    })
