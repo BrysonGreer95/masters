@@ -61,7 +61,7 @@
 
       <b-table-column
         field="masters"
-        label="Master's Bet Points"
+        label="Masters Bet Points"
         sortable
         v-slot="props"
       >
@@ -70,7 +70,7 @@
 
       <b-table-column
         field="rttm"
-        label="Road To The Master's Points"
+        label="Road To The Masters Points"
         sortable
         v-slot="props"
       >
