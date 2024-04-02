@@ -7,7 +7,7 @@
     <p>
       The Ultimate Masters Competition is our way of adding an extra layer of
       fun to the already exciting week of the Masters! We hope that you’ll join
-      us in a multi- event competition, focused around various aspects of the
+      us in a multi-event competition, focused around various aspects of the
       game of golf and a celebration on Sunday.
     </p>
     <hr />
@@ -17,7 +17,7 @@
       <h3 class="title is-3">
         Friday, April 12th, 7:00pm<br />First Street Tavern, Clayton
       </h3>
-      <p class="subtitle is-4">Golden Tee (best score)</p>
+      <p class="subtitle is-4">Golden Tee</p>
       <h4 class="title is-5">
         <br />
         ADDRESS: 115 EAST FIRST STREET, CLAYTON, NC 27520
