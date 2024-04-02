@@ -8,20 +8,7 @@
       The Ultimate Master’s Competition is our way of adding an extra layer of
       fun to the already exciting week of the Master’s! We hope that you’ll join
       us in a multi- event competition, focused around various aspects of the
-      game of golf and a celebration on Sunday. The competition will consist of
-      3 events, each focused on a different skill set. Each event has an
-      opportunity to earn points. The competitor with the most points at the end
-      of the competition on Sunday will win the grand prize of a new putter! We
-      look forward to you joining us. (P.S. if you can’t make all events, no
-      worries! We hope to see you whenever you’re able to join us.) Before the
-      Competition: Each competitor will choose one golfer to win the official
-      Master’s tournament (by texting Bryson) before Thursday, April 11th. This
-      locks in your “bet” which will bring points in on Day 3, Sunday. Buy in:
-      The buy in per competitor is $25. This enters you in the competition to
-      win the putter, and covers your food cost for the party Sunday. Prize: The
-      prize will most likely be a new Odyssey White Hot mallet putter. This of
-      course depends on our pool of money from the collected buy in (as
-      mentioned above).
+      game of golf and a celebration on Sunday.
     </p>
     <hr />
     <br />
@@ -190,7 +177,12 @@ h2 {
   font-size: 1.5rem;
   font-weight: 500;
 }
-
+button {
+  background-color: #174038;
+}
+button.is-primary {
+  background-color: #174038;
+}
 p {
   font-size: 1rem;
 }
