@@ -1,18 +1,15 @@
-const { defineConfig } = require('@vue/cli-service');
+const { defineConfig } = require("@vue/cli-service");
 
-module.exports = defineConfig({
-    transpileDependencies: true,
+defineConfig({
+  transpileDependencies: true,
+  css: {
+    loaderOptions: {
       css: {
-        loaderOptions: {
-        scss: {
-          additionalData: `@import "~@/variables.scss";`
-        },
-        // pass Less.js Options to less-loader
-        less:{
-          globalVars: {
-            primary: '#174038'
-          }
-        }
-      }
-    }
-    })
+        // options here will be passed to css-loader
+      },
+      postcss: {
+        // options here will be passed to postcss-loader
+      },
+    },
+  },
+});
