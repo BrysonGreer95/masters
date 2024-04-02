@@ -7,7 +7,7 @@
     <p>
       The Ultimate Masters Competition is our way of adding an extra layer of
       fun to the already exciting week of the Masters! We hope that you’ll join
-      us in a multi- event competition, focused around various aspects of the
+      us in a multi-event competition, focused around various aspects of the
       game of golf and a celebration on Sunday.
     </p>
     <hr />
@@ -15,10 +15,9 @@
 
     <section>
       <h3 class="title is-3">
-        Friday, April 12th, 7:00pm<br />First Street Tavern, Clayton (location
-        may change)
+        Friday, April 12th, 7:00pm<br />First Street Tavern, Clayton
       </h3>
-      <p class="subtitle is-4">Golden Tee (best score)</p>
+      <p class="subtitle is-4">Golden Tee</p>
       <h4 class="title is-5">
         <br />
         ADDRESS: 115 EAST FIRST STREET, CLAYTON, NC 27520
@@ -102,7 +101,7 @@
       <h3 class="title is-3">Sunday, April 14th, 2:00pm</h3>
       <p class="subtitle is-4">Masters watch party at The Greer’s</p>
       Spouses, families, etc. are invited! Please just let us know how many
-      expect when you RSVP for food.
+      to expect when you RSVP for food.
       <br />
       <br />
       <h4 class="title is-5">ADDRESS: 27 EASTLAND CT, SMITHFIELD, NC 27577</h4>
