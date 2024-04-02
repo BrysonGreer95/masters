@@ -110,8 +110,8 @@
       We will be watching the Masters tournament and having Master’s themed
       snacks. There will likely be a small putting green, corn hole, (possibly a
       chipping contest), and an additional TV with Xbox set up with the game PGA
-      Tour, Road to the Masters. If you’d like additional points, you can play
-      9 holes on the game and log your score. 4 players at a time, should take
+      Tour, Road to the Masters. If you’d like additional points, you can play 9
+      holes on the game and log your score. 4 players at a time, should take
       about 20-30 minutes for 9 holes.
 
       <br />
@@ -180,7 +180,7 @@ h2 {
 button {
   background-color: #174038;
 }
-button.is-primary {
+.button.is-primary {
   background-color: #174038;
 }
 p {

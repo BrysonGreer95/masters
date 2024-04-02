@@ -17,23 +17,32 @@
 
 <style lang="scss">
 #app {
+  @import "~bulma/sass/utilities/_all";
+  $primary: #076652;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #076652;
+
+  @import "~bulma";
+  @import "~buefy/src/scss/buefy";
 }
 
 nav {
   padding: 30px;
 }
 
+button {
+  background-color: #076652;
+}
+
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #076652;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #076652;
 }
 </style>
