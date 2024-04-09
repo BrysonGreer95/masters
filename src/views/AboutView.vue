@@ -100,8 +100,8 @@
     <section>
       <h3 class="title is-3">Sunday, April 14th, 2:00pm</h3>
       <p class="subtitle is-4">Masters watch party at The Greer’s</p>
-      Spouses, families, etc. are invited! Please just let us know how many
-      to expect when you RSVP for food.
+      Spouses, families, etc. are invited! Please just let us know how many to
+      expect when you RSVP for food.
       <br />
       <br />
       <h4 class="title is-5">ADDRESS: 27 EASTLAND CT, SMITHFIELD, NC 27577</h4>

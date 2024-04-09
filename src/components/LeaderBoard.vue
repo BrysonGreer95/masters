@@ -1,4 +1,6 @@
 <template>
+  <h3 class="title is-3">Leaderboard</h3>
+
   <section>
     <b-table
       id="table"

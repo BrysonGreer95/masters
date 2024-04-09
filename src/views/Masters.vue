@@ -1,8 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="masters_table">
-    <h1>Masters Winner:</h1>
-    <h2>TBD</h2>
+    <h3 class="title is-3">Masters Winner:</h3>
+    <p class="subtitle is-4">TBD</p>
+
+    <h1>This page will be updated Thursday once all picks are locked in</h1>
     <b-table :data="data" :columns="columns"></b-table>
   </div>
 </template>
@@ -17,52 +19,62 @@ export default {
         {
           member_1:
             playerData[0].user.first_name + " " + playerData[0].user.last_name,
-          masters_winner: playerData[0].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[0].choice_to_win_masters,
         },
         {
           member_1:
             playerData[1].user.first_name + " " + playerData[1].user.last_name,
-          masters_winner: playerData[1].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[1].choice_to_win_masters,
         },
         {
           member_1:
             playerData[2].user.first_name + " " + playerData[2].user.last_name,
-          masters_winner: playerData[2].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[2].choice_to_win_masters,
         },
         {
           member_1:
             playerData[3].user.first_name + " " + playerData[3].user.last_name,
-          masters_winner: playerData[3].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[3].choice_to_win_masters,
         },
         {
           member_1:
             playerData[4].user.first_name + " " + playerData[4].user.last_name,
-          masters_winner: playerData[4].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[4].choice_to_win_masters,
         },
         {
           member_1:
             playerData[5].user.first_name + " " + playerData[5].user.last_name,
-          masters_winner: playerData[5].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[5].choice_to_win_masters,
         },
         {
           member_1:
             playerData[6].user.first_name + " " + playerData[6].user.last_name,
-          masters_winner: playerData[6].choice_to_win_masters,
+          masters_winner: "coming soon",
+          //playerData[6].choice_to_win_masters,
         },
         {
           member_1:
             playerData[7].user.first_name + " " + playerData[7].user.last_name,
-          masters_winner: playerData[7].choice_to_win_masters,
+          masters_winner: "coming soon",
+          // playerData[7].choice_to_win_masters,
         },
         {
           member_1:
             playerData[8].user.first_name + " " + playerData[8].user.last_name,
-          masters_winner: playerData[8].choice_to_win_masters,
+          masters_winner: "coming soon",
+          // playerData[8].choice_to_win_masters,
         },
         {
           member_1:
             playerData[9].user.first_name + " " + playerData[9].user.last_name,
-          masters_winner: playerData[9].choice_to_win_masters,
+          masters_winner: "coming soon",
+          // playerData[9].choice_to_win_masters,
         },
       ],
       columns: [
