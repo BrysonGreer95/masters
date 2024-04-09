@@ -8,7 +8,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 2,
@@ -19,7 +20,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 3,
@@ -30,7 +32,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 4,
@@ -41,7 +44,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": "Hideki Matsuyama"
     },
     {
         "id": 5,
@@ -52,18 +56,20 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0  
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 6,
         "user": {
-            "first_name": "Lee",
-            "last_name": "Chatham"
+            "first_name": "Player 6",
+            "last_name": ""
         },
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 7,
@@ -74,7 +80,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": "Jon Rahm"
     },
     {
         "id": 8,
@@ -85,7 +92,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 9,
@@ -96,7 +104,8 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     },
     {
         "id": 10,
@@ -107,6 +116,7 @@
         "golden_tee": 0,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0
+        "rttm": 0,
+        "choice_to_win_masters": ""
     }
 ]

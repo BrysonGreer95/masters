@@ -15,7 +15,8 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
-    <router-link to="/scramble">Scramble Information</router-link>
+    <router-link to="/scramble">Scramble Information</router-link> |
+    <router-link to="/masters">Masters Watch Party</router-link>
   </nav>
   <router-view />
 

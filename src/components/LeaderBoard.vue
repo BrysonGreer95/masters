@@ -1,7 +1,7 @@
 <template>
   <section>
     <b-table
-    id="table"
+      id="table"
       :key="tableDataKey"
       :data="data"
       :default-sort-direction="defaultSortDirection"
@@ -12,6 +12,15 @@
       :page-input-position="inputPosition"
       :debounce-page-input="inputDebounce"
     >
+      <b-table-column
+        :default-sort-direction="asc"
+        field="id"
+        label="Player Number"
+        sortable
+        v-slot="props"
+      >
+        {{ props.row.id }}
+      </b-table-column>
       <b-table-column
         :default-sort-direction="asc"
         field="user.first_name"
@@ -38,7 +47,12 @@
         sortable
         v-slot="props"
       >
-        {{ props.row.golden_tee + props.row.scramble + props.row.masters_bet + props.row.rttm }}
+        {{
+          props.row.golden_tee +
+          props.row.scramble +
+          props.row.masters_bet +
+          props.row.rttm
+        }}
       </b-table-column>
 
       <b-table-column
@@ -81,7 +95,6 @@
 </template>
 
 <script>
-
 const data = require("../assets/data.json");
 
 export default {
