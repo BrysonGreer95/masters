@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import Scramble from "../views/Scramble.vue";
 import AboutView from "../views/AboutView.vue";
 import Masters from "@/views/Masters.vue";
+import MastersScore from "@/views/MastersScore.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/masters",
     name: "masters",
     component: Masters,
+  },
+  {
+    path: "/masters_score",
+    name: "masters_score",
+    component: MastersScore,
   },
 ];
 
