@@ -70,12 +70,6 @@ export default {
           masters_winner: "coming soon",
           // playerData[8].choice_to_win_masters,
         },
-        {
-          member_1:
-            playerData[9].user.first_name + " " + playerData[9].user.last_name,
-          masters_winner: "coming soon",
-          // playerData[9].choice_to_win_masters,
-        },
       ],
       columns: [
         {
