@@ -46,13 +46,6 @@ export default {
             playerData[7].user.first_name + " " + playerData[7].user.last_name,
           tee_time: "10:12",
         },
-        {
-          team: 5,
-          member_1:
-            playerData[8].user.first_name + " " + playerData[8].user.last_name,
-          member_2: "Sarah Leon (not competing)",
-          tee_time: "10:20",
-        },
       ],
       columns: [
         {
