@@ -4,7 +4,7 @@
     <h3 class="title is-3">Masters Winner:</h3>
     <p class="subtitle is-4">TBD</p>
 
-    <b-table :data="data" :columns="columns"></b-table>
+    <b-table striped :data="data" :columns="columns"></b-table>
   </div>
 </template>
 

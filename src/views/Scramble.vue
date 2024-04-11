@@ -3,7 +3,7 @@
   <h3 class="title is-3">Scramble Teams</h3>
 
   <div id="scramble_table">
-    <b-table :data="data" :columns="columns"></b-table>
+    <b-table striped :data="data" :columns="columns"></b-table>
   </div>
 </template>
 

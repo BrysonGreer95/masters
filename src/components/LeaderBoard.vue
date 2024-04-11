@@ -10,6 +10,7 @@
       :sort-icon="sortIcon"
       :sort-icon-size="sortIconSize"
       default-sort="total"
+      striped
       :page-input="hasInput"
       :page-input-position="inputPosition"
       :debounce-page-input="inputDebounce"

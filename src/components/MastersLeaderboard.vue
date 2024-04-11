@@ -2,9 +2,9 @@
 <template>
   <h3 class="title is-3">Current Score</h3>
   <section>
-    <b-table :data="currentScore">
+    <b-table striped :data="currentScore">
       <b-table-column field="playerName" label="Player Name" v-slot="props">
-        {{ props.row.lastName }}
+        {{ props.row.firstName + " " + props.row.lastName }}
       </b-table-column>
       <b-table-column field="position" label="Position" v-slot="props">
         {{ props.row.position }}
