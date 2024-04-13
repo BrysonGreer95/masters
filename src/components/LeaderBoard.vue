@@ -18,6 +18,7 @@
       <b-table-column
         :default-sort-direction="asc"
         field="id"
+        numeric
         label="Player Number"
         sortable
         v-slot="props"
@@ -45,23 +46,28 @@
       </b-table-column>
 
       <b-table-column
+        :default-sort-direction="desc"
         field="total"
         label="Total Points"
         sortable
+        numeric
         v-slot="props"
       >
         {{
-          props.row.golden_tee +
-          props.row.scramble +
-          props.row.masters_bet +
-          props.row.rttm
+          (props.row.total =
+            props.row.scramble +
+            props.row.golden_tee +
+            props.row.rttm +
+            props.row.masters_bet)
         }}
       </b-table-column>
 
       <b-table-column
+        :default-sort-direction="desc"
         field="golden_tee"
         label="Golden Tee Points"
         sortable
+        numeric
         v-slot="props"
       >
         {{ props.row.golden_tee }}
@@ -71,6 +77,7 @@
         field="scramble"
         label="Scramble Points"
         sortable
+        numeric
         v-slot="props"
       >
         {{ props.row.scramble }}
@@ -80,6 +87,7 @@
         field="masters"
         label="Masters Bet Points"
         sortable
+        numeric
         v-slot="props"
       >
         {{ props.row.masters_bet }}
@@ -89,6 +97,7 @@
         field="rttm"
         label="Road To The Masters Points"
         sortable
+        numeric
         v-slot="props"
       >
         {{ props.row.rttm }}
@@ -101,14 +110,11 @@
 const data = require("../assets/data.json");
 
 export default {
-  created() {
-    this.tableDataKey++;
-  },
   data() {
     return {
       tableDataKey: 0,
       data,
-      defaultSortDirection: "asc",
+      defaultSortDirection: "desc",
       sortIcon: "arrow-up",
       sortIconSize: "is-small",
       hasInput: false,
