@@ -6,7 +6,7 @@
             "last_name": "Greer"
         },
         "golden_tee": 0,
-        "scramble": 0,
+        "scramble": 20,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Wyndham Clark"
@@ -18,7 +18,7 @@
             "last_name": "Welsh"
         },
         "golden_tee": 3,
-        "scramble": 0,
+        "scramble": 20,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Brooks Koepka"
@@ -30,7 +30,7 @@
             "last_name": "Jones"
         },
         "golden_tee": 15,
-        "scramble": 0,
+        "scramble": 10,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Rory McIlroy"
@@ -42,7 +42,7 @@
             "last_name": "Jones"
         },
         "golden_tee": 20,
-        "scramble": 0,
+        "scramble": 10,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Hideki Matsuyama"
@@ -54,7 +54,7 @@
             "last_name": "Quinn"
         },
         "golden_tee": 0,
-        "scramble": 0,
+        "scramble": 30,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Scottie Scheffler"
@@ -66,7 +66,7 @@
             "last_name": "Dershem"
         },
         "golden_tee": 0,
-        "scramble": 0,
+        "scramble": 30,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Scottie Scheffler"
@@ -78,7 +78,7 @@
             "last_name": "Leon"
         },
         "golden_tee": 0,
-        "scramble": 0,
+        "scramble": 40,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Tiger Woods"
@@ -90,7 +90,7 @@
             "last_name": "Vogt"
         },
         "golden_tee": 5,
-        "scramble": 0,
+        "scramble": 40,
         "masters_bet": 0,
         "rttm": 0,
         "choice_to_win_masters": "Viktor Hovland"
