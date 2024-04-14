@@ -55,7 +55,7 @@
         },
         "golden_tee": 0,
         "scramble": 30,
-        "masters_bet": 0,
+        "masters_bet": 50,
         "rttm": 12,
         "choice_to_win_masters": "Scottie Scheffler"
     },
@@ -67,7 +67,7 @@
         },
         "golden_tee": 0,
         "scramble": 30,
-        "masters_bet": 0,
+        "masters_bet": 50,
         "rttm": 0,
         "choice_to_win_masters": "Scottie Scheffler"
     },
@@ -103,7 +103,7 @@
         },
         "golden_tee": 10,
         "scramble": 0,
-        "masters_bet": 0,
+        "masters_bet": 15,
         "rttm": 12,
         "choice_to_win_masters": "Xander Schauffele"
     }
