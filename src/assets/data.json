@@ -8,7 +8,7 @@
         "golden_tee": 0,
         "scramble": 20,
         "masters_bet": 0,
-        "rttm": 0,
+        "rttm": 12,
         "choice_to_win_masters": "Wyndham Clark"
     },
     {
@@ -56,7 +56,7 @@
         "golden_tee": 0,
         "scramble": 30,
         "masters_bet": 0,
-        "rttm": 0,
+        "rttm": 12,
         "choice_to_win_masters": "Scottie Scheffler"
     },
     {
@@ -80,7 +80,7 @@
         "golden_tee": 0,
         "scramble": 40,
         "masters_bet": 0,
-        "rttm": 0,
+        "rttm": 20,
         "choice_to_win_masters": "Tiger Woods"
     },
     {
@@ -92,7 +92,7 @@
         "golden_tee": 5,
         "scramble": 40,
         "masters_bet": 0,
-        "rttm": 0,
+        "rttm": 16,
         "choice_to_win_masters": "Viktor Hovland"
     },
     {
@@ -104,7 +104,7 @@
         "golden_tee": 10,
         "scramble": 0,
         "masters_bet": 0,
-        "rttm": 0,
+        "rttm": 12,
         "choice_to_win_masters": "Xander Schauffele"
     }
 ]
