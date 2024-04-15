@@ -104,8 +104,6 @@
       expect when you RSVP for food.
       <br />
       <br />
-      <h4 class="title is-5">ADDRESS: 27 EASTLAND CT, SMITHFIELD, NC 27577</h4>
-      <br />
       We will be watching the Masters tournament and having Master’s themed
       snacks. There will likely be a small putting green, corn hole, (possibly a
       chipping contest), and an additional TV with Xbox set up with the game PGA
