@@ -2,7 +2,7 @@
 <template>
   <div id="masters_table">
     <h3 class="title is-3">Masters Winner:</h3>
-    <p class="subtitle is-4">TBD</p>
+    <p class="subtitle is-4">Scottie Scheffler</p>
 
     <b-table striped :data="data" :columns="columns"></b-table>
   </div>
