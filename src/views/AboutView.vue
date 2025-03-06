@@ -13,47 +13,28 @@
     <hr />
     <br />
 
-    <section>
-      <h3 class="title is-3">
-        Friday, April 12th, 7:00pm<br />First Street Tavern, Clayton
-      </h3>
-      <p class="subtitle is-4">Golden Tee</p>
-      <h4 class="title is-5">
-        <br />
-        ADDRESS: 115 EAST FIRST STREET, CLAYTON, NC 27520
-      </h4>
-      <p>
-        This will either be an individual or team based event, depending on how
-        many people attend.
-      </p>
-      <br />
-      <b-collapse :open="false" aria-id="contentIdForA11y1">
-        <template #trigger="props">
-          <b-button
-            label="Points for Golden Tee"
-            type="is-primary"
-            aria-controls="contentIdForA11y1"
-            :aria-expanded="props.open"
-          />
-        </template>
-        <div class="notification">
-          <div class="content">
-            <p>
-              1st = 20 points (or 20 per person if it is a team event)<br />
-              2nd = 15 points<br />
-              3rd = 10 points<br />
-              4th = 5 points<br />
-              Do not attend = auto 3 points
-            </p>
-          </div>
-        </div>
-      </b-collapse>
-    </section>
+<section>
+  <h3>Friday, April 11th, 2025</h3>
+  <h4>Information Coming Soon</h4>
+</section>
 
     <hr />
     <br />
 
-    <section>
+<section>
+  <h3 class="title is-3">Saturday, April 12th, 2025</h3>
+  <h4 class="subtitle is-4">Scramble Information Coming Soon</h4>
+</section>
+
+<hr />
+<br />
+
+<section>
+  <h3 class="title is-3">Sunday, April 13th, 2025</h3>
+  <h4 class="subtitle is-4">Watch Party Information Coming Soon</h4>
+</section>
+
+    <!-- <section>
       <h3 class="title is-3">
         Saturday, April 13th, 10:00am<br />Reedy Creek Golf Course
       </h3>
@@ -92,12 +73,12 @@
           </div>
         </div>
       </b-collapse>
-    </section>
+    </section> -->
 
-    <hr />
-    <br />
+    <!-- <hr />
+    <br /> -->
 
-    <section>
+    <!-- <section>
       <h3 class="title is-3">Sunday, April 14th, 2:00pm</h3>
       <p class="subtitle is-4">Masters watch party at The Greer’s</p>
       Spouses, families, etc. are invited! Please just let us know how many to
@@ -158,7 +139,7 @@
           </div>
         </div>
       </b-collapse>
-    </section>
+    </section> -->
   </div>
 </template>
 

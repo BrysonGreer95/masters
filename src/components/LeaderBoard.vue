@@ -55,22 +55,21 @@
       >
         {{
           (props.row.total =
+            props.row.drive_shack +
             props.row.scramble +
-            props.row.golden_tee +
-            props.row.rttm +
-            props.row.masters_bet)
+            props.row.fantasy)
         }}
       </b-table-column>
 
       <b-table-column
         :default-sort-direction="desc"
-        field="golden_tee"
-        label="Golden Tee Points"
+        field="drive_shack"
+        label="Drive Shack Points"
         sortable
         numeric
         v-slot="props"
       >
-        {{ props.row.golden_tee }}
+        {{ props.row.drive_shack }}
       </b-table-column>
 
       <b-table-column
@@ -84,23 +83,13 @@
       </b-table-column>
 
       <b-table-column
-        field="masters"
-        label="Masters Bet Points"
+        field="fantasy"
+        label="Fantasy Points"
         sortable
         numeric
         v-slot="props"
       >
-        {{ props.row.masters_bet }}
-      </b-table-column>
-
-      <b-table-column
-        field="rttm"
-        label="Road To The Masters Points"
-        sortable
-        numeric
-        v-slot="props"
-      >
-        {{ props.row.rttm }}
+        {{ props.row.fantasy }}
       </b-table-column>
     </b-table>
   </section>
