@@ -13,26 +13,26 @@
     <hr />
     <br />
 
-<section>
-  <h3>Friday, April 11th, 2025</h3>
-  <h4>Information Coming Soon</h4>
-</section>
+    <section>
+      <h3>Friday, April 11th, 2025</h3>
+      <h4>Information Coming Soon</h4>
+    </section>
 
     <hr />
     <br />
 
-<section>
-  <h3 class="title is-3">Saturday, April 12th, 2025</h3>
-  <h4 class="subtitle is-4">Scramble Information Coming Soon</h4>
-</section>
+    <section>
+      <h3 class="title is-3">Saturday, April 12th, 2025</h3>
+      <h4 class="subtitle is-4">Scramble Information Coming Soon</h4>
+    </section>
 
-<hr />
-<br />
+    <hr />
+    <br />
 
-<section>
-  <h3 class="title is-3">Sunday, April 13th, 2025</h3>
-  <h4 class="subtitle is-4">Watch Party Information Coming Soon</h4>
-</section>
+    <section>
+      <h3 class="title is-3">Sunday, April 13th, 2025</h3>
+      <h4 class="subtitle is-4">Watch Party Information Coming Soon</h4>
+    </section>
 
     <!-- <section>
       <h3 class="title is-3">
