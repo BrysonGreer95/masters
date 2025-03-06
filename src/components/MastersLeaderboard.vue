@@ -1,6 +1,9 @@
 <!-- eslint-disable vue/no-unused-vars -->
 <template>
-  <h3 class="title is-3">Current Score</h3>
+  <h3 class="title is-3">Current Tournament:</h3>
+  <h4 class="title is-4">{{ tournament.name }}</h4>
+
+  <h4 class="title is-4">Current Score</h4>
   <section>
     <b-table striped :data="currentScore">
       <b-table-column field="playerName" label="Player Name" v-slot="props">
@@ -27,15 +30,16 @@
 </template>
 
 <script>
+let tournID = "009";
 import axios from "axios";
 
-const options = {
+const leaderboardOptions = {
   method: "GET",
   url: "https://live-golf-data.p.rapidapi.com/leaderboard",
   params: {
     orgId: "1",
-    tournId: "014",
-    year: "2024",
+    tournId: tournID,
+    year: "2025",
   },
   headers: {
     "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
@@ -43,16 +47,51 @@ const options = {
   },
 };
 
+const tournamentOptions = {
+  method: "GET",
+  url: "https://live-golf-data.p.rapidapi.com/tournament",
+  params: {
+    orgId: "1",
+    tournId: tournID,
+    year: "2025",
+  },
+  headers: {
+    "x-rapidapi-key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
+    "x-rapidapi-host": "live-golf-data.p.rapidapi.com",
+  },
+};
+
 export default {
-  created() {
-    this.getScore();
+  async created() {
+    await this.getDate().then(() => {
+      this.getTournament().then(() => {
+        this.getScore();
+      });
+    });
   },
   methods: {
-    getScore() {
+    async getDate() {
+      let date = new Date();
+      console.log(date);
+      if (date > new Date("2025-03-05") && date < new Date("2025-03-10")) {
+        console.log("1 triggered");
+        tournID = "010";
+      } else {
+        console.log("2 triggered");
+        tournID = "009";
+      }
+    },
+    async getScore() {
       axios
-        .request(options)
+        .request(leaderboardOptions)
         .then((response) => (this.currentScore = response.data.leaderboardRows))
         .catch((error) => (this.currentScore = error.data));
+    },
+    async getTournament() {
+      axios
+        .request(tournamentOptions)
+        .then((response) => (this.tournament = response.data))
+        .catch((error) => (this.tournament = error.data));
     },
   },
   data() {
@@ -63,6 +102,7 @@ export default {
       sortIconSize: "is-small",
       hasInput: false,
       currentScore: [],
+      tournament: [],
       columns: [
         {
           field: "player",

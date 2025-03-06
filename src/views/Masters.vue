@@ -55,11 +55,6 @@ export default {
             playerData[7].user.first_name + " " + playerData[7].user.last_name,
           masters_winner: playerData[7].choice_to_win_masters,
         },
-        {
-          member_1:
-            playerData[8].user.first_name + " " + playerData[8].user.last_name,
-          masters_winner: playerData[8].choice_to_win_masters,
-        },
       ],
       columns: [
         {
