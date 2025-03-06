@@ -1,12 +1,90 @@
 [
-    {
-        "id": 1,
-        "user": {
-            "first_name": "Bryson",
-            "last_name": "Greer"
-        },
-        "drive_shack": 0,
-        "scramble": 0,
-        "fantasy": 0
-    }
+  {
+    "id": 1,
+    "user": {
+      "first_name": "Bryson",
+      "last_name": "Greer"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 2,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 3,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 4,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 5,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 6,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 7,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  },
+  {
+    "id": 8,
+    "user": {
+      "first_name": "Placeholder",
+      "last_name": "Player"
+    },
+    "drive_shack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": "Tiger Woods"
+  }
 ]

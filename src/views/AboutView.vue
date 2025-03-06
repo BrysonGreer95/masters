@@ -1,21 +1,21 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
   <div class="about">
-    <h1 class="title is-2">Ultimate Masters Competition</h1>
+    <h2 class="title is-2">Ultimate Masters Competition</h2>
     <br />
     <hr />
-    <p>
+    <h5 class="subtitle is-5">
       The Ultimate Masters Competition is our way of adding an extra layer of
       fun to the already exciting week of the Masters! We hope that you’ll join
       us in a multi-event competition, focused around various aspects of the
       game of golf and a celebration on Sunday.
-    </p>
+    </h5>
     <hr />
     <br />
 
     <section>
-      <h3>Friday, April 11th, 2025</h3>
-      <h4>Information Coming Soon</h4>
+      <h3 class="title is-3">Friday, April 11th, 2025</h3>
+      <h4 class="subtitle is-4">Information Coming Soon</h4>
     </section>
 
     <hr />
