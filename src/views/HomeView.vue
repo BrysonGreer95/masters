@@ -34,6 +34,9 @@ export default {
 </script>
 
 <style lang="scss">
+template {
+  padding: 1rem;
+}
 img {
   width: 8rem;
 }
