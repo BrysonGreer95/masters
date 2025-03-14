@@ -43,21 +43,21 @@
               1st place - 20 points<br />
               2nd place - 18 points<br />
               3rd place - 16 points<br />
-              4th place- 15 points<br />
-              5th place- 14 points<br />
-              6th place- 13 points<br />
-              7th place- 12 points<br />
-              8th place- 11 points<br />
-              9th place- 10 points<br />
-              10th place- 9 points<br />
-              11th place- 8 points<br />
-              12th place- 7 points<br />
-              13th place- 6 points<br />
-              14th place- 5 points<br />
-              15th place- 4 points<br />
-              16th place- 3 points<br />
-              17th place- 2 points<br />
-              18th place- 1 point
+              4th place - 15 points<br />
+              5th place - 14 points<br />
+              6th place - 13 points<br />
+              7th place - 12 points<br />
+              8th place - 11 points<br />
+              9th place - 10 points<br />
+              10th place - 9 points<br />
+              11th place - 8 points<br />
+              12th place - 7 points<br />
+              13th place - 6 points<br />
+              14th place - 5 points<br />
+              15th place - 4 points<br />
+              16th place - 3 points<br />
+              17th place - 2 points<br />
+              18th place - 1 point
             </p>
           </div>
         </div>
@@ -96,16 +96,16 @@
         <div class="notification">
           <div class="content">
             <p>
-              1st = 40 points each<br />
-              2nd = 35 points<br />
-              3rd = 30 points<br />
-              4th = 25 points<br />
-              5th = 20 points<br />
-              6th = 15 points<br />
-              7th = 10 points<br />
-              8th = 5 points<br />
-              9th = 0 points<br />
-              Do not attend = 0 points
+              1st - 40 points each<br />
+              2nd - 35 points<br />
+              3rd - 30 points<br />
+              4th - 25 points<br />
+              5th - 20 points<br />
+              6th - 15 points<br />
+              7th - 10 points<br />
+              8th - 5 points<br />
+              9th - 0 points<br />
+              Do not attend - 0 points
             </p>
           </div>
         </div>
@@ -150,17 +150,17 @@
         <div class="notification">
           <div class="content">
             <p>
-              1st = 50 points each<br />
-              2nd = 45 points<br />
-              3rd = 40 points<br />
-              4th = 35 points<br />
-              5th = 30 points<br />
-              6th = 25 points<br />
-              7th = 20 points<br />
-              8th = 15 points<br />
-              9th = 10 points<br />
-              10th = 5 points<br />
-              11th+ = 0 points<br />
+              1st - 50 points each<br />
+              2nd - 45 points<br />
+              3rd - 40 points<br />
+              4th - 35 points<br />
+              5th - 30 points<br />
+              6th - 25 points<br />
+              7th - 20 points<br />
+              8th - 15 points<br />
+              9th - 10 points<br />
+              10th - 5 points<br />
+              11th+ - 0 points<br />
             </p>
           </div>
         </div>
