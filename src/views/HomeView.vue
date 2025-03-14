@@ -9,13 +9,17 @@
       April 13th
     </h4>
     <br />
-    <div class="content is-large">
-      <h4>This year's events consist of</h4>
+    <div class="is-large">
+      <h4 class="title is-4">This year's events consist of</h4>
       <ul>
         <li>Friday Night: Top Golf</li>
         <li>Saturday Morning: 2 man Scramble Tournament</li>
         <li>All Weekend: Masters Fantasy App</li>
       </ul>
+      <br />
+      <br />
+
+      <h4>Check the About page for more details</h4>
     </div>
     <!-- <LeaderBoard id="leaderboard" /> -->
   </div>
@@ -34,13 +38,15 @@ export default {
 </script>
 
 <style lang="scss">
+.home {
+  padding: 1rem;
+}
 template {
   padding: 1rem;
 }
 img {
   width: 8rem;
 }
-
 ul {
   list-style-type: none;
 }

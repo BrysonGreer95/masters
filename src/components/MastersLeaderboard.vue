@@ -30,7 +30,7 @@
 </template>
 
 <script>
-let tournID = "009";
+let tournID = "011";
 import axios from "axios";
 
 const leaderboardOptions = {
