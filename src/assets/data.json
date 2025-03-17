@@ -8,51 +8,51 @@
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 2,
     "user": {
-      "first_name": "Placeholder",
-      "last_name": "Player"
+      "first_name": "Daniel",
+      "last_name": "Bizzell"
     },
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 3,
     "user": {
-      "first_name": "Placeholder",
-      "last_name": "Player"
+      "first_name": "Steven",
+      "last_name": "Welsh"
     },
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 4,
     "user": {
-      "first_name": "Placeholder",
-      "last_name": "Player"
+      "first_name": "Ethan",
+      "last_name": "Brach"
     },
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 5,
     "user": {
-      "first_name": "Placeholder",
-      "last_name": "Player"
+      "first_name": "Micah",
+      "last_name": "Greer"
     },
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 6,
@@ -63,7 +63,7 @@
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 7,
@@ -74,7 +74,7 @@
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   },
   {
     "id": 8,
@@ -85,6 +85,6 @@
     "drive_shack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "Tiger Woods"
+    "choice_to_win_masters": ""
   }
 ]

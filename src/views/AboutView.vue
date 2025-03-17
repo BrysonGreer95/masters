@@ -14,6 +14,31 @@
     <br />
 
     <section>
+      <h3 class="title is-3">Buy In</h3>
+      <br />
+      <h4 class="subtitle is-5">
+        The buy in for this year is $35. This buy in goes strictly towards the
+        final prize, and if there is leftover, additional prizes
+      </h4>
+      <br />
+      <h4 class="subtitle is-5">
+        Before you RSVP, please know that the buy in does not cover the cost of
+        Friday night's Drive Shack round, or the Saturday morning tee time. You
+        do not need to worry about making any reservations though, just pay for
+        your round when you show up.
+      </h4>
+      <br />
+      <h4 class="subtitle is-5">
+        Lastly, food will be provided at the watch party on Sunday. If you'd
+        like to bring food or drinks, feel free but there is no obligation to do
+        so!
+      </h4>
+      <br />
+    </section>
+
+    <hr />
+    <br />
+    <section>
       <h3 class="title is-3">
         Friday, April 11th, 2025; 6:30pm <br />Drive Shack
       </h3>
@@ -28,13 +53,14 @@
       points for the event.
       <br />
       <br />
-      <b-collapse :open="false" aria-id="contentIdForA11y1">
+      <b-collapse class="collapse" :open="false" aria-id="contentIdForA11y1">
         <template #trigger="props">
           <b-button
             label="Points for Drive Shack"
             type="is-primary"
             aria-controls="contentIdForA11y1"
             :aria-expanded="props.open"
+            data-toggle="collapse"
           />
         </template>
         <div class="notification">
@@ -84,7 +110,7 @@
       goes towards our grand prize.
       <br />
       <br />
-      <b-collapse :open="false" aria-id="contentIdForA11y1">
+      <b-collapse class="collapse" :open="false" aria-id="contentIdForA11y1">
         <template #trigger="props">
           <b-button
             label="Points for Scramble"
@@ -138,7 +164,7 @@
         NOTE: Attendance is not required to this event to get points for Fantasy
       </h4>
       <br />
-      <b-collapse :open="false" aria-id="contentIdForA11y1">
+      <b-collapse class="collapse" :open="false" aria-id="contentIdForA11y1">
         <template #trigger="props">
           <b-button
             label="Points for Fantasy"
@@ -278,7 +304,7 @@
 
 <style lang="scss">
 .about {
-  padding: 3rem;
+  padding: 8rem;
 }
 h1 {
   font-size: 2rem;

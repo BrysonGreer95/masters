@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="masters_table">
-    <h3 class="title is-3">Masters Winner:</h3>
-    <p class="subtitle is-4">Scottie Scheffler</p>
+    <h3 class="title is-3">Masters 2025 Winner:</h3>
+    <p class="subtitle is-4"></p>
 
     <b-table striped :data="data" :columns="columns"></b-table>
   </div>

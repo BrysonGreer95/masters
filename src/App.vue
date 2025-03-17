@@ -14,6 +14,7 @@
   />
   <nav>
     <router-link to="/">Home</router-link> |
+    <router-link to="/prize">Prize</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/scramble">Scramble Information</router-link> |
     <router-link to="/masters">Watch Party</router-link> |

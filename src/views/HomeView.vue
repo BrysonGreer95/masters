@@ -12,27 +12,28 @@
     <div class="is-large">
       <h4 class="title is-4">This year's events consist of</h4>
       <ul>
-        <li>Friday Night: Top Golf</li>
+        <li>Friday Night: Drive Shack</li>
         <li>Saturday Morning: 2 man Scramble Tournament</li>
         <li>All Weekend: Masters Fantasy App</li>
       </ul>
       <br />
-      <br />
 
-      <h4>Check the About page for more details</h4>
+      <h4 class="title is-4">Check the About page for more details</h4>
+      <br />
+      <hr />
     </div>
-    <!-- <LeaderBoard id="leaderboard" /> -->
+    <LeaderBoard id="leaderboard" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-// import LeaderBoard from "@/components/LeaderBoard.vue";
+import LeaderBoard from "@/components/LeaderBoard.vue";
 
 export default {
   name: "HomeView",
   components: {
-    // LeaderBoard,
+    LeaderBoard,
   },
 };
 </script>
