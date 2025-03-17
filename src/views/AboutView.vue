@@ -304,7 +304,7 @@
 
 <style lang="scss">
 .about {
-  padding: 8rem;
+  padding: 2rem;
 }
 h1 {
   font-size: 2rem;
