@@ -95,7 +95,7 @@
 
     <section>
       <h3 class="title is-3">
-        Saturday, April 12th, TIME: TBD<br />Reedy Creek Golf Course
+        Saturday, April 12th, 9:00am<br />Reedy Creek Golf Course
       </h3>
       <br />
       <p class="subtitle is-4">Team Scramble tournament</p>

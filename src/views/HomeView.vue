@@ -10,7 +10,7 @@
     </h4>
     <br />
     <div class="is-large">
-      <h4 class="title is-4">This year's events consist of</h4>
+      <h4 class="title is-4">Events:</h4>
       <ul>
         <li>Friday Night: Sully's Golf and Gather</li>
         <li>Saturday Morning: 2 man Scramble Tournament</li>
