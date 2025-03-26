@@ -23,7 +23,7 @@
       <br />
       <h4 class="subtitle is-5">
         Before you RSVP, please know that the buy in does not cover the cost of
-        Friday night's Drive Shack round, or the Saturday morning tee time. You
+        Friday night's Sully's Simulator round, or the Saturday morning tee time. You
         do not need to worry about making any reservations though, just pay for
         your round when you show up.
       </h4>
@@ -40,15 +40,14 @@
     <br />
     <section>
       <h3 class="title is-3">
-        Friday, April 11th, 2025; 6:30pm <br />Drive Shack
+        Friday, April 11th, 2025; 6:00pm <br />Sully's Golf and Gather
       </h3>
       <br />
-      <h4 class="subtitle is-4">PGA National Sim</h4>
+      <h4 class="subtitle is-4">Simulator Round</h4>
       <br />
-      <h4 class="title is-5">6901 Play Golf Wy, Raleigh, NC 27607</h4>
+      <h4 class="title is-5">2311 Timber Drive, Garner NC, 27529</h4>
       <br />
-      Spouses invited! We will be renting bays of 4-6 people, playing the PGA
-      National Course at Drive Shack. Every group will set up their game to play
+      Spouses invited! Pay per person at the door. We will be renting 3 bays. We are playing a simulator round at Sully's! Every group will set up their game to play
       9 holes, but only the score after the first 5 will go towards your total
       points for the event.
       <br />
@@ -56,7 +55,7 @@
       <b-collapse class="collapse" :open="false" aria-id="contentIdForA11y1">
         <template #trigger="props">
           <b-button
-            label="Points for Drive Shack"
+            label="Points for Sully's"
             type="is-primary"
             aria-controls="contentIdForA11y1"
             :aria-expanded="props.open"

@@ -12,7 +12,7 @@
     <div class="is-large">
       <h4 class="title is-4">This year's events consist of</h4>
       <ul>
-        <li>Friday Night: Drive Shack</li>
+        <li>Friday Night: Sully's Golf and Gather</li>
         <li>Saturday Morning: 2 man Scramble Tournament</li>
         <li>All Weekend: Masters Fantasy App</li>
       </ul>

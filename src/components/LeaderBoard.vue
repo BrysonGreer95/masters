@@ -55,7 +55,7 @@
       >
         {{
           (props.row.total =
-            props.row.drive_shack +
+            props.row.sullys +
             props.row.scramble +
             props.row.fantasy)
         }}
@@ -63,13 +63,13 @@
 
       <b-table-column
         :default-sort-direction="desc"
-        field="drive_shack"
-        label="Drive Shack Points"
+        field="simulator"
+        label="Simulator Points"
         sortable
         numeric
         v-slot="props"
       >
-        {{ props.row.drive_shack }}
+        {{ props.row.sullys }}
       </b-table-column>
 
       <b-table-column

@@ -5,7 +5,7 @@
       "first_name": "Bryson",
       "last_name": "Greer"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -16,7 +16,7 @@
       "first_name": "Daniel",
       "last_name": "Bizzell"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -27,7 +27,7 @@
       "first_name": "Steven",
       "last_name": "Welsh"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -38,7 +38,7 @@
       "first_name": "Ethan",
       "last_name": "Brach"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -49,7 +49,7 @@
       "first_name": "Micah",
       "last_name": "Greer"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -60,7 +60,7 @@
       "first_name": "Andy",
       "last_name": "Jones"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -71,7 +71,7 @@
       "first_name": "Jonah",
       "last_name": "Vogt"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -82,7 +82,7 @@
       "first_name": "Austin",
       "last_name": "Myrick"
     },
-    "drive_shack": 0,
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
@@ -93,7 +93,40 @@
       "first_name": "Wyatt",
       "last_name": "Dershem"
     },
-    "drive_shack": 0,
+    "sullys": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 10,
+    "user": {
+      "first_name": "Marty",
+      "last_name": "Bizzell"
+    },
+    "sullys": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 11,
+    "user": {
+      "first_name": "Jayden",
+      "last_name": "Bauer"
+    },
+    "sullys": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 12,
+    "user": {
+      "first_name": "Brandon",
+      "last_name": "Massie"
+    },
+    "sullys": 0,
     "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
