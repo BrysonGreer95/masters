@@ -67,18 +67,17 @@ export default {
           member_2:
             playerData[11].user.first_name + " " + playerData[11].user.last_name,
           tee_time: "9:16",
-        },
+        }
       ],
       columns: [
         {
           field: "team",
           label: "Team",
-          numeric: true,
+          numeric: true
         },
         {
           field: "name",
-          label: "Team Name",
-          numeric: true,
+          label: "Team Name"
         },
         {
           field: "member_1",
