@@ -71,18 +71,18 @@ export default {
             " " +
             playerData[10].user.last_name,
           tee_time: "9:16",
-        }
+        },
       ],
       columns: [
         {
           field: "team",
           label: "Team",
-          numeric: true
+          numeric: true,
         },
-        {
-          field: "name",
-          label: "Team Name"
-        },
+        // {
+        //   field: "name",
+        //   label: "Team Name"
+        // },
         {
           field: "member_1",
           label: "Member 1",
