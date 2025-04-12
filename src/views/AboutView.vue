@@ -151,7 +151,10 @@
       <h4 class="title is-5">ADDRESS: Sent out via RSVP</h4>
       <br />
       <h4 class="title is-4">
-        Fantasy Link: <a>https://www.masters.com/en_US/fantasy/index.html</a>
+        Fantasy Link:
+        <a href="https://www.masters.com/en_US/fantasy/index.html"
+          >Master's Fantasy Link</a
+        >
       </h4>
       Watch party at our house! The fantasy lineup will need to be set BEFORE
       the Masters starts, so by the night of Wednesday the 9th. We will be
