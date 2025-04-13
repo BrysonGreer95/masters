@@ -7,7 +7,7 @@
     },
     "sullys": 11,
     "scramble": 20,
-    "fantasy": 0,
+    "fantasy": 25,
     "choice_to_win_masters": ""
   },
   {
@@ -17,8 +17,8 @@
       "last_name": "Bizzell"
     },
     "sullys": 14,
-    "scramble": 35,
-    "fantasy": 0,
+    "scramble": 32.5,
+    "fantasy": 15,
     "choice_to_win_masters": ""
   },
   {
@@ -29,7 +29,7 @@
     },
     "sullys": 12,
     "scramble": 15,
-    "fantasy": 0,
+    "fantasy": 5,
     "choice_to_win_masters": ""
   },
   {
@@ -40,7 +40,7 @@
     },
     "sullys": 15,
     "scramble": 25,
-    "fantasy": 0,
+    "fantasy": 35,
     "choice_to_win_masters": ""
   },
   {
@@ -61,8 +61,8 @@
       "last_name": "Vogt"
     },
     "sullys": 10,
-    "scramble": 35,
-    "fantasy": 0,
+    "scramble": 32.5,
+    "fantasy": 10,
     "choice_to_win_masters": ""
   },
   {
@@ -72,8 +72,8 @@
       "last_name": "Myrick"
     },
     "sullys": 18,
-    "scramble": 35,
-    "fantasy": 0,
+    "scramble": 32.5,
+    "fantasy": 35,
     "choice_to_win_masters": ""
   },
   {
@@ -84,7 +84,7 @@
     },
     "sullys": 16,
     "scramble": 40,
-    "fantasy": 0,
+    "fantasy": 20,
     "choice_to_win_masters": ""
   },
   {
@@ -94,8 +94,8 @@
       "last_name": "Bizzell"
     },
     "sullys": 13,
-    "scramble": 35,
-    "fantasy": 0,
+    "scramble": 32.5,
+    "fantasy": 50,
     "choice_to_win_masters": ""
   },
   {
@@ -106,7 +106,7 @@
     },
     "sullys": 0,
     "scramble": 15,
-    "fantasy": 0,
+    "fantasy": 45,
     "choice_to_win_masters": ""
   },
   {
@@ -117,7 +117,7 @@
     },
     "sullys": 20,
     "scramble": 40,
-    "fantasy": 0,
+    "fantasy": 35,
     "choice_to_win_masters": ""
   }
 ]
