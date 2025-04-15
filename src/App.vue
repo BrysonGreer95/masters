@@ -1,32 +1,5 @@
 <template>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-  />
-  <img
-    alt="Masters logo"
-    src="../src/assets/masters.png"
-    @click="isImageModalActive = true"
-  />
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/prize">Prize</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/scramble">Scramble Information</router-link> |
-    <router-link to="/masters">Watch Party</router-link> |
-    <router-link to="/masters_score">Masters Rankings</router-link>
-  </nav>
-  <router-view />
-
-  <b-modal v-model="isImageModalActive">
-    <p class="image is-4by3">
-      <img src="../src/assets/pimento.png" />
-    </p>
-  </b-modal>
+  <h1>Augusta, Please contact the owner for purchase of this domain</h1>
 </template>
 
 <style lang="scss">
