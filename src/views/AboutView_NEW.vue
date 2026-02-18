@@ -23,7 +23,8 @@
     <br />
 
     <section>
-      <h3 class="title is-3">Event 1: ParTee Shack - Mini Golf</h3>
+      <h3 class="title is-3">Event 1: ParTee Shack South Raleigh - Mini Golf</h3>
+      <h4 class="subtitle is-4">Friday, April 10th. 6-8pm</h4>
       <br />
       <h4 class="subtitle is-4">Test Your Short Game</h4>
       <br />
@@ -72,7 +73,8 @@
     <br />
 
     <section>
-      <h3 class="title is-3">Event 2: Scramble Tournament</h3>
+      <h3 class="title is-3">Event 2: Reedy Creek Scramble Tournament</h3>
+      <h4 class="subtitle is-4">Saturday, April 11th. 10am</h4>
       <br />
       <h4 class="subtitle is-4">2-Player Team Competition</h4>
       <br />
@@ -122,7 +124,8 @@
     <br />
 
     <section>
-      <h3 class="title is-3">Event 3: Masters Fantasy League</h3>
+      <h3 class="title is-3">Event 3: Masters Fantasy League Watch Party, Greer House</h3>
+      <h4 class="subtitle is-4">Sunday, April 12th. 1pm</h4>
       <br />
       <h4 class="subtitle is-4">Pick Your Winners</h4>
       <br />
