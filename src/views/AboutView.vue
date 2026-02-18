@@ -10,7 +10,8 @@
 
     <section class="intro-section">
       <p class="intro-text">
-        Join us for the 3rd Annual Masters Competition! We're hosting three exciting events centered around the Masters golf tournament. Compete in multiple events for points and championship glory!
+        Join us for the 3rd Annual Masters Competition! We're hosting three exciting events centered around the Masters
+        golf tournament. Compete in multiple events for points and championship glory!
       </p>
     </section>
 
@@ -21,7 +22,9 @@
       <h3 class="title is-3">General Information</h3>
       <br />
       <h4 class="subtitle is-5">
-        This year's competition features three distinct events: ParTee Shack mini golf, a competitive scramble tournament, and the Masters Fantasy League. Points earned across all events will be aggregated for final rankings.
+        This year's competition features three distinct events: ParTee Shack mini golf, a competitive scramble
+        tournament, and the Masters Fantasy League. Points earned across all events will be aggregated for final
+        rankings.
       </h4>
       <br />
     </section>
@@ -31,20 +34,16 @@
 
     <section>
       <h3 class="title is-3">Event 1: ParTee Shack - Mini Golf</h3>
-      <br />
+      <h4 class="subtitle is-4">Friday, April 10th. 6-8pm</h4>
       <h4 class="subtitle is-4">Test Your Short Game</h4>
-      <br />
-      Compete in a friendly mini-golf competition. Each player will complete a course of 18 holes, and scores will be ranked. The player with the lowest score will earn the most points.
+      Compete in a friendly mini-golf competition. Each player will complete a course of 18 holes, and scores will be
+      ranked. The player with the lowest score will earn the most points.
       <br />
       <br />
       <b-collapse class="collapse" v-model="openParTee" aria-id="contentIdForA11y2">
         <template #trigger="props">
-          <b-button
-            label="Points for ParTee Shack"
-            type="is-primary"
-            aria-controls="contentIdForA11y2"
-            :aria-expanded="props.open"
-          />
+          <b-button label="Points for ParTee Shack" type="is-primary" aria-controls="contentIdForA11y2"
+            :aria-expanded="props.open" />
         </template>
         <div class="notification">
           <div class="content">
@@ -80,20 +79,17 @@
 
     <section>
       <h3 class="title is-3">Event 2: Scramble Tournament</h3>
-      <br />
+      <h4 class="subtitle is-4">Saturday, April 11th. 10am</h4>
       <h4 class="subtitle is-4">2-Player Team Competition</h4>
-      <br />
-      Teams of 2 will compete in a best-ball scramble format at a local golf course. Both players score points based on team placement. Contact Bryson Greer to request a specific teammate if desired.
+      Teams of 2 will compete in a best-ball scramble format at a local golf course. Both players score points based on
+      team
+      placement. Contact Bryson Greer to request a specific teammate if desired.
       <br />
       <br />
       <b-collapse class="collapse" v-model="openScramble" aria-id="contentIdForA11y3">
         <template #trigger="props">
-          <b-button
-            label="Points for Scramble"
-            type="is-primary"
-            aria-controls="contentIdForA11y3"
-            :aria-expanded="props.open"
-          />
+          <b-button label="Points for Scramble" type="is-primary" aria-controls="contentIdForA11y3"
+            :aria-expanded="props.open" />
         </template>
         <div class="notification">
           <div class="content">
@@ -130,30 +126,23 @@
 
     <section>
       <h3 class="title is-3">Event 3: Masters Fantasy League</h3>
-      <br />
+      <h4 class="subtitle is-4">Sunday, April 12th. 2pm</h4>
       <h4 class="subtitle is-4">Pick Your Winners</h4>
-      <br />
       <p>
-        Create your fantasy lineup using the 
+        Create your fantasy lineup using the
         <span class="fantasy-link-wrapper">
-          <a 
-            href="https://www.masters.com/en_US/fantasy/index.html" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="fantasy-link"
-          >Masters Official Fantasy Site</a>
-        </span>. 
-        Your fantasy score is determined by how well your selected golfers perform during the Masters tournament. Highest total fantasy points wins!
+          <a href="https://www.masters.com/en_US/fantasy/index.html" target="_blank" rel="noopener noreferrer"
+            class="fantasy-link">Masters Official Fantasy Site</a>
+        </span>.
+        Your fantasy score is determined by how well your selected golfers perform during the Masters tournament.
+        Highest
+        total fantasy points wins!
       </p>
       <br />
       <b-collapse class="collapse" v-model="openFantasy" aria-id="contentIdForA11y4">
         <template #trigger="props">
-          <b-button
-            label="Points for Masters Fantasy"
-            type="is-primary"
-            aria-controls="contentIdForA11y4"
-            :aria-expanded="props.open"
-          />
+          <b-button label="Points for Masters Fantasy" type="is-primary" aria-controls="contentIdForA11y4"
+            :aria-expanded="props.open" />
         </template>
         <div class="notification">
           <div class="content">
@@ -192,7 +181,7 @@
 <style lang="scss" scoped>
 @import '../styles/_variables.scss';
 
-.about { 
+.about {
   padding: 0;
 }
 
@@ -236,8 +225,8 @@
   letter-spacing: 0.3px;
 }
 
-.about h1 { 
-  font-size: 2rem; 
+.about h1 {
+  font-size: 2rem;
   font-weight: 700;
   color: $primary;
   font-family: $heading-font-stack;
@@ -261,8 +250,8 @@
   font-size: 1.1rem;
 }
 
-.about p { 
-  font-size: 1rem; 
+.about p {
+  font-size: 1rem;
   color: #333;
   line-height: 1.6;
   letter-spacing: 0.3px;
@@ -300,7 +289,7 @@
   letter-spacing: 0.5px !important;
   font-weight: 600 !important;
   transition: all 0.3s ease !important;
-  
+
   &:hover {
     background: darken($primary, 5%) !important;
     box-shadow: 0 4px 8px rgba($primary, 0.2) !important;
