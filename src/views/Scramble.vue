@@ -3,7 +3,9 @@
   <h3 class="title is-3">Scramble Teams</h3>
 
   <div id="scramble_table">
-    <b-table striped :data="data" :columns="columns"></b-table>
+    <div class="table-responsive">
+      <b-table striped :data="data" :columns="columns"></b-table>
+    </div>
   </div>
 </template>
 
@@ -91,19 +93,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
-#scramble_table {
-  padding: 5px;
-}
-table.text-center * {
-  text-align: center;
-}
-
-.b-table th {
-  text-align: center;
-}
-
-.b-table .table th .th-wrap {
-  display: block;
-}
+<style lang="scss" scoped>
+#scramble_table { padding: 0.5rem; }
 </style>

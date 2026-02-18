@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <h2 class="title is-2">
-      Welcome to the 2nd Annual Masters Weekend Competition
+      Welcome to the 3rd Annual Masters Weekend Competition
     </h2>
     <br />
     <h4 class="subtitle is-4">
-      This year's competition takes place from Friday, April 11th to Sunday,
-      April 13th
+      More details, coming soon
     </h4>
     <br />
-    <div class="is-large">
+    <LeaderBoard id="leaderboard" />
+    <!-- <div class="is-large">
       <h4 class="title is-4">Events:</h4>
       <ul>
         <li>Friday Night: Sully's Golf and Gather</li>
@@ -21,8 +21,8 @@
       <h4 class="title is-4">Check the About page for more details</h4>
       <br />
       <hr />
-    </div>
-    <LeaderBoard id="leaderboard" />
+    </div> -->
+    <!-- <LeaderBoard id="leaderboard" /> -->
   </div>
 </template>
 
@@ -38,28 +38,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.home {
-  padding: 1rem;
-}
-template {
-  padding: 1rem;
-}
-img {
-  width: 8rem;
-}
-ul {
-  list-style-type: none;
-}
-li {
-  list-style-type: none;
-}
-div {
-  align-items: center;
-  text-align: center;
-}
-
-#leaderboard {
-  padding: 5px;
-}
+<style lang="scss" scoped>
+.home { padding: 1rem; text-align: center; }
+.home img { width: 8rem; }
 </style>

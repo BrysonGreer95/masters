@@ -5,119 +5,218 @@
       "first_name": "Bryson",
       "last_name": "Greer"
     },
-    "sullys": 11,
-    "scramble": 20,
-    "fantasy": 25,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 2,
     "user": {
-      "first_name": "Daniel",
-      "last_name": "Bizzell"
+      "first_name": "Player",
+      "last_name": "2"
     },
-    "sullys": 14,
-    "scramble": 32.5,
-    "fantasy": 15,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 3,
     "user": {
-      "first_name": "Steven",
-      "last_name": "Welsh"
+      "first_name": "Player",
+      "last_name": "3"
     },
-    "sullys": 12,
-    "scramble": 15,
-    "fantasy": 5,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 4,
     "user": {
-      "first_name": "Ethan",
-      "last_name": "Brach"
+      "first_name": "Player",
+      "last_name": "4"
     },
-    "sullys": 15,
-    "scramble": 25,
-    "fantasy": 35,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 5,
     "user": {
-      "first_name": "Micah",
-      "last_name": "Greer"
+      "first_name": "Player",
+      "last_name": "5"
     },
-    "sullys": 0,
-    "scramble": 25,
+    "parTeeShack": 0,
+    "scramble": 0,
     "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 6,
     "user": {
-      "first_name": "Jonah",
-      "last_name": "Vogt"
+      "first_name": "Player",
+      "last_name": "6"
     },
-    "sullys": 10,
-    "scramble": 32.5,
-    "fantasy": 10,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 7,
     "user": {
-      "first_name": "Austin",
-      "last_name": "Myrick"
+      "first_name": "Player",
+      "last_name": "7"
     },
-    "sullys": 18,
-    "scramble": 32.5,
-    "fantasy": 35,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 8,
     "user": {
-      "first_name": "Wyatt",
-      "last_name": "Dershem"
+      "first_name": "Player",
+      "last_name": "8"
     },
-    "sullys": 16,
-    "scramble": 40,
-    "fantasy": 20,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 9,
     "user": {
-      "first_name": "Marty",
-      "last_name": "Bizzell"
+      "first_name": "Player",
+      "last_name": "9"
     },
-    "sullys": 13,
-    "scramble": 32.5,
-    "fantasy": 50,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 10,
     "user": {
-      "first_name": "Jayden",
-      "last_name": "Bauer"
+      "first_name": "Player",
+      "last_name": "10"
     },
-    "sullys": 0,
-    "scramble": 15,
-    "fantasy": 45,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   },
   {
     "id": 11,
     "user": {
-      "first_name": "Brandon",
-      "last_name": "Massie"
+      "first_name": "Player",
+      "last_name": "11"
     },
-    "sullys": 20,
-    "scramble": 40,
-    "fantasy": 35,
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 12,
+    "user": {
+      "first_name": "Player",
+      "last_name": "12"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 13,
+    "user": {
+      "first_name": "Player",
+      "last_name": "13"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 14,
+    "user": {
+      "first_name": "Player",
+      "last_name": "14"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 15,
+    "user": {
+      "first_name": "Player",
+      "last_name": "15"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 16,
+    "user": {
+      "first_name": "Player",
+      "last_name": "16"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 17,
+    "user": {
+      "first_name": "Player",
+      "last_name": "17"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 18,
+    "user": {
+      "first_name": "Player",
+      "last_name": "18"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 19,
+    "user": {
+      "first_name": "Player",
+      "last_name": "19"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
+    "choice_to_win_masters": ""
+  },
+  {
+    "id": 20,
+    "user": {
+      "first_name": "Player",
+      "last_name": "20"
+    },
+    "parTeeShack": 0,
+    "scramble": 0,
+    "fantasy": 0,
     "choice_to_win_masters": ""
   }
 ]

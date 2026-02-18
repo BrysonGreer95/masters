@@ -1,10 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="masters_table">
-    <h3 class="title is-3">Masters 2025 Winner: TBD</h3>
+    <h3 class="title is-3">Masters 2026 Winner: TBD</h3>
     <p class="subtitle is-4"></p>
 
-    <b-table striped :data="data" :columns="columns"></b-table>
+    <div class="table-responsive">
+      <b-table striped :data="data" :columns="columns"></b-table>
+    </div>
   </div>
 </template>
 
@@ -103,19 +105,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-#scramble_table {
-  padding: 5px;
-}
-table.text-center * {
-  text-align: center;
-}
-
-.b-table th {
-  text-align: center;
-}
-
-.b-table .table th .th-wrap {
-  display: block;
-}
-</style>

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
   <div class="about">
-    <h2 class="title is-2">Masters 2025 Competition</h2>
+    <h2 class="title is-2">Masters 2026 Competition</h2>
     <br />
     <hr />
     <h5 class="subtitle is-5">
@@ -152,7 +152,7 @@
       <h3 class="title is-3">Final Rankings</h3>
       <br />
       <p>
-        After all events are complete, points from all three events will be summed for final rankings. The player with the highest total points wins the 2025 Masters Competition championship!
+        After all events are complete, points from all three events will be summed for final rankings. The player with the highest total points wins the 2026 Masters Competition championship!
       </p>
     </section>
   </div>
