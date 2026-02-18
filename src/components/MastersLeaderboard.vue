@@ -1,10 +1,12 @@
 <!-- eslint-disable vue/no-unused-vars -->
 <template>
   <div class="masters-leaderboard">
-    <h3 class="title is-3 mast-title">{{ tournament.tournamentName || "Current Tournament" }}</h3>
-    <h4 class="title is-4 mast-subtitle" v-if="tournament.tournamentName">April 9 - April 12, 2026</h4>
+    <div class="leaderboard-header">
+      <h3 class="title is-3 mast-title">{{ tournament.tournamentName || "Current Tournament" }}</h3>
+      <p class="tournament-date" v-if="tournament.tournamentName">April 9 - April 12, 2026</p>
+    </div>
 
-    <h4 class="title is-4">Current Score</h4>
+    <h4 class="score-section-title">Live Score</h4>
     
     <!-- Desktop table -->
     <div class="table-responsive is-hidden-mobile">
@@ -157,92 +159,140 @@ export default {
   width: 100%;
 }
 
+.leaderboard-header {
+  text-align: center;
+  padding: 1.5rem 1rem 2rem;
+  border-bottom: 2px solid $masters-gold;
+  margin-bottom: 1.5rem;
+}
+
+.mast-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.tournament-date {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+}
+
+.score-section-title {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 1rem 0;
+  color: $primary;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: $heading-font-stack;
+}
+
 /* Mobile score cards */
 .score-cards {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  gap: 0.75rem;
+  padding: 0;
 }
 
 .score-card {
   background: white;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: all 0.2s ease;
+  border-left: 4px solid $masters-gold;
+  border-top: 3px solid $primary;
+  transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
   }
 }
 
 .score-card-header {
-  background: linear-gradient(135deg, rgba(23, 64, 56, 0.08) 0%, rgba(23, 64, 56, 0.03) 100%);
-  padding: 0.6rem;
+  background: linear-gradient(135deg, rgba($primary, 0.05) 0%, rgba($primary, 0.02) 100%);
+  padding: 0.75rem 0.9rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(23, 64, 56, 0.06);
+  border-bottom: 1px solid rgba($masters-gold, 0.2);
 }
 
 .player-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  flex: 1;
-}
-
-.score-player-name {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: $primary;
-}
-
-.score-position {
-  font-size: 0.8rem;
-  color: #888;
-}
-
-.score-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background: $primary;
-  color: white;
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-.score-card-body {
-  padding: 0.5rem 0.6rem;
-  display: flex;
-  gap: 1rem;
-}
-
-.score-detail {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   flex: 1;
 }
 
+.score-player-name {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: $primary;
+  letter-spacing: 0.3px;
+}
+
+.score-position {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 0;
+  background: $primary;
+  color: $masters-gold;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.score-card-body {
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.score-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
 .detail-label {
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #999;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .detail-value {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: $primary;
+  letter-spacing: 0.5px;
+}
+
+@media (min-width: 641px) {
+  .score-cards {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .table-responsive {
+    display: none;
+  }
 }
 
 @media (min-width: 641px) {

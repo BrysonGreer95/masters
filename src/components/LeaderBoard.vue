@@ -1,5 +1,5 @@
 <template>
-  <h3 class="title is-3 mast-title">Leaderboard</h3>
+  <h3 class="title is-3 mast-title">Players Leaderboard</h3>
 
   <section class="leaderboard-container">
     <!-- Desktop table view -->
@@ -159,63 +159,69 @@ export default {
 .leaderboard-cards {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 0.5rem;
+  gap: 1rem;
+  padding: 0;
 }
 
 .player-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  border-left: 4px solid $primary;
-  transition: box-shadow 0.2s ease;
+  border-left: 4px solid $masters-gold;
+  border-top: 4px solid $masters-accent;
+  transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    border-left: 4px solid $masters-accent;
   }
 }
 
 .card-header {
-  background: linear-gradient(135deg, rgba(23, 64, 56, 0.06) 0%, rgba(23, 64, 56, 0.02) 100%);
-  padding: 0.75rem;
+  background: linear-gradient(135deg, rgba($primary, 0.05) 0%, rgba($masters-accent, 0.04) 100%);
+  padding: 1rem 0.9rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  border-bottom: 1px solid rgba(23, 64, 56, 0.08);
+  gap: 1rem;
+  border-bottom: 1px solid rgba($masters-accent, 0.2);
 }
 
 .position-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: $primary;
-  color: white;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 0;
+  background: linear-gradient(135deg, $primary, $masters-accent);
+  color: $masters-gold;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 4px rgba($primary, 0.15);
 }
 
 .player-name {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: $primary;
   flex: 1;
+  letter-spacing: 0.3px;
 }
 
 .card-body {
-  padding: 0.75rem;
+  padding: 1rem 0.9rem;
 }
 
 .score-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 0;
-  font-size: 0.9rem;
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -225,17 +231,22 @@ export default {
 .score-label {
   font-weight: 500;
   color: #666;
+  font-size: 0.9rem;
 }
 
 .score-value {
-  font-weight: 600;
+  font-weight: 700;
   color: $primary;
+  letter-spacing: 0.5px;
   
   &.total {
-    font-size: 1.1rem;
-    background: rgba($primary, 0.08);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, rgba($masters-accent, 0.1), rgba($masters-gold, 0.08));
+    padding: 0.35rem 0.75rem;
+    border-radius: 0;
+    border-left: 3px solid $masters-accent;
+    border-right: 3px solid $masters-accent;
+    color: $primary;
   }
 }
 

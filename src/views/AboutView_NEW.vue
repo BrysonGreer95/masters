@@ -42,17 +42,26 @@
         <div class="notification">
           <div class="content">
             <p>
-              1st place - 50 points<br />
-              2nd place - 45 points<br />
-              3rd place - 40 points<br />
-              4th place - 35 points<br />
-              5th place - 30 points<br />
-              6th place - 25 points<br />
-              7th place - 20 points<br />
-              8th place - 15 points<br />
-              9th place - 10 points<br />
-              10th place - 5 points<br />
-              11th+ place - 0 points
+              1st place - 100 points<br />
+              2nd place - 95 points<br />
+              3rd place - 90 points<br />
+              4th place - 85 points<br />
+              5th place - 80 points<br />
+              6th place - 75 points<br />
+              7th place - 70 points<br />
+              8th place - 65 points<br />
+              9th place - 60 points<br />
+              10th place - 55 points<br />
+              11th place - 50 points<br />
+              12th place - 45 points<br />
+              13th place - 40 points<br />
+              14th place - 35 points<br />
+              15th place - 30 points<br />
+              16th place - 25 points<br />
+              17th place - 20 points<br />
+              18th place - 15 points<br />
+              19th place - 10 points<br />
+              20th+ place - 0 points
             </p>
           </div>
         </div>
@@ -82,12 +91,26 @@
         <div class="notification">
           <div class="content">
             <p>
-              1st place - 50 points each<br />
-              2nd place - 40 points each<br />
-              3rd place - 30 points each<br />
-              4th place - 20 points each<br />
-              5th place - 10 points each<br />
-              6th+ place - 0 points<br />
+              1st place - 200 points each<br />
+              2nd place - 190 points each<br />
+              3rd place - 180 points each<br />
+              4th place - 170 points each<br />
+              5th place - 160 points each<br />
+              6th place - 150 points each<br />
+              7th place - 140 points each<br />
+              8th place - 130 points each<br />
+              9th place - 120 points each<br />
+              10th place - 110 points each<br />
+              11th place - 100 points each<br />
+              12th place - 90 points each<br />
+              13th place - 80 points each<br />
+              14th place - 70 points each<br />
+              15th place - 60 points each<br />
+              16th place - 50 points each<br />
+              17th place - 40 points each<br />
+              18th place - 30 points each<br />
+              19th place - 20 points each<br />
+              20th+ place - 0 points<br />
               Did not participate - 0 points
             </p>
           </div>
@@ -128,17 +151,26 @@
         <div class="notification">
           <div class="content">
             <p>
-              1st place - 50 points<br />
-              2nd place - 45 points<br />
-              3rd place - 40 points<br />
-              4th place - 35 points<br />
-              5th place - 30 points<br />
-              6th place - 25 points<br />
-              7th place - 20 points<br />
-              8th place - 15 points<br />
-              9th place - 10 points<br />
-              10th place - 5 points<br />
-              11th+ place - 0 points
+              1st place - 300 points<br />
+              2nd place - 285 points<br />
+              3rd place - 270 points<br />
+              4th place - 255 points<br />
+              5th place - 240 points<br />
+              6th place - 225 points<br />
+              7th place - 210 points<br />
+              8th place - 195 points<br />
+              9th place - 180 points<br />
+              10th place - 165 points<br />
+              11th place - 150 points<br />
+              12th place - 135 points<br />
+              13th place - 120 points<br />
+              14th place - 105 points<br />
+              15th place - 90 points<br />
+              16th place - 75 points<br />
+              17th place - 60 points<br />
+              18th place - 45 points<br />
+              19th place - 30 points<br />
+              20th+ place - 0 points
             </p>
           </div>
         </div>
@@ -147,14 +179,6 @@
 
     <hr />
     <br />
-
-    <section>
-      <h3 class="title is-3">Final Rankings</h3>
-      <br />
-      <p>
-        After all events are complete, points from all three events will be summed for final rankings. The player with the highest total points wins the 2026 Masters Competition championship!
-      </p>
-    </section>
   </div>
 </template>
 

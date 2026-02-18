@@ -1,13 +1,20 @@
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
 
-// Set your colors
-$primary: #174038;
+// Set your colors - Masters inspired
+$primary: #0a3a2f; // Deep forest green
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
-$twitter: #174038;
+$masters-gold: #d4af37; // Elegant gold
+$masters-accent: #1a5f4a; // Medium green
+$twitter: #0a3a2f;
 $twitter-invert: findColorInvert($twitter);
+
+// Typography
+$font-size-base: 16px;
+$heading-font-stack: 'Georgia', 'Times New Roman', serif;
+$body-font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Lists and maps
 $custom-colors: null !default;

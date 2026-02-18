@@ -1,11 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="masters_table">
-    <h3 class="title is-3">Masters 2026 Winner: TBD</h3>
-    <p class="subtitle is-4"></p>
+    <div class="masters-header">
+      <h1 class="masters-title">Tournament Winner Predictions</h1>
+      <p class="masters-subtitle">2026 Masters Champion: <span class="highlight">TBD</span></p>
+    </div>
 
     <div class="table-responsive">
-      <b-table striped :data="data" :columns="columns"></b-table>
+      <b-table striped :data="tableData" :columns="columns"></b-table>
     </div>
   </div>
 </template>
@@ -16,81 +18,7 @@ const playerData = require("../assets/data.json");
 export default {
   data() {
     return {
-      data: [
-        {
-          id: playerData[0].id,
-          player:
-            playerData[0].user.first_name + " " + playerData[0].user.last_name,
-          masters_winner: playerData[0].choice_to_win_masters,
-        },
-        {
-          id: playerData[1].id,
-          player:
-            playerData[1].user.first_name + " " + playerData[1].user.last_name,
-          masters_winner: playerData[1].choice_to_win_masters,
-        },
-        {
-          id: playerData[2].id,
-          player:
-            playerData[2].user.first_name + " " + playerData[2].user.last_name,
-          masters_winner: playerData[2].choice_to_win_masters,
-        },
-        {
-          id: playerData[3].id,
-          player:
-            playerData[3].user.first_name + " " + playerData[3].user.last_name,
-          masters_winner: playerData[3].choice_to_win_masters,
-        },
-        {
-          id: playerData[4].id,
-          player:
-            playerData[4].user.first_name + " " + playerData[4].user.last_name,
-          masters_winner: playerData[4].choice_to_win_masters,
-        },
-        {
-          id: playerData[5].id,
-          player:
-            playerData[5].user.first_name + " " + playerData[5].user.last_name,
-          masters_winner: playerData[5].choice_to_win_masters,
-        },
-        {
-          id: playerData[6].id,
-          player:
-            playerData[6].user.first_name + " " + playerData[6].user.last_name,
-          masters_winner: playerData[6].choice_to_win_masters,
-        },
-        {
-          id: playerData[7].id,
-          player:
-            playerData[7].user.first_name + " " + playerData[7].user.last_name,
-          masters_winner: playerData[7].choice_to_win_masters,
-        },
-        {
-          id: playerData[8].id,
-          player:
-            playerData[8].user.first_name + " " + playerData[8].user.last_name,
-          masters_winner: playerData[8].choice_to_win_masters,
-        },
-        {
-          id: playerData[9].id,
-          player:
-            playerData[9].user.first_name + " " + playerData[9].user.last_name,
-          masters_winner: playerData[9].choice_to_win_masters,
-        },
-        {
-          id: playerData[10].id,
-          player:
-            playerData[10].user.first_name +
-            " " +
-            playerData[10].user.last_name,
-          masters_winner: playerData[10].choice_to_win_masters,
-        },
-      ],
       columns: [
-        {
-          field: "id",
-          label: "Player ID",
-        },
         {
           field: "player",
           label: "Player",
@@ -102,6 +30,66 @@ export default {
       ],
     };
   },
+  computed: {
+    tableData() {
+      return playerData.map((player) => ({
+        player: `${player.user.first_name} ${player.user.last_name}`,
+        masters_winner: player.choice_to_win_masters,
+      }));
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../styles/_variables.scss';
+
+#masters_table {
+  width: 100%;
+}
+
+.masters-header {
+  text-align: center;
+  padding: 2rem 1rem 2.5rem;
+  border-bottom: 3px solid $masters-accent;
+  margin-bottom: 2rem;
+  background: linear-gradient(180deg, transparent 0%, rgba($masters-accent, 0.02) 100%);
+}
+
+.masters-title {
+  font-size: 2rem;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: $primary;
+  font-family: $heading-font-stack;
+}
+
+.masters-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.highlight {
+  color: $masters-gold;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .masters-header {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .masters-title {
+    font-size: 1.5rem;
+  }
+
+  .masters-subtitle {
+    font-size: 1rem;
+  }
+}
+</style>
 

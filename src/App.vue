@@ -21,7 +21,7 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; 2026 Masters Competition. All rights reserved.</p>
+      <p>&copy; 2026 Masters Competition. Home of Championship Excellence.</p>
     </footer>
   </div>
 </template>
@@ -54,27 +54,32 @@ export default {
 
 .app-nav {
   background: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-  border-bottom: 2px solid rgba($primary, 0.1);
-  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 3px solid $masters-accent;
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .nav-brand .nav-title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: $primary;
   white-space: nowrap;
+  letter-spacing: 0.5px;
+  font-family: $heading-font-stack;
 }
 
 .nav-links {
   display: flex;
-  gap: 0.25rem;
+  gap: 0;
   flex-wrap: wrap;
   align-items: center;
 }
@@ -83,35 +88,48 @@ export default {
   color: $primary;
   text-decoration: none;
   font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0;
+  transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  position: relative;
 
   &:hover {
-    background: rgba($primary, 0.08);
-    color: darken($primary, 10%);
+    background: transparent;
+    color: $masters-accent;
   }
 
   &.router-link-active {
-    background: rgba($primary, 0.15);
-    color: darken($primary, 5%);
-    border-bottom: 2px solid $primary;
+    background: transparent;
+    color: $masters-accent;
+    font-weight: 700;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1.2rem;
+      right: 1.2rem;
+      height: 2px;
+      background: $masters-accent;
+    }
   }
 }
 
 .app-container {
   flex: 1;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
-  padding: 1.5rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .app-footer {
-  background: rgba($primary, 0.04);
-  border-top: 1px solid rgba($primary, 0.1);
-  padding: 1rem;
+  background: linear-gradient(180deg, rgba($primary, 0.08) 0%, rgba($masters-accent, 0.05) 100%);
+  border-top: 3px solid $masters-accent;
+  padding: 2rem 1.5rem;
   text-align: center;
   color: #666;
   font-size: 0.9rem;
@@ -119,6 +137,7 @@ export default {
 
   p {
     margin: 0;
+    letter-spacing: 0.3px;
   }
 }
 
@@ -127,43 +146,50 @@ export default {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    padding: 0.75rem 1rem;
   }
 
   .nav-brand .nav-title {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
   }
 
   .nav-links {
     justify-content: center;
     width: 100%;
+    gap: 0.25rem;
   }
 
   .nav-link {
-    padding: 0.4rem 0.75rem;
+    padding: 0.5rem 0.9rem;
     font-size: 0.9rem;
   }
 
   .app-container {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .app-nav {
     padding: 0.5rem 0.75rem;
+    gap: 0.75rem;
   }
 
   .nav-brand .nav-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 
   .nav-links {
-    gap: 0.15rem;
+    gap: 0;
   }
 
   .nav-link {
-    padding: 0.35rem 0.5rem;
+    padding: 0.4rem 0.65rem;
     font-size: 0.8rem;
+  }
+  
+  .app-container {
+    padding: 1rem;
   }
 }
 </style>
