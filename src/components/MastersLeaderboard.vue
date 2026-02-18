@@ -11,8 +11,14 @@
 
     <h4 class="score-section-title">Live Score</h4>
     
-    <!-- Desktop table -->
-    <div class="table-responsive is-hidden-mobile">
+    <div class="loading-container" v-if="isLoading">
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
+
+    <!-- Scores -->
+    <div v-else>
+      <!-- Desktop table -->
+      <div class="table-responsive is-hidden-mobile">
       <b-table striped :data="sortedScores">
         <b-table-column field="playerName" label="Player" v-slot="props">
           {{ props.row.firstName }} {{ props.row.lastName }}
@@ -31,9 +37,8 @@
         </b-table-column>
       </b-table>
     </div>
-
-    <!-- Mobile cards -->
-    <div class="score-cards is-hidden-tablet">
+      <!-- Mobile cards -->
+      <div class="score-cards is-hidden-tablet">
       <div v-for="player in sortedScores" :key="`${player.id}-score`" class="score-card">
         <div class="score-card-header">
           <div class="player-info">
@@ -53,6 +58,7 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +73,7 @@ export default {
     await this.getTournament();
     await this.getScore();
     this.startAutoRefresh();
+    this.isLoading = false;
   },
   computed: {
     sortedScores() {
@@ -227,6 +234,7 @@ export default {
       refreshIntervalMs: 30000,
       refreshTimer: null,
       lastUpdated: "",
+      isLoading: true,
     };
   },
   beforeUnmount() {
@@ -388,5 +396,25 @@ export default {
   .table-responsive {
     display: none;
   }
+}
+
+/* Spinner */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(0,0,0,0.08);
+  border-top-color: $primary;
+  border-left-color: rgba($primary, 0.25);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 </style>
