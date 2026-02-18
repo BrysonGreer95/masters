@@ -33,7 +33,7 @@ const routes = [
     component: Masters,
   },
   {
-    path: "/masters_score",
+    path: "/masters-score",
     name: "masters_score",
     component: MastersScore,
   },

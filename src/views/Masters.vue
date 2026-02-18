@@ -25,7 +25,7 @@ export default {
         },
         {
           field: "masters_winner",
-          label: "Masters Winner",
+          label: "Golfer",
         },
       ],
     };

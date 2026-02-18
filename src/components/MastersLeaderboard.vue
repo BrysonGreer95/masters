@@ -2,8 +2,11 @@
 <template>
   <div class="masters-leaderboard">
     <div class="leaderboard-header">
-      <h3 class="title is-3 mast-title">{{ tournament.tournamentName || "Current Tournament" }}</h3>
-      <p class="tournament-date" v-if="tournament.tournamentName">April 9 - April 12, 2026</p>
+      <h3 class="title is-3 mast-title">{{ tournamentDisplayName }}</h3>
+      <p class="tournament-date" v-if="tournamentDate">{{ tournamentDate }}</p>
+      <div class="tournament-meta">
+        <span class="last-updated" v-if="lastUpdated">Last updated: {{ lastUpdated }}</span>
+      </div>
     </div>
 
     <h4 class="score-section-title">Live Score</h4>
@@ -58,41 +61,12 @@
 let tournID = "014";
 import axios from "axios";
 
-const leaderboardOptions = {
-  method: "GET",
-  url: "https://live-golf-data.p.rapidapi.com/leaderboard",
-  params: {
-    orgId: "1",
-    tournId: tournID,
-    year: "2026",
-  },
-  headers: {
-    "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
-    "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
-  },
-};
-
-const tournamentOptions = {
-  method: "GET",
-  url: "https://live-golf-data.p.rapidapi.com/tournament",
-  params: {
-    orgId: "1",
-    tournId: tournID,
-    year: "2026",
-  },
-  headers: {
-    "x-rapidapi-key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
-    "x-rapidapi-host": "live-golf-data.p.rapidapi.com",
-  },
-};
-
 export default {
   async created() {
-    await this.getDate().then(() => {
-      this.getTournament().then(() => {
-        this.getScore();
-      });
-    });
+    await this.getSchedule();
+    await this.getTournament();
+    await this.getScore();
+    this.startAutoRefresh();
   },
   computed: {
     sortedScores() {
@@ -104,36 +78,138 @@ export default {
         return posA - posB;
       });
     },
+    tournamentDisplayName() {
+      return this.tournament && (this.tournament.name || this.tournament.tournamentName)
+        ? (this.tournament.name || this.tournament.tournamentName)
+        : "Current Tournament";
+    },
+    tournamentDate() {
+      if (!this.tournament || !this.tournament.date) return "";
+      const { start, end } = this.tournament.date;
+      if (!start && !end) return "";
+      try {
+        const s = start
+          ? new Date(start).toLocaleDateString("en-US", { timeZone: "America/New_York", month: "short", day: "numeric" })
+          : "";
+        const e = end
+          ? new Date(end).toLocaleDateString("en-US", { timeZone: "America/New_York", month: "short", day: "numeric", year: start && new Date(start).getFullYear() !== new Date(end).getFullYear() ? "numeric" : undefined })
+          : "";
+        return s && e ? `${s} - ${e}` : s || e;
+      } catch (e) {
+        return "";
+      }
+    },
   },
   methods: {
-    async getDate() {
-      let date = new Date();
-      console.log(date);
-      if (date > new Date("2026-03-05") && date < new Date("2026-03-10")) {
-        console.log("1 triggered");
-        tournID = "010";
-      } else {
-        console.log("2 triggered");
-        tournID = "009";
+    async getSchedule() {
+      try {
+        const response = await axios.get("https://live-golf-data.p.rapidapi.com/schedule", {
+          params: {
+            orgId: "1",
+            year: "2026",
+          },
+          headers: {
+            "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
+            "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
+          },
+        });
+
+        const schedule = (response.data && response.data.schedule) || [];
+        const today = new Date();
+
+        const inProgress = schedule.find((s) => {
+          if (!s.date) return false;
+          const start = s.date.start ? new Date(s.date.start) : null;
+          const end = s.date.end ? new Date(s.date.end) : null;
+          if (!start || !end) return false;
+          return today >= start && today <= end;
+        });
+
+        if (inProgress) {
+          tournID = inProgress.tournId || tournID;
+        } else {
+          const upcoming = schedule
+            .filter((s) => s.date && s.date.start && new Date(s.date.start) > today)
+            .sort((a, b) => new Date(a.date.start) - new Date(b.date.start));
+
+          if (upcoming.length) {
+            tournID = upcoming[0].tournId || tournID;
+          } else {
+            const past = schedule
+              .filter((s) => s.date && s.date.end && new Date(s.date.end) < today)
+              .sort((a, b) => new Date(b.date.end) - new Date(a.date.end));
+            if (past.length) {
+              tournID = past[0].tournId || tournID;
+            }
+          }
+        }
+
+        this.selectedTournId = tournID;
+        console.log("Selected tournID:", tournID);
+        return tournID;
+      } catch (error) {
+        console.error("Error fetching schedule:", error);
+        this.selectedTournId = tournID;
+        return tournID;
       }
     },
     async getScore() {
-      axios
-        .request(leaderboardOptions)
-        .then((response) => (this.currentScore = response.data.leaderboardRows))
-        .catch((error) => {
-          console.error("Error fetching leaderboard:", error);
-          this.currentScore = [];
+      try {
+        const response = await axios.get("https://live-golf-data.p.rapidapi.com/leaderboard", {
+          params: {
+            orgId: "1",
+            tournId: tournID,
+            year: "2026",
+          },
+          headers: {
+            "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
+            "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
+          },
         });
+
+        this.currentScore = response.data && response.data.leaderboardRows ? response.data.leaderboardRows : [];
+        const lu = response.data && response.data.lastUpdated ? response.data.lastUpdated : new Date().toISOString();
+        try {
+          this.lastUpdated = new Date(lu).toLocaleString("en-US", { timeZone: "America/New_York" });
+        } catch (e) {
+          this.lastUpdated = lu;
+        }
+      } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        this.currentScore = [];
+      }
     },
     async getTournament() {
-      axios
-        .request(tournamentOptions)
-        .then((response) => (this.tournament = response.data))
-        .catch((error) => {
-          console.error("Error fetching tournament:", error);
-          this.tournament = {};
+      try {
+        const response = await axios.get("https://live-golf-data.p.rapidapi.com/tournament", {
+          params: {
+            orgId: "1",
+            tournId: tournID,
+            year: "2026",
+          },
+          headers: {
+            "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
+            "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
+          },
         });
+
+        this.tournament = response.data || {};
+      } catch (error) {
+        console.error("Error fetching tournament:", error);
+        this.tournament = {};
+      }
+    },
+    startAutoRefresh() {
+      this.stopAutoRefresh();
+      this.refreshTimer = setInterval(() => {
+        this.getScore();
+      }, this.refreshIntervalMs);
+    },
+    stopAutoRefresh() {
+      if (this.refreshTimer) {
+        clearInterval(this.refreshTimer);
+        this.refreshTimer = null;
+      }
     },
   },
   data() {
@@ -147,7 +223,14 @@ export default {
         { field: "player", label: "Player Name" },
         { field: "score", label: "Current Score" },
       ],
+      selectedTournId: tournID,
+      refreshIntervalMs: 30000,
+      refreshTimer: null,
+      lastUpdated: "",
     };
+  },
+  beforeUnmount() {
+    this.stopAutoRefresh && this.stopAutoRefresh();
   },
 };
 </script>
