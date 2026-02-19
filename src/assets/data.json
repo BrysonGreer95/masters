@@ -13,8 +13,8 @@
   {
     "id": 2,
     "user": {
-      "first_name": "Player",
-      "last_name": "2"
+      "first_name": "Daniel",
+      "last_name": "Bizzell"
     },
     "parTeeShack": 0,
     "scramble": 0,
@@ -24,8 +24,8 @@
   {
     "id": 3,
     "user": {
-      "first_name": "Player",
-      "last_name": "3"
+      "first_name": "Marty",
+      "last_name": "Bizzell"
     },
     "parTeeShack": 0,
     "scramble": 0,
@@ -35,8 +35,8 @@
   {
     "id": 4,
     "user": {
-      "first_name": "Player",
-      "last_name": "4"
+      "first_name": "Jayden",
+      "last_name": "Bauer"
     },
     "parTeeShack": 0,
     "scramble": 0,
@@ -46,7 +46,7 @@
   {
     "id": 5,
     "user": {
-      "first_name": "Player",
+      "first_name": "",
       "last_name": "5"
     },
     "parTeeShack": 0,
