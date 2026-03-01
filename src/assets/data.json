@@ -134,8 +134,8 @@
   {
     "id": 13,
     "user": {
-      "first_name": "Paul",
-      "last_name": "Black"
+      "first_name": "",
+      "last_name": ""
     },
     "parTeeShack": 0,
     "scramble": 0,
@@ -145,8 +145,8 @@
   {
     "id": 14,
     "user": {
-      "first_name": "Markell",
-      "last_name": "Quinn"
+      "first_name": "",
+      "last_name": ""
     },
     "parTeeShack": 0,
     "scramble": 0,
