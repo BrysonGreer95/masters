@@ -6,7 +6,6 @@
         Experience excellence in competition across ParTee Shack, Scramble, and Fantasy picks
       </p>
     </div>
-    
     <div class="leaderboard-section">
       <LeaderBoard id="leaderboard" />
     </div>

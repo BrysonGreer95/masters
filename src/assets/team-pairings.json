@@ -1,0 +1,226 @@
+[
+  {
+    "team": 1,
+    "member_1": {
+      "id": 7,
+      "user": {
+        "first_name": "Ethan",
+        "last_name": "Brach"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 6,
+      "user": {
+        "first_name": "Jonah",
+        "last_name": "Vogt"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:12 PM"
+  },
+  {
+    "team": 2,
+    "member_1": {
+      "id": 3,
+      "user": {
+        "first_name": "Marty",
+        "last_name": "Bizzell"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 4,
+      "user": {
+        "first_name": "Zachary",
+        "last_name": "Burk"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:12 PM"
+  },
+  {
+    "team": 3,
+    "member_1": {
+      "id": 5,
+      "user": {
+        "first_name": "Austin",
+        "last_name": "Myrick"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 13,
+      "user": {
+        "first_name": "Jayden",
+        "last_name": "Bauer"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:20 PM"
+  },
+  {
+    "team": 4,
+    "member_1": {
+      "id": 10,
+      "user": {
+        "first_name": "Wyatt",
+        "last_name": "Dershem"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 8,
+      "user": {
+        "first_name": "Daniel",
+        "last_name": "Bizzell"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:20 PM"
+  },
+  {
+    "team": 5,
+    "member_1": {
+      "id": 12,
+      "user": {
+        "first_name": "Andy",
+        "last_name": "Jones"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 15,
+      "user": {
+        "first_name": "Duke",
+        "last_name": "Dye"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:28 PM"
+  },
+  {
+    "team": 6,
+    "member_1": {
+      "id": 11,
+      "user": {
+        "first_name": "Miles",
+        "last_name": "Moser"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 2,
+      "user": {
+        "first_name": "Eric",
+        "last_name": "Leon"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:28 PM"
+  },
+  {
+    "team": 7,
+    "member_1": {
+      "id": 14,
+      "user": {
+        "first_name": "Chris",
+        "last_name": "Bagale"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 16,
+      "user": {
+        "first_name": "Quinlan",
+        "last_name": "Arias"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:36 PM"
+  },
+  {
+    "team": 8,
+    "member_1": {
+      "id": 9,
+      "user": {
+        "first_name": "Micah",
+        "last_name": "Greer"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "member_2": {
+      "id": 1,
+      "user": {
+        "first_name": "Bryson",
+        "last_name": "Greer"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "choice_to_win_masters": ""
+    },
+    "tee_time": "12:36 PM"
+  }
+]

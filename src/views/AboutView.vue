@@ -129,15 +129,26 @@
       <h4 class="subtitle is-4">Sunday, April 12th. 2pm</h4>
       <h4 class="subtitle is-4">Pick Your Winners</h4>
       <p>
-        Create your fantasy lineup using the
-        <span class="fantasy-link-wrapper">
-          <a href="https://www.masters.com/en_US/fantasy/index.html" target="_blank" rel="noopener noreferrer"
-            class="fantasy-link">Masters Official Fantasy Site</a>
-        </span>.
-        Your fantasy score is determined by how well your selected golfers perform during the Masters tournament.
-        Highest
-        total fantasy points wins!
+      <div class="watch-party-announcement">
+        <div class="announcement-content">
+          <h2 class="announcement-title">Fantasy Watch Party</h2>
+          <p class="announcement-text">
+            Join us Sunday at my house from 2 PM until the Masters ends, where the prize will be awarded!
+          </p>
+        </div>
+      </div>
+
+
+      Create your fantasy lineup using the
+      <span class="fantasy-link-wrapper">
+        <a href="https://www.masters.com/en_US/fantasy/index.html" target="_blank" rel="noopener noreferrer"
+          class="fantasy-link">Masters Official Fantasy Site</a>
+      </span>.
+      Your fantasy score is determined by how well your selected golfers perform during the Masters tournament.
+      Highest
+      total fantasy points wins!
       </p>
+
       <br />
       <b-collapse class="collapse" v-model="openFantasy" aria-id="contentIdForA11y4">
         <template #trigger="props">
@@ -294,6 +305,66 @@
     background: darken($primary, 5%) !important;
     box-shadow: 0 4px 8px rgba($primary, 0.2) !important;
   }
+}
+
+
+.watch-party-announcement {
+  margin: 0 1rem 2rem 1rem;
+  padding: 0;
+}
+
+.announcement-content {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba($masters-accent, 0.15) 0%, rgba($primary, 0.08) 100%);
+  border-left: 5px solid $masters-accent;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.announcement-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: $primary;
+  margin: 0 0 0.75rem 0;
+  font-family: $heading-font-stack;
+  letter-spacing: 0.3px;
+}
+
+.announcement-text {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.announcement-content {
+  padding: 1.25rem;
+}
+
+.announcement-title {
+  font-size: 1.2rem;
+}
+
+.announcement-text {
+  font-size: 1rem;
+}
+
+.watch-party-announcement {
+  margin: 0 0.75rem 1.5rem 0.75rem;
+}
+
+
+.announcement-content {
+  padding: 1rem;
+}
+
+.announcement-title {
+  font-size: 1.1rem;
+}
+
+.announcement-text {
+  font-size: 0.95rem;
 }
 
 @media (max-width: 768px) {
