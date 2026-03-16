@@ -148,7 +148,8 @@
       Highest
       total fantasy points wins!
       </p>
-
+      <br>
+      <h4>Note, you MUST have your fantasy lineup submitted by April 10th!</h4>
       <br />
       <b-collapse class="collapse" v-model="openFantasy" aria-id="contentIdForA11y4">
         <template #trigger="props">
