@@ -78,7 +78,7 @@
     <br />
 
     <section>
-      <h3 class="title is-3">Event 2: Scramble Tournament</h3>
+      <h3 class="title is-3">Event 2: Scramble Tournament - Reedy Creek Golf Course</h3>
       <h4 class="subtitle is-4">Saturday, April 11th. 10am</h4>
       <h4 class="subtitle is-4">2-Player Team Competition</h4>
       Teams of 2 will compete in a best-ball scramble format at a local golf course. Both players score points based on
