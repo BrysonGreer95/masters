@@ -172,8 +172,8 @@
     "member_1": {
       "id": 14,
       "user": {
-        "first_name": "Chris",
-        "last_name": "Bagale"
+        "first_name": "Micah",
+        "last_name": "Greer"
       },
       "list_designation": "A",
       "parTeeShack": 0,
@@ -200,10 +200,10 @@
     "member_1": {
       "id": 9,
       "user": {
-        "first_name": "Micah",
+        "first_name": "Bryson",
         "last_name": "Greer"
       },
-      "list_designation": "A",
+      "list_designation": "B",
       "parTeeShack": 0,
       "scramble": 0,
       "fantasy": 0,
@@ -212,10 +212,10 @@
     "member_2": {
       "id": 1,
       "user": {
-        "first_name": "Bryson",
-        "last_name": "Greer"
+        "first_name": "",
+        "last_name": ""
       },
-      "list_designation": "B",
+      "list_designation": "",
       "parTeeShack": 0,
       "scramble": 0,
       "fantasy": 0,
