@@ -9,7 +9,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 7
   },
   {
     "id": 2,
@@ -21,7 +22,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 4
   },
   {
     "id": 3,
@@ -33,7 +35,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 2
   },
   {
     "id": 4,
@@ -45,7 +48,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 3
   },
   {
     "id": 5,
@@ -57,7 +61,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 3
   },
   {
     "id": 6,
@@ -69,7 +74,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 1
   },
   {
     "id": 7,
@@ -81,7 +87,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 1
   },
   {
     "id": 8,
@@ -89,11 +96,12 @@
       "first_name": "Eric",
       "last_name": "Leon"
     },
-    "list_designation": "B",
+    "list_designation": "A",
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 6
   },
   {
     "id": 9,
@@ -105,7 +113,8 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 7
   },
   {
     "id": 10,
@@ -117,22 +126,11 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 4
   },
   {
     "id": 11,
-    "user": {
-      "first_name": "Miles",
-      "last_name": "Moser"
-    },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "choice_to_win_masters": ""
-  },
-  {
-    "id": 12,
     "user": {
       "first_name": "Andy",
       "last_name": "Jones"
@@ -141,10 +139,11 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 5
   },
   {
-    "id": 13,
+    "id": 12,
     "user": {
       "first_name": "Zachary",
       "last_name": "Burk"
@@ -153,22 +152,11 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 2
   },
   {
-    "id": 14,
-    "user": {
-      "first_name": "Chris",
-      "last_name": "Bagale"
-    },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "choice_to_win_masters": ""
-  },
-  {
-    "id": 15,
+    "id": 13,
     "user": {
       "first_name": "Duke",
       "last_name": "Dye"
@@ -177,10 +165,11 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 5
   },
   {
-    "id": 16,
+    "id": 14,
     "user": {
       "first_name": "Quinlan",
       "last_name": "Arias"
@@ -189,6 +178,7 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": ""
+    "choice_to_win_masters": "",
+    "team": 6
   }
 ]

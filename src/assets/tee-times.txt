@@ -1,0 +1,17 @@
+TEE TIMES - 2026 Masters Event
+(Automatically calculated based on team number)
+
+12:12 PM - Teams 1 & 2
+  Team 1: Ethan Brach (id 7) & Jonah Vogt (id 6)
+  Team 2: Marty Bizzell (id 3) & Zachary Burk (id 12)
+
+12:20 PM - Teams 3 & 4
+  Team 3: Austin Myrick (id 5) & Jayden Bauer (id 4)
+  Team 4: Wyatt Dershem (id 10) & Daniel Bizzell (id 2)
+
+12:28 PM - Teams 5 & 6
+  Team 5: Andy Jones (id 11) & Duke Dye (id 13)
+  Team 6: Micah Greer (id 9) & Quinlan Arias (id 14)
+
+12:36 PM - Team 7
+  Team 7: Bryson Greer (id 1) & Eric Leon (id 8)

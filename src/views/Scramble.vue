@@ -38,7 +38,8 @@
 
 <script>
 const playerData = require("../assets/data.json");
-const teamPairings = require("../assets/team-pairings.json");
+
+const TEE_TIMES = ['12:12 PM', '12:12 PM', '12:20 PM', '12:20 PM', '12:28 PM', '12:28 PM', '12:36 PM', '12:36 PM'];
 
 export default {
   data() {
@@ -73,12 +74,30 @@ export default {
       return playerData.filter(player => player.list_designation === "B");
     },
     tableData() {
-      return teamPairings.map(pair => ({
-        team: pair.team,
-        member_1: `${pair.member_1.user.first_name} ${pair.member_1.user.last_name}`,
-        member_2: `${pair.member_2.user.first_name} ${pair.member_2.user.last_name}`,
-        tee_time: pair.tee_time,
-      }));
+      // Group players by team
+      const teamMap = {};
+      playerData.forEach(player => {
+        if (player.team) {
+          if (!teamMap[player.team]) {
+            teamMap[player.team] = [];
+          }
+          teamMap[player.team].push(player);
+        }
+      });
+
+      // Build table data from grouped teams
+      return Object.keys(teamMap)
+        .sort((a, b) => a - b)
+        .map(teamNum => {
+          const members = teamMap[teamNum];
+          const teeTime = TEE_TIMES[teamNum - 1];
+          return {
+            team: teamNum,
+            member_1: `${members[0].user.first_name} ${members[0].user.last_name}`,
+            member_2: `${members[1].user.first_name} ${members[1].user.last_name}`,
+            tee_time: teeTime,
+          };
+        });
     },
   },
 };
