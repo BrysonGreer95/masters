@@ -34,10 +34,10 @@
 
     <section>
       <h3 class="title is-3">Event 1: ParTee Shack North Raleigh - Mini Golf</h3>
-      <h4>6231 Triangle Plantation Drive, Raleigh, NC 27616</h4>
+      <h4 class="subtitle is-4">6231 Triangle Plantation Drive, Raleigh, NC 27616</h4>
       <h4 class="subtitle is-4">Friday, April 10th. 6-8pm</h4>
-      <h4 class="subtitle is-4">Test Your Short Game</h4>
-      Compete in a friendly mini-golf competition. Each player will complete a course of 18 holes, and scores will be
+      Compete in a friendly mini-golf competition. Each player will complete two courses of 18 holes (for 36 holes
+      total), and scores will be
       ranked. The player with the lowest score will earn the most points.
       <br />
       <br />
@@ -80,9 +80,8 @@
 
     <section>
       <h3 class="title is-3">Event 2: Scramble Tournament - Reedy Creek Golf Course</h3>
-      <h4>585 Reedy Creek Rd, Four Oaks, NC 27524</h4>
+      <h4 class="subtitle is-4">585 Reedy Creek Rd, Four Oaks, NC 27524</h4>
       <h4 class="subtitle is-4">Saturday, April 11th. 12pm</h4>
-      <h4 class="subtitle is-4">2-Player Team Competition</h4>
       Teams of 2 will compete in a best-ball scramble format at a local golf course. Both players score points based on
       team
       placement. Contact Bryson Greer to request a specific teammate if desired.
@@ -128,9 +127,11 @@
 
     <section>
       <h3 class="title is-3">Event 3: Masters Fantasy League</h3>
-      <h4>Contact </h4>
-      <h4 class="subtitle is-4">Sunday, April 12th. 2pm</h4>
-      <h4 class="subtitle is-4">Pick Your Winners</h4>
+      <h4 class="subtitle is-4">Sunday, April 12th. 2pm at Bryson's House</h4>
+      <h4 class="subtitle is-4">Pick Your Winners : <a class="link"
+          href="https://www.masters.com/en_US/fantasy?leagueJoinToken=09a845f0e8&leagueId=13604">Use this link to
+          join
+          the league</a></h4>
       <p>
       <div class="watch-party-announcement">
         <div class="announcement-content">
@@ -152,7 +153,7 @@
       total fantasy points wins!
       </p>
       <br>
-      <h4>Note, you MUST have your fantasy lineup submitted by April 10th!</h4>
+      <h4>Note, you MUST have your fantasy lineup submitted by April 9th!</h4>
       <br />
       <b-collapse class="collapse" v-model="openFantasy" aria-id="contentIdForA11y4">
         <template #trigger="props">
@@ -206,6 +207,11 @@
   border-bottom: 3px solid $masters-accent;
   margin-bottom: 2rem;
   background: linear-gradient(180deg, transparent 0%, rgba($masters-accent, 0.02) 100%);
+}
+
+.link {
+  text-decoration: underline;
+
 }
 
 .about-title {
