@@ -34,6 +34,7 @@
 
     <section>
       <h3 class="title is-3">Event 1: ParTee Shack North Raleigh - Mini Golf</h3>
+      <h4>6231 Triangle Plantation Drive, Raleigh, NC 27616</h4>
       <h4 class="subtitle is-4">Friday, April 10th. 6-8pm</h4>
       <h4 class="subtitle is-4">Test Your Short Game</h4>
       Compete in a friendly mini-golf competition. Each player will complete a course of 18 holes, and scores will be
@@ -79,6 +80,7 @@
 
     <section>
       <h3 class="title is-3">Event 2: Scramble Tournament - Reedy Creek Golf Course</h3>
+      <h4>585 Reedy Creek Rd, Four Oaks, NC 27524</h4>
       <h4 class="subtitle is-4">Saturday, April 11th. 12pm</h4>
       <h4 class="subtitle is-4">2-Player Team Competition</h4>
       Teams of 2 will compete in a best-ball scramble format at a local golf course. Both players score points based on
@@ -126,6 +128,7 @@
 
     <section>
       <h3 class="title is-3">Event 3: Masters Fantasy League</h3>
+      <h4>Contact </h4>
       <h4 class="subtitle is-4">Sunday, April 12th. 2pm</h4>
       <h4 class="subtitle is-4">Pick Your Winners</h4>
       <p>
