@@ -10,6 +10,7 @@
         <router-link to="/masters" class="nav-link">Masters Pick</router-link>
         <router-link to="/scramble" class="nav-link">Scramble</router-link>
         <router-link to="/masters-score" class="nav-link">Live Score</router-link>
+        <router-link to="/final-prize" class="nav-link">Prize</router-link>
         <router-link to="/about" class="nav-link">About</router-link>
       </div>
     </nav>
@@ -105,7 +106,7 @@ export default {
     background: transparent;
     color: $masters-accent;
     font-weight: 700;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -187,7 +188,7 @@ export default {
     padding: 0.4rem 0.65rem;
     font-size: 0.8rem;
   }
-  
+
   .app-container {
     padding: 1rem;
   }

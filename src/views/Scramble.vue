@@ -3,7 +3,15 @@
   <div id="scramble_table">
     <div class="scramble-header">
       <h1 class="scramble-title">Scramble Teams</h1>
-      <p class="scramble-subtitle">A List players paired with B List players</p>
+    </div>
+
+    <div class="rules-block">
+      <h4 class="rules">Rules</h4>
+      <ul>
+        <li>- 1 Mulligan per 9 (can't save your front mulligan for two on the back 9)</li>
+        <li>- Breakfast ball is allowed</li>
+
+      </ul>
     </div>
 
     <div class="player-lists">
@@ -116,6 +124,21 @@ export default {
   border-bottom: 3px solid $masters-accent;
   margin-bottom: 2rem;
   background: linear-gradient(180deg, transparent 0%, rgba($masters-accent, 0.02) 100%);
+}
+
+.rules {
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: $primary;
+  font-family: $heading-font-stack;
+  text-decoration: underline;
+
+}
+
+.rules-block {
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 .scramble-title {

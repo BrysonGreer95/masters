@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Scramble from "../views/Scramble.vue";
-import FinalPrize from '../views/FinalPrize.vue'
+import Prize from '../views/FinalPrize.vue';
 import AboutView from "../views/AboutView.vue";
 import Masters from "@/views/Masters.vue";
 import MastersScore from "@/views/MastersScore.vue";
@@ -13,9 +13,9 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/prize",
-    name: "prize",
-    component: FinalPrize,
+    path: "/final-prize",
+    name: "final_prize",
+    component: Prize,
   },
   {
     path: "/about",
