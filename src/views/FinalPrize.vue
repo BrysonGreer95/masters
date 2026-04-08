@@ -1,10 +1,14 @@
 <template>
-  <div class="prize-page">
-    <h1 class="prize-title">This Year's Prize</h1>
-    <h2 class="prize-subtitle">Scotty Cameron Select Newport 2</h2>
-    <div class="prize-image-container">
-      <!-- Replace 'prize.jpg' with your image filename -->
-      <img :src="require('@/assets/scotty.jpg')" alt="Scotty Cameron Select Newport 2" class="prize-image" />
+  <div class="prize">
+    <div class="page-header">
+      <h1>This Year's Prize</h1>
+      <p class="page-subtitle">Awarded to the Masters Weekend 2026 Overall Champion</p>
+    </div>
+    <div class="prize-body">
+      <h2 class="prize-name">Scotty Cameron Select Newport 2</h2>
+      <div class="prize-image-wrap">
+        <img :src="require('@/assets/scotty.jpg')" alt="Scotty Cameron Select Newport 2" class="prize-image" />
+      </div>
     </div>
   </div>
 </template>
@@ -15,39 +19,60 @@ export default {
 };
 </script>
 
-<style scoped>
-.prize-page {
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+<style lang="scss" scoped>
+@import '../styles/_variables.scss';
+
+.prize {
+  width: 100%;
+}
+
+.prize-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
   text-align: center;
 }
 
-.prize-title {
-  font-size: 2.5rem;
+.prize-name {
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  color: #2c3e50;
-  letter-spacing: 1px;
+  color: $primary;
+  font-family: $heading-font-stack;
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.5px;
 }
 
-.prize-subtitle {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  color: #4a5568;
+.prize-desc {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0 0 2.5rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.prize-image-container {
-  margin-top: 2rem;
+.prize-image-wrap {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: white;
+  padding: 1.5rem;
 }
 
 .prize-image {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: $bp-mobile) {
+  .prize-body {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .prize-name {
+    font-size: 1.4rem;
+  }
 }
 </style>

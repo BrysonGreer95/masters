@@ -1,37 +1,37 @@
 <template>
-  <h3 class="title is-3 mast-title">Players Leaderboard</h3>
-
   <section class="leaderboard-container">
-    <!-- Desktop table view -->
+    <h3 class="leaderboard-heading">Overall Standings</h3>
+
+    <!-- Desktop table -->
     <div class="table-responsive is-hidden-mobile">
-      <b-table bordered id="table" :key="tableDataKey" :data="sortedData" :default-sort-direction="defaultSortDirection"
-        :sort-icon="sortIcon" :sort-icon-size="sortIconSize" default-sort="total" striped :page-input="hasInput"
-        :page-input-position="inputPosition" :debounce-page-input="inputDebounce">
-        <b-table-column :default-sort-direction="asc" field="id" numeric label="Pos" sortable v-slot="props">
-          {{ data.indexOf(props.row) + 1 }}
+      <b-table
+        bordered
+        id="table"
+        :key="tableDataKey"
+        :data="sortedByTotal"
+        :default-sort-direction="defaultSortDirection"
+        :sort-icon="sortIcon"
+        :sort-icon-size="sortIconSize"
+        default-sort="_rank"
+        striped
+      >
+        <b-table-column field="_rank" numeric label="Pos" sortable v-slot="props">
+          <span class="pos-num">{{ props.row._rank }}</span>
         </b-table-column>
-        <b-table-column :default-sort-direction="asc" field="user.first_name" label="Player" sortable v-slot="props">
+        <b-table-column field="user.first_name" label="Player" sortable v-slot="props">
           {{ props.row.user.first_name }} {{ props.row.user.last_name }}
         </b-table-column>
-
-        <b-table-column :default-sort-direction="desc" field="total" label="Total" sortable numeric v-slot="props">
-          <span class="points-badge">{{
-            (props.row.total =
-              props.row.parTeeShack +
-              props.row.scramble +
-              props.row.fantasy)
+        <b-table-column field="total" label="Total" sortable numeric v-slot="props">
+          <span class="score-total">{{
+            props.row.parTeeShack + props.row.scramble + props.row.fantasy
           }}</span>
         </b-table-column>
-
-        <b-table-column :default-sort-direction="desc" field="simulator" label="ParTee Shack" sortable numeric
-          v-slot="props">
+        <b-table-column field="parTeeShack" label="ParTee Shack" sortable numeric v-slot="props">
           {{ props.row.parTeeShack }}
         </b-table-column>
-
         <b-table-column field="scramble" label="Scramble" sortable numeric v-slot="props">
           {{ props.row.scramble }}
         </b-table-column>
-
         <b-table-column field="fantasy" label="Fantasy" sortable numeric v-slot="props">
           {{ props.row.fantasy }}
         </b-table-column>
@@ -40,18 +40,13 @@
 
     <!-- Mobile card view -->
     <div class="leaderboard-cards is-hidden-tablet">
-      <div v-for="(player, idx) in sortedData" :key="`${player.id}-card`" class="player-card">
+      <div v-for="player in sortedByTotal" :key="`${player.id}-card`" class="player-card">
         <div class="card-header">
-          <span class="position-badge">{{ idx + 1 }}</span>
-          <h4 class="player-name">{{ player.user.first_name }} {{ player.user.last_name }}</h4>
+          <span class="position-badge">{{ player._rank }}</span>
+          <span class="player-name">{{ player.user.first_name }} {{ player.user.last_name }}</span>
+          <span class="card-total">{{ player.parTeeShack + player.scramble + player.fantasy }}</span>
         </div>
         <div class="card-body">
-          <div class="score-row">
-            <span class="score-label">Total</span>
-            <span class="score-value total">{{
-              (player.total = player.parTeeShack + player.scramble + player.fantasy)
-            }}</span>
-          </div>
           <div class="score-row">
             <span class="score-label">ParTee Shack</span>
             <span class="score-value">{{ player.parTeeShack }}</span>
@@ -71,26 +66,18 @@
 </template>
 
 <script>
-const data = require("../assets/data.json");
+import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    sortedData() {
-      return [...this.data].sort((a, b) => {
-        const totalA = a.parTeeShack + a.scramble + a.fantasy;
-        const totalB = b.parTeeShack + b.scramble + b.fantasy;
-        return totalB - totalA;
-      });
-    },
+    ...mapGetters(['sortedByTotal']),
   },
   data() {
     return {
       tableDataKey: 0,
-      data,
-      defaultSortDirection: "desc",
-      sortIcon: "arrow-up",
-      sortIconSize: "is-small",
-      hasInput: false,
+      defaultSortDirection: 'asc',
+      sortIcon: 'arrow-up',
+      sortIconSize: 'is-small',
     };
   },
 };
@@ -101,113 +88,107 @@ export default {
 
 .leaderboard-container {
   width: 100%;
+  padding: 2rem 1.5rem;
 }
 
-/* Mobile cards */
+.leaderboard-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #aaa;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 1.25rem;
+  font-family: $body-font-stack;
+}
+
+.pos-num {
+  font-weight: 600;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+// ─── Mobile Cards ─────────────────────────────────────────────────────────────
 .leaderboard-cards {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 0;
+  gap: 0.75rem;
 }
 
 .player-card {
   background: white;
-  border-radius: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  border-left: 4px solid $masters-gold;
-  border-top: 4px solid $masters-accent;
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
-    border-left: 4px solid $masters-accent;
-  }
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 3px solid $masters-accent;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .card-header {
-  background: linear-gradient(135deg, rgba($primary, 0.05) 0%, rgba($masters-accent, 0.04) 100%);
-  padding: 1rem 0.9rem;
+  background: #fafafa;
+  padding: 0.85rem 1rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid rgba($masters-accent, 0.2);
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .position-badge {
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 36px;
-  height: 36px;
-  border-radius: 0;
-  background: linear-gradient(135deg, $primary, $masters-accent);
-  color: $masters-gold;
+  background: $primary;
+  color: white;
   font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  box-shadow: 0 2px 4px rgba($primary, 0.15);
+  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
 .player-name {
-  margin: 0;
-  font-size: 1rem;
+  flex: 1;
+  font-size: 0.95rem;
   font-weight: 600;
   color: $primary;
-  flex: 1;
-  letter-spacing: 0.3px;
+}
+
+.card-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $primary;
 }
 
 .card-body {
-  padding: 1rem 0.9rem;
+  padding: 0.75rem 1rem;
 }
 
 .score-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 0;
-  font-size: 0.95rem;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
 
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   }
 }
 
 .score-label {
+  color: #777;
   font-weight: 500;
-  color: #666;
-  font-size: 0.9rem;
 }
 
 .score-value {
-  font-weight: 700;
-  color: $primary;
-  letter-spacing: 0.5px;
-
-  &.total {
-    font-size: 1.25rem;
-    background: linear-gradient(135deg, rgba($masters-accent, 0.1), rgba($masters-gold, 0.08));
-    padding: 0.35rem 0.75rem;
-    border-radius: 0;
-    border-left: 3px solid $masters-accent;
-    border-right: 3px solid $masters-accent;
-    color: $primary;
-  }
+  font-weight: 600;
+  color: #333;
 }
 
-/* Desktop table stays as is, but with minor tweaks */
+// ─── Show/Hide ────────────────────────────────────────────────────────────────
 @media (min-width: 641px) {
-  .leaderboard-cards {
-    display: none;
-  }
+  .leaderboard-cards { display: none; }
 }
 
 @media (max-width: 640px) {
-  .table-responsive {
-    display: none;
-  }
+  .leaderboard-container { padding: 1.5rem 1rem; }
+  ::v-deep .table-responsive { display: none; }
 }
 </style>

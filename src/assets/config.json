@@ -1,0 +1,34 @@
+{
+  "_comment": "Update this file each year to refresh all event details across the app.",
+
+  "year": 2026,
+  "edition": "3rd Annual",
+  "title": "Masters Weekend Competition",
+
+  "events": {
+    "minigolf": {
+      "name": "ParTee Shack Mini Golf",
+      "venue": "ParTee Shack North Raleigh",
+      "address": "6231 Triangle Plantation Drive, Raleigh, NC 27616",
+      "maps_url": "https://maps.google.com/?q=6231+Triangle+Plantation+Drive+Raleigh+NC+27616",
+      "date": "Friday, April 10",
+      "time": "6–8 PM"
+    },
+    "scramble": {
+      "name": "Scramble Tournament",
+      "venue": "Reedy Creek Golf Course",
+      "address": "585 Reedy Creek Rd, Four Oaks, NC 27524",
+      "maps_url": "https://maps.google.com/?q=585+Reedy+Creek+Rd+Four+Oaks+NC+27524",
+      "date": "Saturday, April 11",
+      "time": "12 PM"
+    },
+    "fantasy": {
+      "name": "Masters Fantasy League",
+      "venue": "Bryson's House",
+      "date": "Sunday, April 12",
+      "time": "2 PM",
+      "lineup_deadline": "April 9th",
+      "league_join_url": "https://www.masters.com/en_US/fantasy?leagueJoinToken=09a845f0e8&leagueId=13604"
+    }
+  }
+}

@@ -1,89 +1,48 @@
-// Import Bulma's core
+// Import Bulma's core utilities (must precede color function usage)
 @import "~bulma/sass/utilities/_all";
 
-// Set your colors - Masters inspired
-$primary: #0a3a2f; // Deep forest green
-$primary-light: findLightColor($primary);
-$primary-dark: findDarkColor($primary);
-$primary-invert: findColorInvert($primary);
-$masters-gold: #d4af37; // Elegant gold
+// ─── Brand Colors ─────────────────────────────────────────────────────────────
+$primary:        #0a3a2f; // Augusta deep green
 $masters-accent: #1a5f4a; // Medium green
-$twitter: #0a3a2f;
-$twitter-invert: findColorInvert($twitter);
+$masters-gold:   #d4af37; // Championship gold
 
-// Typography
-$font-size-base: 16px;
+$primary-light:  findLightColor($primary);
+$primary-dark:   findDarkColor($primary);
+$primary-invert: findColorInvert($primary);
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font-size-base:     16px;
 $heading-font-stack: 'Georgia', 'Times New Roman', serif;
-$body-font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$body-font-stack:    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 
-// Lists and maps
+// ─── Breakpoints ──────────────────────────────────────────────────────────────
+$bp-mobile:  640px;
+$bp-tablet:  768px;
+
+// ─── Bulma Color Integration ──────────────────────────────────────────────────
 $custom-colors: null !default;
 $custom-shades: null !default;
 
-// Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: mergeColorMaps(
-    (
-        "white": (
-            $white,
-            $black,
-        ),
-        "black": (
-            $black,
-            $white,
-        ),
-        "light": (
-            $light,
-            $light-invert,
-        ),
-        "dark": (
-            $dark,
-            $dark-invert,
-        ),
-        "primary": (
-            $primary,
-            $primary-invert,
-            $primary-light,
-            $primary-dark,
-        ),
-        "link": (
-            $link,
-            $link-invert,
-            $link-light,
-            $link-dark,
-        ),
-        "info": (
-            $info,
-            $info-invert,
-            $info-light,
-            $info-dark,
-        ),
-        "success": (
-            $success,
-            $success-invert,
-            $success-light,
-            $success-dark,
-        ),
-        "warning": (
-            $warning,
-            $warning-invert,
-            $warning-light,
-            $warning-dark,
-        ),
-        "danger": (
-            $danger,
-            $danger-invert,
-            $danger-light,
-            $danger-dark,
-        ),
-    ),
-    $custom-colors
+  (
+    "white":   ($white,   $black),
+    "black":   ($black,   $white),
+    "light":   ($light,   $light-invert),
+    "dark":    ($dark,    $dark-invert),
+    "primary": ($primary, $primary-invert, $primary-light, $primary-dark),
+    "link":    ($link,    $link-invert, $link-light, $link-dark),
+    "info":    ($info,    $info-invert, $info-light, $info-dark),
+    "success": ($success, $success-invert, $success-light, $success-dark),
+    "warning": ($warning, $warning-invert, $warning-light, $warning-dark),
+    "danger":  ($danger,  $danger-invert, $danger-light, $danger-dark),
+  ),
+  $custom-colors
 );
 
-// Links
-$link: $primary;
-$link-invert: $primary-invert;
+$link:              $primary;
+$link-invert:       $primary-invert;
 $link-focus-border: $primary;
 
-// Import Bulma and Buefy styles
+// ─── Framework Imports ────────────────────────────────────────────────────────
 @import "~bulma";
 @import "~buefy/src/scss/buefy";

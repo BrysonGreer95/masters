@@ -1,17 +1,17 @@
 <template>
   <div id="app" class="app-wrapper">
-    <!-- Navigation Header -->
+    <!-- Navigation -->
     <nav class="app-nav">
       <div class="nav-brand">
-        <h2 class="nav-title">Masters 2026</h2>
+        <span class="nav-title">Masters 2026</span>
       </div>
       <div class="nav-links">
         <router-link to="/" class="nav-link">Home</router-link>
+        <router-link to="/about" class="nav-link">About</router-link>
         <router-link to="/scramble" class="nav-link">Scramble</router-link>
         <router-link to="/masters" class="nav-link">Masters Fantasy</router-link>
         <router-link to="/masters-score" class="nav-link">Live Score</router-link>
         <router-link to="/final-prize" class="nav-link">Prize</router-link>
-        <router-link to="/about" class="nav-link">About</router-link>
       </div>
     </nav>
 
@@ -22,26 +22,14 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; 2026 Masters Competition. Home of Championship Excellence.</p>
+      <p>&copy; 2026 Masters Competition &mdash; Home of Championship Excellence</p>
+      <router-link to="/admin" class="admin-link">Score Entry</router-link>
     </footer>
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-
-// eslint-disable-next-line no-unused-vars
-const counter = ref(0);
-</script>
-
 <script>
-export default {
-  data() {
-    return {
-      isImageModalActive: false,
-    };
-  },
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
@@ -53,144 +41,170 @@ export default {
   min-height: 100vh;
 }
 
+// ─── Navigation ───────────────────────────────────────────────────────────────
 .app-nav {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-bottom: 3px solid $masters-accent;
-  padding: 1rem 1.5rem;
+  background: $primary;
+  padding: 0 2rem;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
-.nav-brand .nav-title {
-  margin: 0;
-  font-size: 1.75rem;
+.nav-title {
+  color: white;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: $primary;
-  white-space: nowrap;
-  letter-spacing: 0.5px;
   font-family: $heading-font-stack;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
-  gap: 0;
-  flex-wrap: wrap;
   align-items: center;
+  height: 60px;
 }
 
 .nav-link {
-  color: $primary;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  font-size: 0.95rem;
-  letter-spacing: 0.3px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0 1rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
   position: relative;
+  transition: color 0.2s ease;
+  white-space: nowrap;
 
   &:hover {
-    background: transparent;
-    color: $masters-accent;
+    color: white;
   }
 
   &.router-link-active {
-    background: transparent;
-    color: $masters-accent;
-    font-weight: 700;
+    color: $masters-gold;
 
     &::after {
       content: '';
       position: absolute;
       bottom: 0;
-      left: 1.2rem;
-      right: 1.2rem;
-      height: 2px;
-      background: $masters-accent;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: $masters-gold;
     }
   }
 }
 
+// ─── Main Content ─────────────────────────────────────────────────────────────
 .app-container {
   flex: 1;
-  max-width: 1100px;
-  margin: 0 auto;
   width: 100%;
-  padding: 2rem 1rem;
+  padding: 0;
 }
 
+// ─── Footer ───────────────────────────────────────────────────────────────────
 .app-footer {
-  background: linear-gradient(180deg, rgba($primary, 0.08) 0%, rgba($masters-accent, 0.05) 100%);
-  border-top: 3px solid $masters-accent;
-  padding: 2rem 1.5rem;
+  background: $primary;
+  padding: 1.25rem 2rem;
   text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-  margin-top: 2rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  letter-spacing: 0.3px;
 
   p {
-    margin: 0;
-    letter-spacing: 0.3px;
+    margin: 0 0 0.4rem;
   }
 }
 
-@media (max-width: 768px) {
+.admin-link {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.25);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: $bp-tablet) {
   .app-nav {
+    height: auto;
     flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 0.75rem 1rem;
-  }
-
-  .nav-brand .nav-title {
-    font-size: 1.4rem;
-  }
-
-  .nav-links {
-    justify-content: center;
-    width: 100%;
-    gap: 0.25rem;
-  }
-
-  .nav-link {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.9rem;
-  }
-
-  .app-container {
-    padding: 1.5rem 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-nav {
-    padding: 0.5rem 0.75rem;
-    gap: 0.75rem;
-  }
-
-  .nav-brand .nav-title {
-    font-size: 1.2rem;
-  }
-
-  .nav-links {
+    align-items: stretch;
+    padding: 0.75rem 0 0;
     gap: 0;
   }
 
-  .nav-link {
-    padding: 0.4rem 0.65rem;
-    font-size: 0.8rem;
+  .nav-brand {
+    padding: 0 1.25rem 0.6rem;
   }
 
-  .app-container {
+  // Single scrollable row — no wrapping, no cluttered grid
+  .nav-links {
+    height: 40px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 0.5rem;
+    gap: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    // Hide scrollbar visually — still scrollable
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .nav-link {
+    height: 40px;
+    flex-shrink: 0;
+    padding: 0 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.3px;
+    border-bottom: none;
+    position: relative;
+
+    &.router-link-active {
+      color: $masters-gold;
+
+      // Gold underline on active, matching desktop language
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 1rem;
+        right: 1rem;
+        height: 2px;
+        background: $masters-gold;
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .nav-title {
+    font-size: 1.05rem;
+  }
+
+  .nav-link {
+    padding: 0 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  .app-footer {
     padding: 1rem;
+    font-size: 0.8rem;
   }
 }
 </style>
