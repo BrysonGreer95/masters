@@ -4,47 +4,17 @@
   <section class="leaderboard-container">
     <!-- Desktop table view -->
     <div class="table-responsive is-hidden-mobile">
-      <b-table
-        id="table"
-        :key="tableDataKey"
-        :data="sortedData"
-        :default-sort-direction="defaultSortDirection"
-        :sort-icon="sortIcon"
-        :sort-icon-size="sortIconSize"
-        default-sort="total"
-        striped
-        :page-input="hasInput"
-        :page-input-position="inputPosition"
-        :debounce-page-input="inputDebounce"
-      >
-        <b-table-column
-          :default-sort-direction="asc"
-          field="id"
-          numeric
-          label="Pos"
-          sortable
-          v-slot="props"
-        >
+      <b-table bordered id="table" :key="tableDataKey" :data="sortedData" :default-sort-direction="defaultSortDirection"
+        :sort-icon="sortIcon" :sort-icon-size="sortIconSize" default-sort="total" striped :page-input="hasInput"
+        :page-input-position="inputPosition" :debounce-page-input="inputDebounce">
+        <b-table-column :default-sort-direction="asc" field="id" numeric label="Pos" sortable v-slot="props">
           {{ data.indexOf(props.row) + 1 }}
         </b-table-column>
-        <b-table-column
-          :default-sort-direction="asc"
-          field="user.first_name"
-          label="Player"
-          sortable
-          v-slot="props"
-        >
+        <b-table-column :default-sort-direction="asc" field="user.first_name" label="Player" sortable v-slot="props">
           {{ props.row.user.first_name }} {{ props.row.user.last_name }}
         </b-table-column>
 
-        <b-table-column
-          :default-sort-direction="desc"
-          field="total"
-          label="Total"
-          sortable
-          numeric
-          v-slot="props"
-        >
+        <b-table-column :default-sort-direction="desc" field="total" label="Total" sortable numeric v-slot="props">
           <span class="points-badge">{{
             (props.row.total =
               props.row.parTeeShack +
@@ -53,34 +23,16 @@
           }}</span>
         </b-table-column>
 
-        <b-table-column
-          :default-sort-direction="desc"
-          field="simulator"
-          label="ParTee Shack"
-          sortable
-          numeric
-          v-slot="props"
-        >
+        <b-table-column :default-sort-direction="desc" field="simulator" label="ParTee Shack" sortable numeric
+          v-slot="props">
           {{ props.row.parTeeShack }}
         </b-table-column>
 
-        <b-table-column
-          field="scramble"
-          label="Scramble"
-          sortable
-          numeric
-          v-slot="props"
-        >
+        <b-table-column field="scramble" label="Scramble" sortable numeric v-slot="props">
           {{ props.row.scramble }}
         </b-table-column>
 
-        <b-table-column
-          field="fantasy"
-          label="Fantasy"
-          sortable
-          numeric
-          v-slot="props"
-        >
+        <b-table-column field="fantasy" label="Fantasy" sortable numeric v-slot="props">
           {{ props.row.fantasy }}
         </b-table-column>
       </b-table>
@@ -88,11 +40,7 @@
 
     <!-- Mobile card view -->
     <div class="leaderboard-cards is-hidden-tablet">
-      <div
-        v-for="(player, idx) in sortedData"
-        :key="`${player.id}-card`"
-        class="player-card"
-      >
+      <div v-for="(player, idx) in sortedData" :key="`${player.id}-card`" class="player-card">
         <div class="card-header">
           <span class="position-badge">{{ idx + 1 }}</span>
           <h4 class="player-name">{{ player.user.first_name }} {{ player.user.last_name }}</h4>
@@ -238,7 +186,7 @@ export default {
   font-weight: 700;
   color: $primary;
   letter-spacing: 0.5px;
-  
+
   &.total {
     font-size: 1.25rem;
     background: linear-gradient(135deg, rgba($masters-accent, 0.1), rgba($masters-gold, 0.08));

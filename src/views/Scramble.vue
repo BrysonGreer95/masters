@@ -10,7 +10,6 @@
       <ul>
         <li>- 1 Mulligan per 9 (can't save your front mulligan for two on the back 9)</li>
         <li>- Breakfast ball is allowed</li>
-
       </ul>
     </div>
 
@@ -47,7 +46,7 @@
 <script>
 const playerData = require("../assets/data.json");
 
-const TEE_TIMES = ['12:12 PM', '12:12 PM', '12:20 PM', '12:20 PM', '12:28 PM', '12:28 PM', '12:36 PM', '12:36 PM'];
+const TEE_TIMES = ['12:12 PM', '12:12 PM', '12:20 PM', '12:20 PM', '12:28 PM', '12:28 PM', '11:00 AM'];
 
 export default {
   data() {
@@ -133,12 +132,24 @@ export default {
   color: $primary;
   font-family: $heading-font-stack;
   text-decoration: underline;
-
 }
 
 .rules-block {
-  text-align: center;
-  font-size: 1.5rem;
+  padding: 1.5rem;
+  margin: 2rem 1rem;
+  background: linear-gradient(135deg, rgba($masters-accent, 0.03) 0%, rgba($primary, 0.02) 100%);
+  border-left: 4px solid $masters-accent;
+  border-top: 2px solid $masters-gold;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.rules-block ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
 }
 
 .scramble-title {

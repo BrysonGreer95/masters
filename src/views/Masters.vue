@@ -6,8 +6,8 @@
       <p class="masters-subtitle">2026 Masters Champion: <span class="highlight">TBD</span></p>
     </div>
 
-    <div class="table-responsive">
-      <b-table striped :data="tableData" :columns="columns"></b-table>
+    <div class="table-responsive masters-table-vertical-lines">
+      <b-table striped bordered :data="tableData" :columns="columns"></b-table>
     </div>
   </div>
 </template>
@@ -19,14 +19,13 @@ export default {
   data() {
     return {
       columns: [
-        {
-          field: "player",
-          label: "Player",
-        },
-        {
-          field: "masters_winner",
-          label: "Golfer",
-        },
+        { field: "player", label: "Player" },
+        { field: "past_champ", label: "Past Champ" },
+        { field: "us", label: "United States" },
+        { field: "international", label: "International" },
+        { field: "first_timer", label: "First Timer" },
+        { field: "wild_card", label: "Wild Card" },
+        { field: "total_putts", label: "Total Putts", numeric: true },
       ],
     };
   },
@@ -34,18 +33,45 @@ export default {
     tableData() {
       return playerData.map((player) => ({
         player: `${player.user.first_name} ${player.user.last_name}`,
-        masters_winner: player.choice_to_win_masters,
+        past_champ: player.fantasy_picks?.[0] || "",
+        us: player.fantasy_picks?.[1] || "",
+        international: player.fantasy_picks?.[2] || "",
+        first_timer: player.fantasy_picks?.[3] || "",
+        wild_card: player.fantasy_picks?.[4] || "",
+        total_putts: player.total_putts ?? "",
       }));
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../styles/_variables.scss';
 
-#masters_table {
+/* Add vertical lines between table columns */
+.masters-table-vertical-lines {
   width: 100%;
+  overflow-x: auto;
+}
+
+.masters-table-vertical-lines ::v-deep table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.masters-table-vertical-lines ::v-deep th,
+.masters-table-vertical-lines ::v-deep td {
+  border-right: 1px solid #dbdbdb;
+  padding: 0.75em 0.5em !important;
+}
+
+.masters-table-vertical-lines ::v-deep th:last-child,
+.masters-table-vertical-lines ::v-deep td:last-child {
+  border-right: none;
+}
+
+.masters-table-vertical-lines ::v-deep thead th {
+  border-bottom: 2px solid #dbdbdb;
 }
 
 .masters-header {
@@ -92,4 +118,3 @@ export default {
   }
 }
 </style>
-

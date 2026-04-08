@@ -6,11 +6,18 @@
       "last_name": "Greer"
     },
     "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "choice_to_win_masters": "",
-    "team": 7
+    "parTeeShack": 10,
+    "scramble": 50,
+    "fantasy": 30,
+    "fantasy_picks": [
+      "Tiger Woods",
+      "Tiger Woods",
+      "Tiger Woods",
+      "Tiger Woods",
+      "Tiger Woods"
+    ],
+    "total_putts": 52,
+    "team": 4
   },
   {
     "id": 2,
@@ -22,8 +29,15 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
-    "team": 4
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
+    "team": 7
   },
   {
     "id": 3,
@@ -35,7 +49,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 2
   },
   {
@@ -48,7 +69,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 3
   },
   {
@@ -61,7 +89,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 3
   },
   {
@@ -74,7 +109,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 1
   },
   {
@@ -87,7 +129,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 1
   },
   {
@@ -100,7 +149,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 6
   },
   {
@@ -113,8 +169,15 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
-    "team": 7
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
+    "team": 4
   },
   {
     "id": 10,
@@ -126,8 +189,15 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
-    "team": 4
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
+    "team": 7
   },
   {
     "id": 11,
@@ -139,7 +209,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 5
   },
   {
@@ -152,7 +229,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 2
   },
   {
@@ -165,7 +249,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 5
   },
   {
@@ -178,7 +269,14 @@
     "parTeeShack": 0,
     "scramble": 0,
     "fantasy": 0,
-    "choice_to_win_masters": "",
+    "fantasy_picks": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "total_putts": 0,
     "team": 6
   }
 ]

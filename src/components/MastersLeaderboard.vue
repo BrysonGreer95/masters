@@ -10,7 +10,7 @@
     </div>
 
     <h4 class="score-section-title">Live Score</h4>
-    
+
     <div class="loading-container" v-if="isLoading">
       <div class="spinner" aria-hidden="true"></div>
     </div>
@@ -19,45 +19,45 @@
     <div v-else>
       <!-- Desktop table -->
       <div class="table-responsive is-hidden-mobile">
-      <b-table striped :data="sortedScores">
-        <b-table-column field="playerName" label="Player" v-slot="props">
-          {{ props.row.firstName }} {{ props.row.lastName }}
-        </b-table-column>
-        <b-table-column field="position" label="Pos" numeric v-slot="props">
-          {{ props.row.position }}
-        </b-table-column>
-        <b-table-column field="total_score" label="Score" numeric v-slot="props">
-          <span class="points-badge">{{ props.row.total }}</span>
-        </b-table-column>
-        <b-table-column field="currentRoundScore" label="Today" numeric v-slot="props">
-          {{ props.row.currentRoundScore }}
-        </b-table-column>
-        <b-table-column field="thru" label="Thru" v-slot="props">
-          {{ props.row.thru }}
-        </b-table-column>
-      </b-table>
-    </div>
+        <b-table bordered striped :data="sortedScores">
+          <b-table-column field="playerName" label="Player" v-slot="props">
+            {{ props.row.firstName }} {{ props.row.lastName }}
+          </b-table-column>
+          <b-table-column field="position" label="Pos" numeric v-slot="props">
+            {{ props.row.position }}
+          </b-table-column>
+          <b-table-column field="total_score" label="Score" numeric v-slot="props">
+            <span class="points-badge">{{ props.row.total }}</span>
+          </b-table-column>
+          <b-table-column field="currentRoundScore" label="Today" numeric v-slot="props">
+            {{ props.row.currentRoundScore }}
+          </b-table-column>
+          <b-table-column field="thru" label="Through" v-slot="props">
+            {{ props.row.thru }}
+          </b-table-column>
+        </b-table>
+      </div>
       <!-- Mobile cards -->
       <div class="score-cards is-hidden-tablet">
-      <div v-for="player in sortedScores" :key="`${player.id}-score`" class="score-card">
-        <div class="score-card-header">
-          <div class="player-info">
-            <h5 class="score-player-name">{{ player.firstName }} {{ player.lastName }}</h5>
-            <span class="score-position">{{ player.position }}</span>
+        <div v-for="player in sortedScores" :key="`${player.id}-score`" class="score-card">
+          <div class="score-card-header">
+            <div class="player-info">
+              <h5 class="score-player-name">{{ player.firstName }} {{ player.lastName }}</h5>
+              <span class="score-position">{{ player.position }}</span>
+            </div>
+            <span class="score-badge">{{ player.total }}</span>
           </div>
-          <span class="score-badge">{{ player.total }}</span>
+          <div class="score-card-body">
+            <div class="score-detail">
+              <span class="detail-label">Today</span>
+              <span class="detail-value">{{ player.currentRoundScore }}</span>
+            </div>
+            <div class="score-detail">
+              <span class="detail-label">Through</span>
+              <span class="detail-value">{{ player.thru }}</span>
+            </div>
+          </div>
         </div>
-        <div class="score-card-body">
-          <div class="score-detail">
-            <span class="detail-label">Today</span>
-            <span class="detail-value">{{ player.currentRoundScore }}</span>
-          </div>
-          <div class="score-detail">
-            <span class="detail-label">Through</span>
-            <span class="detail-value">{{ player.thru }}</span>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
   </div>
@@ -405,16 +405,20 @@ export default {
   align-items: center;
   padding: 2rem 0;
 }
+
 .spinner {
   width: 48px;
   height: 48px;
-  border: 4px solid rgba(0,0,0,0.08);
+  border: 4px solid rgba(0, 0, 0, 0.08);
   border-top-color: $primary;
   border-left-color: rgba($primary, 0.25);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

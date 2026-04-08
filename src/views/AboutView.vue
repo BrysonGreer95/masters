@@ -34,7 +34,7 @@
 
     <section>
       <h3 class="title is-3">Event 1: ParTee Shack North Raleigh - Mini Golf</h3>
-      <h4 class="subtitle is-4">6231 Triangle Plantation Drive, Raleigh, NC 27616</h4>
+      <div class="address-block"> <strong>6231 Triangle Plantation Drive, Raleigh, NC 27616</strong></div>
       <h4 class="subtitle is-4">Friday, April 10th. 6-8pm</h4>
       Compete in a friendly mini-golf competition. Each player will complete two courses of 18 holes (for 36 holes
       total), and scores will be
@@ -75,7 +75,7 @@
 
     <section>
       <h3 class="title is-3">Event 2: Scramble Tournament - Reedy Creek Golf Course</h3>
-      <h4 class="subtitle is-4">585 Reedy Creek Rd, Four Oaks, NC 27524</h4>
+      <div class="address-block"> <strong>585 Reedy Creek Rd, Four Oaks, NC 27524</strong></div>
       <h4 class="subtitle is-4">Saturday, April 11th. 12pm</h4>
       <p>
         Teams of 2 will compete in a best-ball scramble format at a local golf course. Both players score points based
@@ -85,11 +85,13 @@
       </p>
       <br />
 
-      <h4 class="rules">Rules</h4>
-      <ul>
-        <li>- 1 Mulligan per 9 (can't save your front mulligan for two on the back 9)</li>
-        <li>- Breakfast ball is allowed</li>
-      </ul>
+      <div class="rules-block">
+        <h4 class="rules">Rules</h4>
+        <ul>
+          <li>- 1 Mulligan per 9 (can't save your front mulligan for two on the back 9)</li>
+          <li>- Breakfast ball is allowed</li>
+        </ul>
+      </div>
 
 
       <br />
@@ -209,6 +211,35 @@
   color: $primary;
   font-family: $heading-font-stack;
   text-decoration: underline;
+}
+
+.rules-block {
+  padding: 1.5rem;
+  margin: 1rem 0 2rem 0;
+  background: linear-gradient(135deg, rgba($masters-accent, 0.03) 0%, rgba($primary, 0.02) 100%);
+  border-left: 4px solid $masters-accent;
+  border-top: 2px solid $masters-gold;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.rules-block ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.address-block {
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0 1rem 0;
+  background-color: rgba($masters-accent, 0.1);
+  border-left: 4px solid $masters-accent;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
 }
 
 .about-title {
