@@ -28,11 +28,6 @@ const routes = [
     component: Scramble,
   },
   {
-    path: "/masters",
-    name: "masters",
-    component: Masters,
-  },
-  {
     path: "/masters-score",
     name: "masters_score",
     component: MastersScore,

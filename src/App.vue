@@ -7,7 +7,6 @@
       </div>
       <div class="nav-links">
         <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/masters" class="nav-link">Masters Pick</router-link>
         <router-link to="/scramble" class="nav-link">Scramble</router-link>
         <router-link to="/masters-score" class="nav-link">Live Score</router-link>
         <router-link to="/final-prize" class="nav-link">Prize</router-link>
