@@ -104,7 +104,7 @@
             <h3 class="event-title">Masters Fantasy League</h3>
             <div class="event-meta">
               <span class="event-date">Sunday, April 12 &bull; 2 PM</span>
-              <span class="event-location-static">Watch Party @ Bryson's House</span>
+              <span class="event-location-static">Watch Party @ Greer House</span>
             </div>
             <p class="event-desc">
               Pick your roster before the Masters begins. Your fantasy score follows your golfers through
@@ -142,7 +142,7 @@
         <h2 class="watch-title">Fantasy Watch Party</h2>
         <p class="watch-desc">
           Sunday, April 12 from 2 PM until the Masters concludes. The overall champion will be crowned
-          and the prize awarded at Bryson's house.
+          and the prize awarded at the Greer's house.
         </p>
       </div>
     </section>
