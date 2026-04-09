@@ -85,23 +85,23 @@ export default {
   padding: 0 1.5rem 2rem;
 }
 
-.masters-table-vertical-lines ::v-deep th,
-.masters-table-vertical-lines ::v-deep td {
+.masters-table-vertical-lines th,
+.masters-table-vertical-lines td {
   border-right: 1px solid rgba($masters-accent, 0.15);
   padding: 0.75em 0.75em !important;
 }
 
-.masters-table-vertical-lines ::v-deep th:last-child,
-.masters-table-vertical-lines ::v-deep td:last-child {
+.masters-table-vertical-lines th:last-child,
+.masters-table-vertical-lines td:last-child {
   border-right: none;
 }
 
-.masters-table-vertical-lines ::v-deep thead th {
+.masters-table-vertical-lines thead th {
   border-bottom: 2px solid $masters-accent;
 }
 
 // Bold the Player column (first td in each row)
-.masters-table-vertical-lines ::v-deep tbody td:first-child {
+.masters-table-vertical-lines tbody td:first-child {
   font-weight: 700;
   color: $primary;
 }

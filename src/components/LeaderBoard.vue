@@ -26,14 +26,17 @@
             props.row.parTeeShack + props.row.scramble + props.row.fantasy
           }}</span>
         </b-table-column>
-        <b-table-column field="parTeeShack" label="ParTee Shack" sortable numeric v-slot="props">
-          {{ props.row.parTeeShack }}
+        <b-table-column field="parTeeShack" sortable numeric>
+          <template #header><span :class="{ 'col--completed': completedEvents.parTeeShack }">ParTee Shack</span></template>
+          <template #default="props"><span :class="{ 'score--completed': completedEvents.parTeeShack }">{{ props.row.parTeeShack }}</span></template>
         </b-table-column>
-        <b-table-column field="scramble" label="Scramble" sortable numeric v-slot="props">
-          {{ props.row.scramble }}
+        <b-table-column field="scramble" sortable numeric>
+          <template #header><span :class="{ 'col--completed': completedEvents.scramble }">Scramble</span></template>
+          <template #default="props"><span :class="{ 'score--completed': completedEvents.scramble }">{{ props.row.scramble }}</span></template>
         </b-table-column>
-        <b-table-column field="fantasy" label="Fantasy" sortable numeric v-slot="props">
-          {{ props.row.fantasy }}
+        <b-table-column field="fantasy" sortable numeric>
+          <template #header><span :class="{ 'col--completed': completedEvents.fantasy }">Fantasy</span></template>
+          <template #default="props"><span :class="{ 'score--completed': completedEvents.fantasy, 'score--no-picks': !hasFantasyPicks(props.row) }">{{ props.row.fantasy }}</span></template>
         </b-table-column>
       </b-table>
     </div>
@@ -47,17 +50,17 @@
           <span class="card-total">{{ player.parTeeShack + player.scramble + player.fantasy }}</span>
         </div>
         <div class="card-body">
-          <div class="score-row">
+          <div class="score-row" :class="{ 'row--completed': completedEvents.parTeeShack }">
             <span class="score-label">ParTee Shack</span>
             <span class="score-value">{{ player.parTeeShack }}</span>
           </div>
-          <div class="score-row">
+          <div class="score-row" :class="{ 'row--completed': completedEvents.scramble }">
             <span class="score-label">Scramble</span>
             <span class="score-value">{{ player.scramble }}</span>
           </div>
-          <div class="score-row">
+          <div class="score-row" :class="{ 'row--completed': completedEvents.fantasy }">
             <span class="score-label">Fantasy</span>
-            <span class="score-value">{{ player.fantasy }}</span>
+            <span class="score-value" :class="{ 'score--no-picks': !hasFantasyPicks(player) }">{{ player.fantasy }}</span>
           </div>
         </div>
       </div>
@@ -70,7 +73,12 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['sortedByTotal']),
+    ...mapGetters(['sortedByTotal', 'completedEvents']),
+  },
+  methods: {
+    hasFantasyPicks(player) {
+      return player.fantasy_picks && player.fantasy_picks.some((p) => p.trim() !== '');
+    },
   },
   data() {
     return {
@@ -182,6 +190,25 @@ export default {
   color: #333;
 }
 
+.score--no-picks {
+  color: #bbb;
+}
+
+.col--completed {
+  color: #bbb;
+}
+
+:deep(.score--completed) {
+  color: #bbb;
+}
+
+.row--completed {
+  .score-label,
+  .score-value {
+    color: #bbb;
+  }
+}
+
 // ─── Show/Hide ────────────────────────────────────────────────────────────────
 @media (min-width: 641px) {
   .leaderboard-cards { display: none; }
@@ -189,6 +216,6 @@ export default {
 
 @media (max-width: 640px) {
   .leaderboard-container { padding: 1.5rem 1rem; }
-  ::v-deep .table-responsive { display: none; }
+  :deep(.table-responsive) { display: none; }
 }
 </style>

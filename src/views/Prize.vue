@@ -4,7 +4,7 @@
         <h2 class="prize-subtitle">Scotty Cameron Select Newport 2</h2>
         <div class="prize-image-container">
             <!-- Replace 'prize.jpg' with your image filename -->
-            <img :src="require('@/assets/scotty.jpg')" alt="Scotty Cameron Select Newport 2" class="prize-image" />
+            <img src="@/assets/scotty.jpg" alt="Scotty Cameron Select Newport 2" class="prize-image" />
         </div>
     </div>
 </template>

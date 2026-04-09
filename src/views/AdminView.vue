@@ -17,6 +17,20 @@
         </div>
       </div>
 
+      <!-- Event completion toggles -->
+      <div class="event-toggles">
+        <span class="event-toggles-label">Mark event complete:</span>
+        <button
+          v-for="event in events"
+          :key="event.field"
+          class="event-toggle-btn"
+          :class="{ completed: completedEvents[event.field] }"
+          @click="toggleEventCompleted(event.field)"
+        >
+          {{ event.label }}
+        </button>
+      </div>
+
       <!-- Score table -->
       <div class="score-table-wrap">
         <table class="score-table">
@@ -57,8 +71,10 @@
                 <input
                   type="number"
                   class="score-input"
+                  :class="{ 'score-input--locked': !hasFantasyPicks(player) }"
                   min="0"
                   :value="player.fantasy"
+                  :disabled="!hasFantasyPicks(player)"
                   @change="update(player.id, 'fantasy', $event.target.value)"
                 />
               </td>
@@ -90,10 +106,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['sortedByTotal', 'players', 'hasLocalOverrides']),
+    ...mapGetters(['sortedByTotal', 'players', 'hasLocalOverrides', 'completedEvents']),
+    events: () => [
+      { field: 'parTeeShack', label: 'ParTee Shack' },
+      { field: 'scramble', label: 'Scramble' },
+      { field: 'fantasy', label: 'Fantasy' },
+    ],
   },
   methods: {
-    ...mapMutations(['updateScore', 'resetScores']),
+    ...mapMutations(['updateScore', 'resetScores', 'toggleEventCompleted']),
+
+    hasFantasyPicks(player) {
+      return player.fantasy_picks && player.fantasy_picks.some((p) => p.trim() !== '');
+    },
 
     update(id, field, value) {
       this.updateScore({ id, field, value });
@@ -202,6 +227,49 @@ export default {
   &:hover { background: darken($primary, 6%); }
 }
 
+// ─── Event Toggles ────────────────────────────────────────────────────────────
+.event-toggles {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.event-toggles-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-right: 0.25rem;
+}
+
+.event-toggle-btn {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: white;
+  color: #777;
+  cursor: pointer;
+  font-family: $body-font-stack;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: $masters-accent;
+    color: $masters-accent;
+  }
+
+  &.completed {
+    background: $masters-accent;
+    border-color: $masters-accent;
+    color: white;
+  }
+}
+
 // ─── Score Table ──────────────────────────────────────────────────────────────
 .score-table-wrap {
   overflow-x: auto;
@@ -290,6 +358,13 @@ export default {
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     opacity: 1;
+  }
+
+  &--locked {
+    background: #f0f0f0;
+    color: #aaa;
+    border-color: rgba(0, 0, 0, 0.08);
+    cursor: not-allowed;
   }
 }
 

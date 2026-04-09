@@ -56,7 +56,7 @@
 </template>
 
 <script>
-const playerData = require("../assets/data.json");
+import playerData from "../assets/data.json";
 
 const TEE_TIMES = ['12:12 PM', '12:12 PM', '12:20 PM', '12:20 PM', '12:28 PM', '12:28 PM', '11:00 AM'];
 

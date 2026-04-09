@@ -406,6 +406,6 @@ export default {
 
 @media (max-width: 640px) {
   .leaderboard-body { padding: 1.25rem 1rem; }
-  ::v-deep .table-responsive { display: none; }
+  :deep(.table-responsive) { display: none; }
 }
 </style>

@@ -7,7 +7,7 @@
     <div class="prize-body">
       <h2 class="prize-name">Scotty Cameron Select Newport 2</h2>
       <div class="prize-image-wrap">
-        <img :src="require('@/assets/scotty.jpg')" alt="Scotty Cameron Select Newport 2" class="prize-image" />
+        <img src="@/assets/scotty.jpg" alt="Scotty Cameron Select Newport 2" class="prize-image" />
       </div>
     </div>
   </div>

@@ -2,6 +2,17 @@ import { createStore } from 'vuex';
 import defaultData from '../assets/data.json';
 
 const STORAGE_KEY = 'masters-scores';
+const EVENTS_KEY = 'masters-completed-events';
+
+function loadCompletedEvents() {
+  try {
+    const saved = localStorage.getItem(EVENTS_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch {
+    // ignore
+  }
+  return { parTeeShack: false, scramble: false, fantasy: false };
+}
 
 function loadPlayers() {
   try {
@@ -26,6 +37,7 @@ export default createStore({
   state() {
     return {
       players: loadPlayers(),
+      completedEvents: loadCompletedEvents(),
     };
   },
 
@@ -42,6 +54,7 @@ export default createStore({
         .map((p, idx) => ({ ...p, _rank: idx + 1 })),
 
     hasLocalOverrides: () => !!localStorage.getItem(STORAGE_KEY),
+    completedEvents: (state) => state.completedEvents,
   },
 
   mutations: {
@@ -53,10 +66,21 @@ export default createStore({
       }
     },
 
+    toggleEventCompleted(state, event) {
+      state.completedEvents[event] = !state.completedEvents[event];
+      try {
+        localStorage.setItem(EVENTS_KEY, JSON.stringify(state.completedEvents));
+      } catch {
+        // ignore
+      }
+    },
+
     resetScores(state) {
       state.players = JSON.parse(JSON.stringify(defaultData));
+      state.completedEvents = { parTeeShack: false, scramble: false, fantasy: false };
       try {
         localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(EVENTS_KEY);
       } catch {
         // ignore
       }
