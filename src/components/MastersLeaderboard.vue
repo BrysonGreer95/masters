@@ -13,22 +13,33 @@
       </div>
 
       <div v-else>
+        <!-- Search bar -->
+        <div class="search-bar-wrap">
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Search player..."
+            class="player-search"
+          />
+          <span v-if="searchQuery" class="search-clear" @click="searchQuery = ''">&times;</span>
+        </div>
+
         <!-- Desktop table -->
         <div class="content-centered table-responsive is-hidden-mobile">
-          <b-table bordered striped :data="sortedScores">
-            <b-table-column field="playerName" label="Player" v-slot="props">
+          <b-table bordered striped :data="filteredScores" default-sort="positionNum" default-sort-direction="asc">
+            <b-table-column field="playerName" label="Player" sortable v-slot="props">
               {{ props.row.firstName }} {{ props.row.lastName }}
             </b-table-column>
-            <b-table-column field="position" label="Pos" numeric v-slot="props">
+            <b-table-column field="positionNum" label="Pos" numeric sortable v-slot="props">
               {{ props.row.position }}
             </b-table-column>
-            <b-table-column field="total_score" label="Score" numeric v-slot="props">
+            <b-table-column field="totalNum" label="Score" numeric sortable v-slot="props">
               <span :class="scoreClass(props.row.total)">{{ props.row.total }}</span>
             </b-table-column>
-            <b-table-column field="currentRoundScore" label="Today" numeric v-slot="props">
+            <b-table-column field="currentRoundScore" label="Today" numeric sortable v-slot="props">
               {{ props.row.currentRoundScore }}
             </b-table-column>
-            <b-table-column field="thru" label="Thru" v-slot="props">
+            <b-table-column field="thru" label="Thru" sortable v-slot="props">
               {{ props.row.thru }}
             </b-table-column>
           </b-table>
@@ -36,7 +47,7 @@
 
         <!-- Mobile cards -->
         <div class="score-cards is-hidden-tablet">
-          <div v-for="player in sortedScores" :key="`${player.id}-score`" class="score-card">
+          <div v-for="player in filteredScores" :key="`${player.id}-score`" class="score-card">
             <div class="score-card-header">
               <div class="player-info">
                 <span class="score-player-name">{{ player.firstName }} {{ player.lastName }}</span>
@@ -76,10 +87,24 @@ export default {
   computed: {
     sortedScores() {
       if (!this.currentScore || !Array.isArray(this.currentScore)) return [];
-      return [...this.currentScore].sort((a, b) => {
-        if (!a.position || !b.position) return 0;
-        return parseInt(a.position) - parseInt(b.position);
-      });
+      return [...this.currentScore]
+        .sort((a, b) => {
+          if (!a.position || !b.position) return 0;
+          return parseInt(a.position) - parseInt(b.position);
+        })
+        .map(p => ({
+          ...p,
+          playerName: `${p.firstName} ${p.lastName}`,
+          positionNum: parseInt(p.position) || 9999,
+          totalNum: p.total === "E" || !p.total ? 0 : (parseInt(p.total) || 0),
+        }));
+    },
+    filteredScores() {
+      if (!this.searchQuery.trim()) return this.sortedScores;
+      const q = this.searchQuery.toLowerCase();
+      return this.sortedScores.filter(p =>
+        `${p.firstName} ${p.lastName}`.toLowerCase().includes(q)
+      );
     },
     tournamentDisplayName() {
       return this.tournament && (this.tournament.name || this.tournament.tournamentName)
@@ -203,6 +228,7 @@ export default {
       refreshTimer: null,
       lastUpdated: "",
       isLoading: true,
+      searchQuery: "",
     };
   },
   beforeUnmount() {
@@ -232,6 +258,52 @@ export default {
 .content-centered {
   max-width: 800px;
   margin: 0 auto;
+}
+
+// ─── Search Bar ───────────────────────────────────────────────────────────────
+.search-bar-wrap {
+  position: relative;
+  max-width: 320px;
+  margin: 0 auto 1.25rem;
+}
+
+.player-search {
+  width: 100%;
+  padding: 0.55rem 2.2rem 0.55rem 0.85rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+  font-size: 0.875rem;
+  font-family: $body-font-stack;
+  color: #333;
+  background: white;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $masters-accent;
+    box-shadow: 0 0 0 2px rgba($masters-accent, 0.12);
+  }
+
+  &::placeholder {
+    color: #bbb;
+  }
+}
+
+.search-clear {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: #bbb;
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+
+  &:hover {
+    color: #888;
+  }
 }
 
 // ─── Score Display ────────────────────────────────────────────────────────────

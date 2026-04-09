@@ -9,10 +9,17 @@
     <div class="content-wrap">
       <!-- Rules -->
       <div class="rules-block">
-        <span class="rules">Rules</span>
-        <ul>
-          <li>1 Mulligan per 9 holes &mdash; cannot carry over from the front 9</li>
-          <li>Breakfast ball is allowed</li>
+        <div class="rules-header">
+          <span class="rules-icon">&#9965;</span>
+          <span class="rules-title">Tournament Rules</span>
+        </div>
+        <ul class="rules-list">
+          <li>1 mulligan per 9 holes &mdash; may not carry over to the back 9</li>
+          <li>Breakfast ball on hole 1 only &mdash; must be called before leaving the tee box</li>
+          <li>No gimmie putts &mdash; all putts must be holed out</li>
+          <li>Each player must contribute a minimum of 2 drives per 9 holes</li>
+          <li>All players must hit before the best ball is selected</li>
+          <li>Ball placed within 1 club length of selected shot, no closer to the hole, same area of course</li>
         </ul>
       </div>
 
@@ -103,6 +110,49 @@ export default {
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1.5rem 3rem;
+}
+
+// ─── Rules Block ──────────────────────────────────────────────────────────────
+.rules-block {
+  margin-bottom: 2rem;
+  border: 1px solid rgba($masters-accent, 0.2);
+  border-top: 3px solid $masters-accent;
+  background: #f9faf9;
+}
+
+.rules-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.rules-icon {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.rules-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: $primary;
+}
+
+.rules-list {
+  margin: 0;
+  padding: 0.65rem 1rem 0.65rem 2rem;
+  list-style: disc;
+
+  li {
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.65;
+    padding: 0.15rem 0;
+  }
 }
 
 // ─── A/B Player Lists ─────────────────────────────────────────────────────────

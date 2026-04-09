@@ -30,13 +30,14 @@ export default {
   data() {
     return {
       columns: [
-        { field: "player",        label: "Player" },
+        { field: "id",            label: "#",            numeric: true, sortable: true },
+        { field: "player",        label: "Player",       sortable: true },
         { field: "past_champ",    label: "Past Champ" },
         { field: "us",            label: "United States" },
         { field: "international", label: "International" },
         { field: "first_timer",   label: "First Timer" },
         { field: "wild_card",     label: "Wild Card" },
-        { field: "total_putts",   label: "Total Putts", numeric: true },
+        { field: "total_putts",   label: "Total Putts",  numeric: true, sortable: true },
       ],
     };
   },
@@ -44,6 +45,7 @@ export default {
     ...mapGetters(['players']),
     tableData() {
       return this.players.map((player) => ({
+        id:            player.id,
         player:        `${player.user.first_name} ${player.user.last_name}`,
         past_champ:    player.fantasy_picks?.[0] || "",
         us:            player.fantasy_picks?.[1] || "",

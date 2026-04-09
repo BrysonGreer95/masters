@@ -67,9 +67,18 @@
               Two-man scramble. Both teammates earn points based on team placement.
             </p>
             <div class="event-rules">
-              <span class="rules-label">Rules</span>
-              <span class="rule-item">1 mulligan per 9 holes</span>
-              <span class="rule-item">Breakfast ball allowed</span>
+              <div class="rules-header">
+                <span class="rules-icon">&#9965;</span>
+                <span class="rules-label">Tournament Rules</span>
+              </div>
+              <ul class="rules-list">
+                <li>1 mulligan per 9 holes &mdash; may not carry over to the back 9</li>
+                <li>Breakfast ball on hole 1 only &mdash; must be called before leaving the tee box</li>
+                <li>No gimmie putts &mdash; all putts must be holed out</li>
+                <li>Each player must contribute a minimum of 2 drives per 9 holes</li>
+                <li>All players must hit before the best ball is selected</li>
+                <li>Ball placed within 1 club length of selected shot, no closer to the hole, same area of course</li>
+              </ul>
             </div>
             <b-collapse v-model="openScramble" aria-id="pts-scramble">
               <template #trigger="props">
@@ -302,34 +311,46 @@ export default {
   flex: 1;
 }
 
-// ─── Inline Rules ─────────────────────────────────────────────────────────────
+// ─── Rules Box ────────────────────────────────────────────────────────────────
 .event-rules {
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba($masters-accent, 0.2);
+  border-top: 3px solid $masters-accent;
+  background: #f9faf9;
+}
+
+.rules-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1.25rem;
-  padding: 0.6rem 0.75rem;
-  background: #fafafa;
-  border-left: 3px solid rgba($masters-accent, 0.4);
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: white;
+}
+
+.rules-icon {
+  font-size: 0.85rem;
+  opacity: 0.6;
 }
 
 .rules-label {
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   color: $primary;
-  margin-right: 0.25rem;
 }
 
-.rule-item {
-  font-size: 0.8rem;
-  color: #666;
+.rules-list {
+  margin: 0;
+  padding: 0.6rem 0.85rem 0.6rem 1.75rem;
+  list-style: disc;
 
-  &:not(:last-child)::after {
-    content: ' ·';
-    color: #bbb;
+  li {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.6;
+    padding: 0.15rem 0;
   }
 }
 
