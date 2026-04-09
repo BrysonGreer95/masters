@@ -156,6 +156,8 @@ export default {};
     height: 40px;
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: hidden;
+    touch-action: pan-x;
     -webkit-overflow-scrolling: touch;
     padding: 0 0.5rem;
     gap: 0;
