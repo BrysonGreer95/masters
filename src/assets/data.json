@@ -10,13 +10,13 @@
     "scramble": 40,
     "fantasy": 30,
     "fantasy_picks": [
-      "Tiger Woods",
-      "Tiger Woods",
-      "Tiger Woods",
-      "Tiger Woods",
-      "Tiger Woods"
+      "Scottie Scheffler",
+      "Akshay Bhatia",
+      "Nicolas Echavarria",
+      "Chris Gotterup",
+      "Cameron Young"
     ],
-    "total_putts": 52,
+    "total_putts": 9042,
     "team": 4
   },
   {
@@ -30,13 +30,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Jon Rahm",
+      "Bryson DeChambeau",
+      "Ludvig Aberg",
+      "Chris Gotterup",
+      "Scottie Scheffler"
     ],
-    "total_putts": 0,
+    "total_putts": 8954,
     "team": 7
   },
   {
@@ -50,13 +50,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Bryson DeChambeau",
+      "Rory McIlroy",
+      "Chris Gotterup",
+      "Justin Rose"
     ],
-    "total_putts": 0,
+    "total_putts": 12658,
     "team": 2
   },
   {
@@ -70,13 +70,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Bryson DeChambeau",
+      "Ludvig Aberg",
+      "Chris Gotterup",
+      "Rory McIlroy"
     ],
-    "total_putts": 0,
+    "total_putts": 8300,
     "team": 3
   },
   {
@@ -90,13 +90,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Akshay Bhatia",
+      "Justin Rose",
+      "Jacob Bridgeman",
+      "Bryson DeChambeau"
     ],
-    "total_putts": 0,
+    "total_putts": 8886,
     "team": 3
   },
   {
@@ -110,11 +110,11 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Bryson DeChambeau",
+      "Ludvig Aberg",
+      "Chris Gotterup",
+      "Jon Rahm"
     ],
     "total_putts": 0,
     "team": 1
@@ -130,13 +130,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Jon Rahm",
+      "Bryson DeChambeau",
+      "Ludvig Aberg",
+      "Ben Griffin",
+      "Scottie Scheffler"
     ],
-    "total_putts": 0,
+    "total_putts": 8760,
     "team": 1
   },
   {
@@ -176,7 +176,7 @@
       "",
       ""
     ],
-    "total_putts": 0,
+    "total_putts": 8800,
     "team": 4
   },
   {
@@ -190,13 +190,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Bryson DeChambeau",
+      "Ludvig Aberg",
+      "Chris Gotterup",
+      "Xander Schauffele"
     ],
-    "total_putts": 0,
+    "total_putts": 8814,
     "team": 7
   },
   {
@@ -210,13 +210,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Patrick Reed",
+      "Rory McIlroy",
+      "Michael Brennan",
+      "Sungjae Im"
     ],
-    "total_putts": 0,
+    "total_putts": 8802,
     "team": 5
   },
   {
@@ -230,13 +230,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Scottie Scheffler",
+      "Cameron Young",
+      "Ludvig Aberg",
+      "Chris Gotterup",
+      "Xander Schauffele"
     ],
-    "total_putts": 0,
+    "total_putts": 8712,
     "team": 2
   },
   {
@@ -250,13 +250,13 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Rory McIlroy",
+      "Scottie Scheffler",
+      "Tommy Fleetwood",
+      "Ben Griffin",
+      "Akshay Bhatia"
     ],
-    "total_putts": 0,
+    "total_putts": 9276,
     "team": 5
   },
   {
@@ -270,11 +270,11 @@
     "scramble": 0,
     "fantasy": 0,
     "fantasy_picks": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Rory McIlroy",
+      "Akshay Bhatia",
+      "Danny Willett",
+      "Ben Griffin",
+      "Rasmus Neergaard-Petersen"
     ],
     "total_putts": 0,
     "team": 6
