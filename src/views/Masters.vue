@@ -6,6 +6,15 @@
       <p class="page-subtitle">2026 Masters Champion: <span class="highlight">TBD</span></p>
     </div>
 
+    <div class="league-bar">
+      <a
+        href="https://www.masters.com/en_US/fantasy?leagueJoinToken=09a845f0e8&leagueId=13604"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="league-link"
+      >Join the Fantasy League &rarr;</a>
+    </div>
+
     <div class="table-wrap">
       <div class="table-responsive masters-table-vertical-lines">
         <b-table striped bordered :data="tableData" :columns="columns"></b-table>
@@ -50,6 +59,25 @@ export default {
 
 <style lang="scss">
 @import '../styles/_variables.scss';
+
+.league-bar {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.league-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $masters-accent;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+
+  &:hover {
+    color: $primary;
+    text-decoration: underline;
+  }
+}
 
 .table-wrap {
   padding: 0 1.5rem 2rem;
