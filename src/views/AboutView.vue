@@ -2,9 +2,9 @@
 <template>
   <div class="about">
     <div class="page-header">
-      <h1>Masters 2026</h1>
+      <h1>Masters Week 2026</h1>
       <p class="page-subtitle">
-        The 3rd Annual Championship Weekend
+        The 3rd Annual
       </p>
     </div>
 

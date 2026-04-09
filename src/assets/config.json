@@ -1,10 +1,8 @@
 {
   "_comment": "Update this file each year to refresh all event details across the app.",
-
   "year": 2026,
   "edition": "3rd Annual",
-  "title": "Masters Weekend Competition",
-
+  "title": "Masters Week Competition",
   "events": {
     "minigolf": {
       "name": "ParTee Shack Mini Golf",

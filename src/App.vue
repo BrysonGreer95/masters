@@ -3,7 +3,7 @@
     <!-- Navigation -->
     <nav class="app-nav">
       <div class="nav-brand">
-        <span class="nav-title">Masters 2026</span>
+        <span class="nav-title">Masters Week 2026</span>
       </div>
       <div class="nav-links">
         <router-link to="/" class="nav-link">Home</router-link>
@@ -165,7 +165,10 @@ export default {};
 
     // Hide scrollbar visually — still scrollable
     scrollbar-width: none;
-    &::-webkit-scrollbar { display: none; }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .nav-link {
