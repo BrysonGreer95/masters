@@ -264,6 +264,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import playerData from '../assets/data.json';
 import scorecardData from '../assets/scorecard_data.json';
+import config from '../assets/config.json';
 import { holeTotal } from '../constants/scoring';
 
 export default {
@@ -341,7 +342,7 @@ export default {
     ]),
 
     tryLogin() {
-      if (this.passwordInput === 'mastersweek2026') {
+      if (this.passwordInput === config.admin_password) {
         sessionStorage.setItem('admin-auth', '1');
         this.authenticated = true;
         this.authError = false;

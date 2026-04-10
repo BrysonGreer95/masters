@@ -2,10 +2,8 @@
 <template>
   <div class="about">
     <div class="page-header">
-      <h1>Masters Week 2026</h1>
-      <p class="page-subtitle">
-        The 3rd Annual
-      </p>
+      <h1>Masters Week {{ cfg.year }}</h1>
+      <p class="page-subtitle">The {{ cfg.edition }}</p>
     </div>
 
     <!-- Intro -->
@@ -25,12 +23,12 @@
         <div class="event-card">
           <div class="event-number">01</div>
           <div class="event-card-body">
-            <h3 class="event-title">ParTee Shack Mini Golf</h3>
+            <h3 class="event-title">{{ cfg.events.putt_putt.name }}</h3>
             <div class="event-meta">
-              <span class="event-date">Friday, April 10 &bull; 6–8 PM</span>
+              <span class="event-date">{{ cfg.events.putt_putt.date }} &bull; {{ cfg.events.putt_putt.time }}</span>
               <a class="event-location"
-                href="https://maps.google.com/?q=6231+Triangle+Plantation+Drive+Raleigh+NC+27616" target="_blank"
-                rel="noopener noreferrer">ParTee Shack North Raleigh &rarr;</a>
+                :href="cfg.events.putt_putt.maps_url" target="_blank"
+                rel="noopener noreferrer">{{ cfg.events.putt_putt.venue }} &rarr;</a>
             </div>
             <p class="event-desc">
               Two full 18-hole courses (36 holes total). Lowest stroke total wins.
@@ -57,11 +55,11 @@
         <div class="event-card">
           <div class="event-number">02</div>
           <div class="event-card-body">
-            <h3 class="event-title">Scramble Tournament</h3>
+            <h3 class="event-title">{{ cfg.events.scramble.name }}</h3>
             <div class="event-meta">
-              <span class="event-date">Saturday, April 11 &bull; 12 PM</span>
-              <a class="event-location" href="https://maps.google.com/?q=585+Reedy+Creek+Rd+Four+Oaks+NC+27524"
-                target="_blank" rel="noopener noreferrer">Reedy Creek Golf Course &rarr;</a>
+              <span class="event-date">{{ cfg.events.scramble.date }} &bull; {{ cfg.events.scramble.time }}</span>
+              <a class="event-location" :href="cfg.events.scramble.maps_url"
+                target="_blank" rel="noopener noreferrer">{{ cfg.events.scramble.venue }} &rarr;</a>
             </div>
             <p class="event-desc">
               Two-man scramble. Both teammates earn points based on team placement.
@@ -101,19 +99,19 @@
         <div class="event-card">
           <div class="event-number">03</div>
           <div class="event-card-body">
-            <h3 class="event-title">Masters Fantasy League</h3>
+            <h3 class="event-title">{{ cfg.events.fantasy.name }}</h3>
             <div class="event-meta">
-              <span class="event-date">Sunday, April 12 &bull; 2 PM</span>
-              <span class="event-location-static">Watch Party @ Greer House</span>
+              <span class="event-date">{{ cfg.events.fantasy.date }} &bull; {{ cfg.events.fantasy.time }}</span>
+              <span class="event-location-static">Watch Party @ {{ cfg.events.fantasy.watch_party_host }}</span>
             </div>
             <p class="event-desc">
               Pick your roster before the Masters begins. Your fantasy score follows your golfers through
               the tournament. Highest points wins.
             </p>
             <div class="fantasy-cta">
-              <a href="https://www.masters.com/en_US/fantasy?leagueJoinToken=09a845f0e8&leagueId=13604" target="_blank"
+              <a :href="cfg.events.fantasy.league_url" target="_blank"
                 rel="noopener noreferrer" class="cta-button">Join the League</a>
-              <p class="deadline-note">Lineups due by April 9th</p>
+              <p class="deadline-note">Lineups due by {{ cfg.events.fantasy.picks_deadline }}</p>
             </div>
             <b-collapse v-model="openFantasy" aria-id="pts-fantasy">
               <template #trigger="props">
@@ -141,8 +139,8 @@
         <p class="watch-label">Join Us</p>
         <h2 class="watch-title">Fantasy Watch Party</h2>
         <p class="watch-desc">
-          Sunday, April 12 from 2 PM until the Masters concludes. The overall champion will be crowned
-          and the prize awarded at the Greer's house.
+          {{ cfg.events.fantasy.date }} from {{ cfg.events.fantasy.time }} until the Masters concludes. The overall champion will be crowned
+          and the prize awarded at the {{ cfg.events.fantasy.watch_party_host }}.
         </p>
       </div>
     </section>
@@ -151,38 +149,30 @@
 </template>
 
 <script>
+import config from '../assets/config.json';
+import { PUTT_PUTT_POINTS, SCRAMBLE_POINTS, FANTASY_POINTS } from '../constants/scoring';
+
+const ordinals = ['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th','13th','14th'];
+
 export default {
   name: "AboutView",
   data() {
     return {
+      cfg: config,
       openParTee: false,
       openScramble: false,
       openFantasy: false,
       parTeePoints: [
-        { place: "1st", points: 100 }, { place: "2nd", points: 95 },
-        { place: "3rd", points: 90 }, { place: "4th", points: 85 },
-        { place: "5th", points: 80 }, { place: "6th", points: 75 },
-        { place: "7th", points: 70 }, { place: "8th", points: 65 },
-        { place: "9th", points: 60 }, { place: "10th", points: 55 },
-        { place: "11th", points: 50 }, { place: "12th", points: 45 },
-        { place: "13th", points: 40 }, { place: "14th", points: 35 },
-        { place: "DNS", points: 0 },
+        ...PUTT_PUTT_POINTS.map((pts, i) => ({ place: ordinals[i], points: pts })),
+        { place: 'DNS', points: 0 },
       ],
       scramblePoints: [
-        { place: "1st", points: 200 }, { place: "2nd", points: 175 },
-        { place: "3rd", points: 150 }, { place: "4th", points: 125 },
-        { place: "5th", points: 100 }, { place: "6th", points: 75 },
-        { place: "7th", points: 50 }, { place: "DNS", points: 0 },
+        ...SCRAMBLE_POINTS.map((pts, i) => ({ place: ordinals[i], points: pts })),
+        { place: 'DNS', points: 0 },
       ],
       fantasyPoints: [
-        { place: "1st", points: 300 }, { place: "2nd", points: 285 },
-        { place: "3rd", points: 270 }, { place: "4th", points: 255 },
-        { place: "5th", points: 240 }, { place: "6th", points: 225 },
-        { place: "7th", points: 210 }, { place: "8th", points: 195 },
-        { place: "9th", points: 180 }, { place: "10th", points: 165 },
-        { place: "11th", points: 150 }, { place: "12th", points: 135 },
-        { place: "13th", points: 120 }, { place: "14th", points: 105 },
-        { place: "DNS", points: 0 },
+        ...FANTASY_POINTS.map((pts, i) => ({ place: ordinals[i], points: pts })),
+        { place: 'DNS', points: 0 },
       ],
     };
   },

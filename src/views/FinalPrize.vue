@@ -2,7 +2,7 @@
   <div class="prize">
     <div class="page-header">
       <h1>This Year's Prize</h1>
-      <p class="page-subtitle">Awarded to the Masters Week 2026 Overall Champion</p>
+      <p class="page-subtitle">Awarded to the Masters Week {{ cfg.year }} Overall Champion</p>
     </div>
     <div class="prize-body">
       <h2 class="prize-name">Scotty Cameron Select Newport 2</h2>
@@ -14,8 +14,12 @@
 </template>
 
 <script>
+import config from '../assets/config.json';
 export default {
   name: 'FinalPrize',
+  data() {
+    return { cfg: config };
+  },
 };
 </script>
 

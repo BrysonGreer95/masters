@@ -75,6 +75,9 @@
 <script>
 let tournID = "014";
 import axios from "axios";
+import config from "../assets/config.json";
+
+const API_YEAR = config.events.fantasy.api_year;
 
 export default {
   async created() {
@@ -138,7 +141,7 @@ export default {
     async getSchedule() {
       try {
         const response = await axios.get("https://live-golf-data.p.rapidapi.com/schedule", {
-          params: { orgId: "1", year: "2026" },
+          params: { orgId: "1", year: API_YEAR },
           headers: {
             "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
             "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
@@ -176,7 +179,7 @@ export default {
     async getScore() {
       try {
         const response = await axios.get("https://live-golf-data.p.rapidapi.com/leaderboard", {
-          params: { orgId: "1", tournId: tournID, year: "2026" },
+          params: { orgId: "1", tournId: tournID, year: API_YEAR },
           headers: {
             "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
             "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
@@ -197,7 +200,7 @@ export default {
     async getTournament() {
       try {
         const response = await axios.get("https://live-golf-data.p.rapidapi.com/tournament", {
-          params: { orgId: "1", tournId: tournID, year: "2026" },
+          params: { orgId: "1", tournId: tournID, year: API_YEAR },
           headers: {
             "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
             "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",

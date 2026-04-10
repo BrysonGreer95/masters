@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../assets/config.json';
 
 const HEADERS = {
   'X-RapidAPI-Key': '6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f',
@@ -6,11 +7,12 @@ const HEADERS = {
 };
 const BASE_URL = 'https://live-golf-data.p.rapidapi.com';
 const DEFAULT_TOURN_ID = '014';
+const API_YEAR = config.events.fantasy.api_year;
 
 export async function getCurrentTournId() {
   try {
     const { data } = await axios.get(`${BASE_URL}/schedule`, {
-      params: { orgId: '1', year: '2026' },
+      params: { orgId: '1', year: API_YEAR },
       headers: HEADERS,
     });
     const schedule = data?.schedule || [];
@@ -39,7 +41,7 @@ export async function getCurrentTournId() {
 
 export async function fetchLeaderboard(tournId) {
   const { data } = await axios.get(`${BASE_URL}/leaderboard`, {
-    params: { orgId: '1', tournId, year: '2026' },
+    params: { orgId: '1', tournId, year: API_YEAR },
     headers: HEADERS,
   });
   return {

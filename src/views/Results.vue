@@ -3,7 +3,7 @@
   <div id="results">
     <div class="page-header">
       <h1>Event Results</h1>
-      <p class="page-subtitle">Masters Week 2026 &bull; Scorecards &amp; Standings</p>
+      <p class="page-subtitle">Masters Week {{ cfg.year }} &bull; Scorecards &amp; Standings</p>
     </div>
 
     <div class="events-grid">
@@ -11,8 +11,8 @@
       <div class="event-card">
         <div class="event-card-header">
           <div>
-            <h2 class="event-title">ParTee Shack</h2>
-            <p class="event-meta">Friday, April 10 &bull; Putt Putt &bull; 36 Holes</p>
+            <h2 class="event-title">{{ cfg.events.putt_putt.short_name }}</h2>
+            <p class="event-meta">{{ cfg.events.putt_putt.date }} &bull; Putt Putt &bull; {{ cfg.events.putt_putt.holes }} Holes</p>
           </div>
         </div>
 
@@ -37,7 +37,7 @@
         <div class="event-card-header">
           <div>
             <h2 class="event-title">Scramble</h2>
-            <p class="event-meta">Saturday, April 11 &bull; 12 PM &bull; Reedy Creek Golf Course &bull; 18 Holes</p>
+            <p class="event-meta">{{ cfg.events.scramble.date }} &bull; {{ cfg.events.scramble.time }} &bull; {{ cfg.events.scramble.venue }} &bull; {{ cfg.events.scramble.holes }} Holes</p>
           </div>
         </div>
 
@@ -61,8 +61,8 @@
       <div class="event-card">
         <div class="event-card-header">
           <div>
-            <h2 class="event-title">Masters Fantasy</h2>
-            <p class="event-meta">Sunday, April 12 &bull; 2026 Masters</p>
+            <h2 class="event-title">{{ cfg.events.fantasy.short_name }}</h2>
+            <p class="event-meta">{{ cfg.events.fantasy.date }} &bull; {{ cfg.year }} Masters</p>
           </div>
         </div>
 
@@ -205,6 +205,7 @@
 import { mapGetters } from 'vuex';
 import playerData from '../assets/data.json';
 import scorecardData from '../assets/scorecard_data.json';
+import config from '../assets/config.json';
 
 export default {
   name: 'ResultsView',
@@ -215,6 +216,7 @@ export default {
       scrambleOpen: false,
       puttPar:    scorecardData.putt_putt.par,
       scramblePar: scorecardData.scramble.par,
+      cfg: config,
     };
   },
 

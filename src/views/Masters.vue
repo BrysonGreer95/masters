@@ -3,12 +3,12 @@
   <div id="masters_table">
     <div class="page-header">
       <h1>Masters Fantasy</h1>
-      <p class="page-subtitle">Overall standings &bull; 2026 Masters</p>
+      <p class="page-subtitle">Overall standings &bull; {{ cfg.year }} Masters</p>
     </div>
 
     <div class="league-bar">
       <a
-        href="https://www.masters.com/en_US/fantasy?leagueJoinToken=09a845f0e8&leagueId=13604"
+        :href="cfg.events.fantasy.league_url"
         target="_blank"
         rel="noopener noreferrer"
         class="league-link"
@@ -89,12 +89,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import { getCurrentTournId, fetchLeaderboard, parseScore, formatScore, scoreClass, isTournamentComplete } from '@/api/golf.js';
+import config from '@/assets/config.json';
 
 export default {
   data() {
     return {
       leaderboard: [],
       scoresLoaded: false,
+      cfg: config,
     };
   },
 

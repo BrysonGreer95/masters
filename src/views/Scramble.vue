@@ -3,7 +3,7 @@
   <div id="scramble_table">
     <div class="page-header">
       <h1>Scramble Teams</h1>
-      <p class="page-subtitle">Saturday, April 11 &bull; 12 PM &bull; Reedy Creek Golf Course</p>
+      <p class="page-subtitle">{{ cfg.events.scramble.date }} &bull; {{ cfg.events.scramble.time }} &bull; {{ cfg.events.scramble.venue }}</p>
     </div>
 
     <div class="content-wrap">
@@ -57,12 +57,14 @@
 
 <script>
 import playerData from "../assets/data.json";
+import config from "../assets/config.json";
 
-const TEE_TIMES = ['12:12 PM', '12:12 PM', '12:20 PM', '12:20 PM', '12:28 PM', '12:28 PM', '11:00 AM'];
+const TEE_TIMES = config.events.scramble.tee_times;
 
 export default {
   data() {
     return {
+      cfg: config,
       columns: [
         { field: "team",     label: "Team",     numeric: true },
         { field: "member_1", label: "Member 1" },

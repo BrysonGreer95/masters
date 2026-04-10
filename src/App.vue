@@ -3,7 +3,7 @@
     <!-- Navigation -->
     <nav class="app-nav">
       <div class="nav-brand">
-        <span class="nav-title">Masters Week 2026</span>
+        <span class="nav-title">Masters Week {{ cfg.year }}</span>
       </div>
       <div class="nav-links">
         <router-link to="/" class="nav-link">Home</router-link>
@@ -30,7 +30,12 @@
 </template>
 
 <script>
-export default {};
+import config from './assets/config.json';
+export default {
+  data() {
+    return { cfg: config };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
