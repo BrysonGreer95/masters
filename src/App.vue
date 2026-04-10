@@ -10,6 +10,7 @@
         <router-link to="/about" class="nav-link">About</router-link>
         <router-link to="/scramble" class="nav-link">Scramble</router-link>
         <router-link to="/masters" class="nav-link">Masters Fantasy</router-link>
+        <router-link to="/results" class="nav-link">Results</router-link>
         <router-link to="/masters-score" class="nav-link">Live Score</router-link>
         <router-link to="/final-prize" class="nav-link">Prize</router-link>
       </div>
@@ -22,7 +23,7 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; 2026 Masters Competition &mdash; Home of Championship Excellence</p>
+      <p>&copy; Masters Week Competition &mdash; Home of Championship Excellence</p>
       <router-link to="/admin" class="admin-link">Score Entry</router-link>
     </footer>
   </div>

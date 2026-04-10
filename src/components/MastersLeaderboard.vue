@@ -87,15 +87,16 @@ export default {
   computed: {
     sortedScores() {
       if (!this.currentScore || !Array.isArray(this.currentScore)) return [];
+      const parsePos = (pos) => {
+        const n = parseInt(String(pos ?? '').replace(/\D/g, ''), 10);
+        return isNaN(n) || n <= 0 ? 9999 : n;
+      };
       return [...this.currentScore]
-        .sort((a, b) => {
-          if (!a.position || !b.position) return 0;
-          return parseInt(a.position) - parseInt(b.position);
-        })
+        .sort((a, b) => parsePos(a.position) - parsePos(b.position))
         .map(p => ({
           ...p,
           playerName: `${p.firstName} ${p.lastName}`,
-          positionNum: parseInt(p.position) || 9999,
+          positionNum: parsePos(p.position),
           totalNum: p.total === "E" || !p.total ? 0 : (parseInt(p.total) || 0),
         }));
     },

@@ -2,8 +2,8 @@
 <template>
   <div id="masters_table">
     <div class="page-header">
-      <h1>Tournament Winner Predictions</h1>
-      <p class="page-subtitle">2026 Masters Champion: <span class="highlight">TBD</span></p>
+      <h1>Masters Fantasy</h1>
+      <p class="page-subtitle">Overall standings &bull; 2026 Masters</p>
     </div>
 
     <div class="league-bar">
@@ -17,7 +17,70 @@
 
     <div class="table-wrap">
       <div class="table-responsive masters-table-vertical-lines">
-        <b-table striped bordered :data="tableData" :columns="columns"></b-table>
+        <b-table
+          striped
+          bordered
+          :data="tableData"
+          default-sort="totalNum"
+          default-sort-direction="asc"
+        >
+          <b-table-column field="_rank" label="Pos" numeric v-slot="props">
+            <span class="pos-num">{{ props.row._rank }}</span>
+          </b-table-column>
+          <b-table-column field="player" label="Player" sortable v-slot="props">
+            {{ props.row.player }}
+          </b-table-column>
+          <b-table-column field="totalNum" label="Total" numeric sortable v-slot="props">
+            <span v-if="!props.row.hasPicks" class="dns-label">DNS</span>
+            <span v-else-if="scoresLoaded" :class="scoreClass(props.row.totalNum)" class="fantasy-total">
+              {{ formatScore(props.row.totalNum) }}
+            </span>
+            <span v-else class="score-loading">—</span>
+          </b-table-column>
+          <b-table-column field="past_champ" label="Past Champ" v-slot="props">
+            <div class="pick-cell">
+              <span>{{ props.row.past_champ.name }}</span>
+              <span v-if="props.row.past_champ.score !== null" :class="scoreClass(props.row.past_champ.score)" class="pick-score">
+                {{ formatScore(props.row.past_champ.score) }}
+              </span>
+            </div>
+          </b-table-column>
+          <b-table-column field="us" label="United States" v-slot="props">
+            <div class="pick-cell">
+              <span>{{ props.row.us.name }}</span>
+              <span v-if="props.row.us.score !== null" :class="scoreClass(props.row.us.score)" class="pick-score">
+                {{ formatScore(props.row.us.score) }}
+              </span>
+            </div>
+          </b-table-column>
+          <b-table-column field="international" label="International" v-slot="props">
+            <div class="pick-cell">
+              <span>{{ props.row.international.name }}</span>
+              <span v-if="props.row.international.score !== null" :class="scoreClass(props.row.international.score)" class="pick-score">
+                {{ formatScore(props.row.international.score) }}
+              </span>
+            </div>
+          </b-table-column>
+          <b-table-column field="first_timer" label="First Timer" v-slot="props">
+            <div class="pick-cell">
+              <span>{{ props.row.first_timer.name }}</span>
+              <span v-if="props.row.first_timer.score !== null" :class="scoreClass(props.row.first_timer.score)" class="pick-score">
+                {{ formatScore(props.row.first_timer.score) }}
+              </span>
+            </div>
+          </b-table-column>
+          <b-table-column field="wild_card" label="Wild Card" v-slot="props">
+            <div class="pick-cell">
+              <span>{{ props.row.wild_card.name }}</span>
+              <span v-if="props.row.wild_card.score !== null" :class="scoreClass(props.row.wild_card.score)" class="pick-score">
+                {{ formatScore(props.row.wild_card.score) }}
+              </span>
+            </div>
+          </b-table-column>
+          <b-table-column field="total_putts" label="Total Putts" numeric sortable v-slot="props">
+            {{ props.row.total_putts || '—' }}
+          </b-table-column>
+        </b-table>
       </div>
     </div>
   </div>
@@ -25,36 +88,81 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { getCurrentTournId, fetchLeaderboard, parseScore, formatScore, scoreClass } from '@/api/golf.js';
 
 export default {
   data() {
     return {
-      columns: [
-        { field: "id",            label: "#",            numeric: true, sortable: true },
-        { field: "player",        label: "Player",       sortable: true },
-        { field: "past_champ",    label: "Past Champ" },
-        { field: "us",            label: "United States" },
-        { field: "international", label: "International" },
-        { field: "first_timer",   label: "First Timer" },
-        { field: "wild_card",     label: "Wild Card" },
-        { field: "total_putts",   label: "Total Putts",  numeric: true, sortable: true },
-      ],
+      leaderboard: [],
+      scoresLoaded: false,
     };
   },
+
   computed: {
     ...mapGetters(['players']),
+
     tableData() {
-      return this.players.map((player) => ({
-        id:            player.id,
-        player:        `${player.user.first_name} ${player.user.last_name}`,
-        past_champ:    player.fantasy_picks?.[0] || "",
-        us:            player.fantasy_picks?.[1] || "",
-        international: player.fantasy_picks?.[2] || "",
-        first_timer:   player.fantasy_picks?.[3] || "",
-        wild_card:     player.fantasy_picks?.[4] || "",
-        total_putts:   player.total_putts ?? "",
-      }));
+      const rows = this.players.map((player) => {
+        const picks = (player.fantasy_picks ?? []).slice(0, 5).map((name) => ({
+          name: name || '',
+          score: name?.trim() ? this.lookupScore(name) : null,
+        }));
+        while (picks.length < 5) picks.push({ name: '', score: null });
+
+        const hasPicks = picks.some((p) => p.name.trim());
+        const totalNum = hasPicks
+          ? picks.reduce((sum, p) => p.name.trim() && p.score !== null ? sum + p.score : sum, 0)
+          : Infinity;
+
+        return {
+          player:        `${player.user.first_name} ${player.user.last_name}`,
+          totalNum,
+          hasPicks,
+          past_champ:    picks[0],
+          us:            picks[1],
+          international: picks[2],
+          first_timer:   picks[3],
+          wild_card:     picks[4],
+          total_putts:   player.total_putts || '',
+        };
+      });
+
+      return rows
+        .sort((a, b) => {
+          if (a.hasPicks !== b.hasPicks) return a.hasPicks ? -1 : 1;
+          return a.totalNum - b.totalNum;
+        })
+        .map((r, i) => ({ ...r, _rank: i + 1 }));
     },
+  },
+
+  methods: {
+    lookupScore(name) {
+      if (!name?.trim() || !this.leaderboard.length) return null;
+      const normalized = name.toLowerCase().trim();
+      const golfer = this.leaderboard.find(
+        (g) => `${g.firstName} ${g.lastName}`.toLowerCase() === normalized,
+      );
+      return golfer ? parseScore(golfer.total) : null;
+    },
+
+    formatScore,
+    scoreClass,
+
+    async loadScores() {
+      try {
+        const tournId = await getCurrentTournId();
+        const { rows } = await fetchLeaderboard(tournId);
+        this.leaderboard = rows;
+        this.scoresLoaded = true;
+      } catch (err) {
+        console.error('Masters fantasy score fetch error:', err);
+      }
+    },
+  },
+
+  async created() {
+    await this.loadScores();
   },
 };
 </script>
@@ -100,14 +208,41 @@ export default {
   border-bottom: 2px solid $masters-accent;
 }
 
-// Bold the Player column (first td in each row)
-.masters-table-vertical-lines tbody td:first-child {
-  font-weight: 700;
-  color: $primary;
+.pos-num {
+  font-weight: 600;
+  color: #999;
+  font-size: 0.9rem;
 }
 
 .highlight {
   color: $masters-gold;
   font-weight: 700;
+}
+
+.pick-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.pick-score {
+  font-size: 0.78rem;
+}
+
+.fantasy-total {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.score-loading {
+  color: #ccc;
+}
+
+.dns-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #bbb;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 </style>
