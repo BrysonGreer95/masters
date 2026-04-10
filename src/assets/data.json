@@ -1,5 +1,6 @@
 {
   "_version": 1,
+  "actual_putts": null,
   "players": [
     {
       "id": 1,
@@ -118,7 +119,7 @@
         "Chris Gotterup",
         "Jon Rahm"
       ],
-      "total_putts": 0,
+      "total_putts": 8700,
       "team": 1
     },
     {
@@ -270,7 +271,7 @@
         "Ben Griffin",
         "Rasmus Neergaard-Petersen"
       ],
-      "total_putts": 0,
+      "total_putts": 8500,
       "team": 6
     }
   ]

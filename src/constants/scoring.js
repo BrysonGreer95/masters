@@ -19,13 +19,18 @@ export function holeTotal(scores) {
 
 /**
  * Rank items by total strokes (ascending) and return a points map.
- * Handles ties by averaging the point values for the tied positions.
+ *
+ * Tie-breaking: if a `tiebreakers` map is provided ({ [id]: number }, lower = better),
+ * tied items are sub-ranked by their tiebreaker value and receive distinct point values.
+ * Without tiebreakers (or when tiebreaker values themselves tie), points are averaged
+ * across the tied positions.
  *
  * @param {Array<{id: number|string, total: number|null}>} items
- * @param {number[]} pointsTable  - index 0 = 1st place points
- * @returns {Object}              - { [id]: { rank: number|null, points: number } }
+ * @param {number[]} pointsTable        - index 0 = 1st place points
+ * @param {Object}  [tiebreakers={}]    - { [id]: number } lower value wins the tiebreak
+ * @returns {Object}                    - { [id]: { rank: number|null, points: number } }
  */
-export function calcRankings(items, pointsTable) {
+export function calcRankings(items, pointsTable, tiebreakers = {}) {
   const played = items
     .filter((x) => x.total !== null)
     .sort((a, b) => a.total - b.total);
@@ -33,16 +38,41 @@ export function calcRankings(items, pointsTable) {
 
   let i = 0;
   while (i < played.length) {
-    // Find all tied at this total
+    // Collect all items tied on total strokes
     let j = i;
     while (j < played.length && played[j].total === played[i].total) j++;
-    // Average the points for positions i…j-1
-    let totalPts = 0;
-    for (let k = i; k < j; k++) totalPts += pointsTable[k] ?? 0;
-    const avgPts = Math.round(totalPts / (j - i));
-    for (let k = i; k < j; k++) {
-      result[played[k].id] = { rank: i + 1, points: avgPts };
+    const tiedGroup = played.slice(i, j);
+
+    if (tiedGroup.length === 1 || Object.keys(tiebreakers).length === 0) {
+      // No tiebreaker available — average points across tied positions
+      let totalPts = 0;
+      for (let k = i; k < j; k++) totalPts += pointsTable[k] ?? 0;
+      const avgPts = Math.round(totalPts / tiedGroup.length);
+      tiedGroup.forEach((x) => { result[x.id] = { rank: i + 1, points: avgPts }; });
+    } else {
+      // Sub-rank within the tie using tiebreakers (lower = better)
+      const subRanked = [...tiedGroup].sort(
+        (a, b) => (tiebreakers[a.id] ?? Infinity) - (tiebreakers[b.id] ?? Infinity),
+      );
+
+      let si = 0;
+      while (si < subRanked.length) {
+        // Find sub-ties (same tiebreaker value)
+        let sj = si;
+        const tbVal = tiebreakers[subRanked[si].id] ?? Infinity;
+        while (sj < subRanked.length && (tiebreakers[subRanked[sj].id] ?? Infinity) === tbVal) sj++;
+
+        // Average only across this sub-tied slice
+        let totalPts = 0;
+        for (let k = i + si; k < i + sj; k++) totalPts += pointsTable[k] ?? 0;
+        const avgPts = Math.round(totalPts / (sj - si));
+        for (let k = si; k < sj; k++) {
+          result[subRanked[k].id] = { rank: i + si + 1, points: avgPts };
+        }
+        si = sj;
+      }
     }
+
     i = j;
   }
 

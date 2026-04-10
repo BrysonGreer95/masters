@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 import defaultData from '../assets/data.json';
 import {
-  PUTT_PUTT_POINTS, SCRAMBLE_POINTS,
+  PUTT_PUTT_POINTS, SCRAMBLE_POINTS, FANTASY_POINTS,
   holeTotal, calcRankings,
 } from '../constants/scoring';
 
@@ -199,6 +199,24 @@ export default createStore({
         p.parTeeShack = rankings[p.id]?.points ?? 0;
       });
       persist(state.players);
+    },
+
+    /**
+     * Apply fantasy points from a pre-computed scores array.
+     * @param {Array<{id: number, total: number|null}>} scoreTotals
+     */
+    applyFantasyPoints(state, scoreTotals) {
+      const actual = defaultData.actual_putts;
+      const tiebreakers = actual != null
+        ? Object.fromEntries(state.players.map((p) => [p.id, Math.abs((p.total_putts || 0) - actual)]))
+        : {};
+      const rankings = calcRankings(scoreTotals, FANTASY_POINTS, tiebreakers);
+      state.players.forEach((p) => {
+        p.fantasy = rankings[p.id]?.points ?? 0;
+      });
+      state.completedEvents.fantasy = true;
+      persist(state.players);
+      try { localStorage.setItem(EVENTS_KEY, JSON.stringify(state.completedEvents)); } catch { /* ignore */ }
     },
 
     /** Compute scramble team rankings and write points to both teammates. */

@@ -88,7 +88,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getCurrentTournId, fetchLeaderboard, parseScore, formatScore, scoreClass } from '@/api/golf.js';
+import { getCurrentTournId, fetchLeaderboard, parseScore, formatScore, scoreClass, isTournamentComplete } from '@/api/golf.js';
 
 export default {
   data() {
@@ -99,7 +99,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['players']),
+    ...mapGetters(['players', 'completedEvents']),
 
     tableData() {
       const rows = this.players.map((player) => {
@@ -152,9 +152,21 @@ export default {
     async loadScores() {
       try {
         const tournId = await getCurrentTournId();
-        const { rows } = await fetchLeaderboard(tournId);
+        const { rows, currentRound, roundStatus } = await fetchLeaderboard(tournId);
         this.leaderboard = rows;
         this.scoresLoaded = true;
+
+        // Auto-apply fantasy points once when the tournament is officially over
+        if (!this.completedEvents.fantasy && isTournamentComplete(rows, currentRound, roundStatus)) {
+          const scoreTotals = this.players.map((player) => {
+            const picks = (player.fantasy_picks ?? []).slice(0, 5);
+            const hasPicks = picks.some((n) => n.trim());
+            if (!hasPicks) return { id: player.id, total: null };
+            const total = picks.reduce((sum, name) => sum + (this.lookupScore(name) ?? 0), 0);
+            return { id: player.id, total };
+          });
+          this.$store.commit('applyFantasyPoints', scoreTotals);
+        }
       } catch (err) {
         console.error('Masters fantasy score fetch error:', err);
       }
