@@ -5,10 +5,29 @@ import {
   holeTotal, calcRankings,
 } from '../constants/scoring';
 
-const STORAGE_KEY       = 'masters-scores';
-const EVENTS_KEY        = 'masters-completed-events';
-const PUTT_HOLES_KEY    = 'masters-putt-holes';
+const STORAGE_KEY        = 'masters-scores';
+const EVENTS_KEY         = 'masters-completed-events';
+const PUTT_HOLES_KEY     = 'masters-putt-holes';
 const SCRAMBLE_HOLES_KEY = 'masters-scramble-holes';
+const VERSION_KEY        = 'masters-data-version';
+
+// ─── Version check ────────────────────────────────────────────────────────────
+// If data.json's _version doesn't match localStorage, nuke all stale caches.
+
+function checkVersion() {
+  try {
+    const stored = Number(localStorage.getItem(VERSION_KEY));
+    if (stored !== defaultData._version) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(EVENTS_KEY);
+      localStorage.removeItem(PUTT_HOLES_KEY);
+      localStorage.removeItem(SCRAMBLE_HOLES_KEY);
+      localStorage.setItem(VERSION_KEY, String(defaultData._version));
+    }
+  } catch { /* ignore */ }
+}
+
+checkVersion();
 
 // ─── Load helpers ─────────────────────────────────────────────────────────────
 
@@ -17,7 +36,7 @@ function loadPlayers() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return JSON.parse(JSON.stringify(defaultData));
+  return JSON.parse(JSON.stringify(defaultData.players));
 }
 
 function loadCompletedEvents() {
@@ -30,13 +49,13 @@ function loadCompletedEvents() {
 
 function defaultPuttHoles() {
   const holes = {};
-  defaultData.forEach((p) => { holes[p.id] = Array(36).fill(null); });
+  defaultData.players.forEach((p) => { holes[p.id] = Array(36).fill(null); });
   return holes;
 }
 
 function defaultScrambleHoles() {
   const holes = {};
-  const teams = [...new Set(defaultData.map((p) => p.team).filter(Boolean))];
+  const teams = [...new Set(defaultData.players.map((p) => p.team).filter(Boolean))];
   teams.forEach((t) => { holes[t] = Array(18).fill(null); });
   return holes;
 }
@@ -136,7 +155,7 @@ export default createStore({
     },
 
     resetScores(state) {
-      state.players        = JSON.parse(JSON.stringify(defaultData));
+      state.players        = JSON.parse(JSON.stringify(defaultData.players));
       state.completedEvents = { parTeeShack: false, scramble: false, fantasy: false };
       state.puttPuttHoles  = defaultPuttHoles();
       state.scrambleHoles  = defaultScrambleHoles();

@@ -1,5 +1,25 @@
 <template>
   <div class="admin">
+
+    <!-- ─── Password gate ─────────────────────────────────────────── -->
+    <div v-if="!authenticated" class="auth-gate">
+      <form class="auth-card" @submit.prevent="tryLogin">
+        <h2 class="auth-title">Score Entry</h2>
+        <p class="auth-subtitle">Enter password to continue</p>
+        <input
+          v-model="passwordInput"
+          type="password"
+          class="auth-input"
+          placeholder="Password"
+          autocomplete="current-password"
+          ref="pwInput"
+        />
+        <p v-if="authError" class="auth-error">Incorrect password</p>
+        <button type="submit" class="auth-btn">Enter</button>
+      </form>
+    </div>
+
+    <template v-else>
     <div class="page-header">
       <h1>Score Entry</h1>
       <p class="page-subtitle">Changes save automatically &mdash; no rebuild needed</p>
@@ -235,24 +255,36 @@
       </div>
 
     </div>
+    </template><!-- end v-else authenticated -->
+
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import playerData from '../assets/data.json';
-import { PUTT_PAR, SCRAMBLE_PAR, holeTotal } from '../constants/scoring';
+import scorecardData from '../assets/scorecard_data.json';
+import { holeTotal } from '../constants/scoring';
 
 export default {
   name: 'AdminView',
 
   data() {
     return {
+      authenticated: sessionStorage.getItem('admin-auth') === '1',
+      passwordInput: '',
+      authError: false,
       tab: 'points',
       copyLabel: 'Copy JSON',
-      PUTT_PAR,
-      SCRAMBLE_PAR,
+      PUTT_PAR:    scorecardData.putt_putt.par,
+      SCRAMBLE_PAR: scorecardData.scramble.par,
     };
+  },
+
+  mounted() {
+    if (!this.authenticated) {
+      this.$nextTick(() => this.$refs.pwInput?.focus());
+    }
   },
 
   computed: {
@@ -268,7 +300,7 @@ export default {
     ],
 
     puttPuttEntryRows() {
-      return playerData.map((p) => ({
+      return playerData.players.map((p) => ({
         id:     p.id,
         name:   `${p.user.first_name} ${p.user.last_name}`,
         scores: this.puttPuttHoles[p.id] ?? Array(36).fill(null),
@@ -277,7 +309,7 @@ export default {
 
     scrambleEntryRows() {
       const teamMap = {};
-      playerData.forEach((p) => {
+      playerData.players.forEach((p) => {
         if (!p.team) return;
         if (!teamMap[p.team]) teamMap[p.team] = [];
         teamMap[p.team].push(`${p.user.first_name} ${p.user.last_name}`);
@@ -293,11 +325,11 @@ export default {
     },
 
     scrambleParOut() {
-      return SCRAMBLE_PAR.slice(0, 9).reduce((s, v) => s + v, 0);
+      return this.SCRAMBLE_PAR.slice(0, 9).reduce((s, v) => s + v, 0);
     },
 
     scrambleParIn() {
-      return SCRAMBLE_PAR.slice(9).reduce((s, v) => s + v, 0);
+      return this.SCRAMBLE_PAR.slice(9).reduce((s, v) => s + v, 0);
     },
   },
 
@@ -307,6 +339,18 @@ export default {
       'updatePuttPuttHole', 'updateScrambleHole',
       'applyPuttPuttPoints', 'applyScramblePoints',
     ]),
+
+    tryLogin() {
+      if (this.passwordInput === 'mastersweek2026') {
+        sessionStorage.setItem('admin-auth', '1');
+        this.authenticated = true;
+        this.authError = false;
+      } else {
+        this.authError = true;
+        this.passwordInput = '';
+        this.$nextTick(() => this.$refs.pwInput?.focus());
+      }
+    },
 
     hasFantasyPicks(player) {
       return player.fantasy_picks?.some((p) => p.trim() !== '');
@@ -716,5 +760,81 @@ export default {
 
   // Hide spinners on Firefox
   -moz-appearance: textfield;
+}
+
+// ─── Auth Gate ────────────────────────────────────────────────────────────────
+.auth-gate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.auth-card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 3px solid $masters-accent;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $primary;
+  font-family: $heading-font-stack;
+  margin: 0 0 0.1rem;
+}
+
+.auth-subtitle {
+  font-size: 0.82rem;
+  color: #999;
+  margin: 0 0 0.5rem;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 0.9rem;
+  font-family: $body-font-stack;
+  color: #333;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: $masters-accent;
+    box-shadow: 0 0 0 2px rgba($masters-accent, 0.12);
+  }
+}
+
+.auth-error {
+  font-size: 0.78rem;
+  color: #b91c1c;
+  margin: 0;
+  font-weight: 600;
+}
+
+.auth-btn {
+  background: $primary;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: $body-font-stack;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 0.25rem;
+  transition: background 0.15s;
+
+  &:hover { background: $masters-accent; }
 }
 </style>

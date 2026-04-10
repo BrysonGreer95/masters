@@ -43,9 +43,24 @@ export async function fetchLeaderboard(tournId) {
     headers: HEADERS,
   });
   return {
-    rows: data?.leaderboardRows ?? [],
-    lastUpdated: data?.lastUpdated ?? null,
+    rows:         data?.leaderboardRows ?? [],
+    currentRound: data?.currentRound    ?? null,
+    roundStatus:  data?.roundStatus     ?? null,
+    lastUpdated:  data?.lastUpdated     ?? null,
   };
+}
+
+/**
+ * Returns true when round 4 is finished.
+ * Uses roundStatus "Official" when available; falls back to checking
+ * whether ≥70% of players show thru="F".
+ */
+export function isTournamentComplete(rows, currentRound, roundStatus) {
+  if (roundStatus && roundStatus.toLowerCase() === 'official') return true;
+  if (currentRound !== null && currentRound !== 4) return false;
+  if (!rows.length) return false;
+  const finished = rows.filter((r) => r.thru === 'F').length;
+  return finished / rows.length >= 0.7;
 }
 
 /** Parse an API score string ("E", "+3", "-2", 0) into a number. Returns null if unknown. */

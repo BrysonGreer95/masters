@@ -73,14 +73,14 @@ export default {
   },
   computed: {
     aListPlayers() {
-      return playerData.filter(p => p.list_designation === "A");
+      return playerData.players.filter(p => p.list_designation === "A");
     },
     bListPlayers() {
-      return playerData.filter(p => p.list_designation === "B");
+      return playerData.players.filter(p => p.list_designation === "B");
     },
     tableData() {
       const teamMap = {};
-      playerData.forEach(player => {
+      playerData.players.forEach(player => {
         if (player.team) {
           if (!teamMap[player.team]) teamMap[player.team] = [];
           teamMap[player.team].push(player);

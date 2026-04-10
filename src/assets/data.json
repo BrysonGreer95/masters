@@ -1,274 +1,277 @@
-[
-  {
-    "id": 1,
-    "user": {
-      "first_name": "Bryson",
-      "last_name": "Greer"
+{
+  "_version": 1,
+  "players": [
+    {
+      "id": 1,
+      "user": {
+        "first_name": "Bryson",
+        "last_name": "Greer"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Akshay Bhatia",
+        "Nicolas Echavarria",
+        "Chris Gotterup",
+        "Cameron Young"
+      ],
+      "total_putts": 9042,
+      "team": 4
     },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Akshay Bhatia",
-      "Nicolas Echavarria",
-      "Chris Gotterup",
-      "Cameron Young"
-    ],
-    "total_putts": 9042,
-    "team": 4
-  },
-  {
-    "id": 2,
-    "user": {
-      "first_name": "Daniel",
-      "last_name": "Bizzell"
+    {
+      "id": 2,
+      "user": {
+        "first_name": "Daniel",
+        "last_name": "Bizzell"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Jon Rahm",
+        "Bryson DeChambeau",
+        "Ludvig Åberg",
+        "Chris Gotterup",
+        "Scottie Scheffler"
+      ],
+      "total_putts": 8954,
+      "team": 7
     },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Jon Rahm",
-      "Bryson DeChambeau",
-      "Ludvig Åberg",
-      "Chris Gotterup",
-      "Scottie Scheffler"
-    ],
-    "total_putts": 8954,
-    "team": 7
-  },
-  {
-    "id": 3,
-    "user": {
-      "first_name": "Marty",
-      "last_name": "Bizzell"
+    {
+      "id": 3,
+      "user": {
+        "first_name": "Marty",
+        "last_name": "Bizzell"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Bryson DeChambeau",
+        "Rory McIlroy",
+        "Chris Gotterup",
+        "Justin Rose"
+      ],
+      "total_putts": 12658,
+      "team": 2
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Bryson DeChambeau",
-      "Rory McIlroy",
-      "Chris Gotterup",
-      "Justin Rose"
-    ],
-    "total_putts": 12658,
-    "team": 2
-  },
-  {
-    "id": 4,
-    "user": {
-      "first_name": "Jayden",
-      "last_name": "Bauer"
+    {
+      "id": 4,
+      "user": {
+        "first_name": "Jayden",
+        "last_name": "Bauer"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Bryson DeChambeau",
+        "Ludvig Åberg",
+        "Chris Gotterup",
+        "Rory McIlroy"
+      ],
+      "total_putts": 8300,
+      "team": 3
     },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Bryson DeChambeau",
-      "Ludvig Åberg",
-      "Chris Gotterup",
-      "Rory McIlroy"
-    ],
-    "total_putts": 8300,
-    "team": 3
-  },
-  {
-    "id": 5,
-    "user": {
-      "first_name": "Austin",
-      "last_name": "Myrick"
+    {
+      "id": 5,
+      "user": {
+        "first_name": "Austin",
+        "last_name": "Myrick"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Akshay Bhatia",
+        "Justin Rose",
+        "Jacob Bridgeman",
+        "Bryson DeChambeau"
+      ],
+      "total_putts": 8886,
+      "team": 3
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Akshay Bhatia",
-      "Justin Rose",
-      "Jacob Bridgeman",
-      "Bryson DeChambeau"
-    ],
-    "total_putts": 8886,
-    "team": 3
-  },
-  {
-    "id": 6,
-    "user": {
-      "first_name": "Jonah",
-      "last_name": "Vogt"
+    {
+      "id": 6,
+      "user": {
+        "first_name": "Jonah",
+        "last_name": "Vogt"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Bryson DeChambeau",
+        "Ludvig Åberg",
+        "Chris Gotterup",
+        "Jon Rahm"
+      ],
+      "total_putts": 0,
+      "team": 1
     },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Bryson DeChambeau",
-      "Ludvig Åberg",
-      "Chris Gotterup",
-      "Jon Rahm"
-    ],
-    "total_putts": 0,
-    "team": 1
-  },
-  {
-    "id": 7,
-    "user": {
-      "first_name": "Ethan",
-      "last_name": "Brach"
+    {
+      "id": 7,
+      "user": {
+        "first_name": "Ethan",
+        "last_name": "Brach"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Jon Rahm",
+        "Bryson DeChambeau",
+        "Ludvig Åberg",
+        "Ben Griffin",
+        "Scottie Scheffler"
+      ],
+      "total_putts": 8760,
+      "team": 1
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Jon Rahm",
-      "Bryson DeChambeau",
-      "Ludvig Åberg",
-      "Ben Griffin",
-      "Scottie Scheffler"
-    ],
-    "total_putts": 8760,
-    "team": 1
-  },
-  {
-    "id": 8,
-    "user": {
-      "first_name": "Eric",
-      "last_name": "Leon"
+    {
+      "id": 8,
+      "user": {
+        "first_name": "Eric",
+        "last_name": "Leon"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        ""
+      ],
+      "total_putts": 0,
+      "team": 6
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      ""
-    ],
-    "total_putts": 0,
-    "team": 6
-  },
-  {
-    "id": 9,
-    "user": {
-      "first_name": "Micah",
-      "last_name": "Greer"
+    {
+      "id": 9,
+      "user": {
+        "first_name": "Micah",
+        "last_name": "Greer"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        ""
+      ],
+      "total_putts": 8800,
+      "team": 4
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      ""
-    ],
-    "total_putts": 8800,
-    "team": 4
-  },
-  {
-    "id": 10,
-    "user": {
-      "first_name": "Wyatt",
-      "last_name": "Dershem"
+    {
+      "id": 10,
+      "user": {
+        "first_name": "Wyatt",
+        "last_name": "Dershem"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Bryson DeChambeau",
+        "Ludvig Åberg",
+        "Chris Gotterup",
+        "Xander Schauffele"
+      ],
+      "total_putts": 8814,
+      "team": 7
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Bryson DeChambeau",
-      "Ludvig Åberg",
-      "Chris Gotterup",
-      "Xander Schauffele"
-    ],
-    "total_putts": 8814,
-    "team": 7
-  },
-  {
-    "id": 11,
-    "user": {
-      "first_name": "Andy",
-      "last_name": "Jones"
+    {
+      "id": 11,
+      "user": {
+        "first_name": "Andy",
+        "last_name": "Jones"
+      },
+      "list_designation": "A",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Patrick Reed",
+        "Rory McIlroy",
+        "Michael Brennan",
+        "Sungjae Im"
+      ],
+      "total_putts": 8802,
+      "team": 5
     },
-    "list_designation": "A",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Patrick Reed",
-      "Rory McIlroy",
-      "Michael Brennan",
-      "Sungjae Im"
-    ],
-    "total_putts": 8802,
-    "team": 5
-  },
-  {
-    "id": 12,
-    "user": {
-      "first_name": "Zachary",
-      "last_name": "Burk"
+    {
+      "id": 12,
+      "user": {
+        "first_name": "Zachary",
+        "last_name": "Burk"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Scottie Scheffler",
+        "Cameron Young",
+        "Ludvig Åberg",
+        "Chris Gotterup",
+        "Xander Schauffele"
+      ],
+      "total_putts": 8712,
+      "team": 2
     },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Scottie Scheffler",
-      "Cameron Young",
-      "Ludvig Åberg",
-      "Chris Gotterup",
-      "Xander Schauffele"
-    ],
-    "total_putts": 8712,
-    "team": 2
-  },
-  {
-    "id": 13,
-    "user": {
-      "first_name": "Duke",
-      "last_name": "Dye"
+    {
+      "id": 13,
+      "user": {
+        "first_name": "Duke",
+        "last_name": "Dye"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Rory McIlroy",
+        "Scottie Scheffler",
+        "Tommy Fleetwood",
+        "Ben Griffin",
+        "Akshay Bhatia"
+      ],
+      "total_putts": 9276,
+      "team": 5
     },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Rory McIlroy",
-      "Scottie Scheffler",
-      "Tommy Fleetwood",
-      "Ben Griffin",
-      "Akshay Bhatia"
-    ],
-    "total_putts": 9276,
-    "team": 5
-  },
-  {
-    "id": 14,
-    "user": {
-      "first_name": "Quinlan",
-      "last_name": "Arias"
-    },
-    "list_designation": "B",
-    "parTeeShack": 0,
-    "scramble": 0,
-    "fantasy": 0,
-    "fantasy_picks": [
-      "Rory McIlroy",
-      "Akshay Bhatia",
-      "Danny Willett",
-      "Ben Griffin",
-      "Rasmus Neergaard-Petersen"
-    ],
-    "total_putts": 0,
-    "team": 6
-  }
-]
+    {
+      "id": 14,
+      "user": {
+        "first_name": "Quinlan",
+        "last_name": "Arias"
+      },
+      "list_designation": "B",
+      "parTeeShack": 0,
+      "scramble": 0,
+      "fantasy": 0,
+      "fantasy_picks": [
+        "Rory McIlroy",
+        "Akshay Bhatia",
+        "Danny Willett",
+        "Ben Griffin",
+        "Rasmus Neergaard-Petersen"
+      ],
+      "total_putts": 0,
+      "team": 6
+    }
+  ]
+}

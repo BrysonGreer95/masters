@@ -91,15 +91,17 @@
               <thead>
                 <tr class="sc-header-row">
                   <th class="sc-player-col sc-label">Player</th>
-                  <th v-for="h in 36" :key="`h-${h}`" class="sc-hole-col">{{ h }}</th>
-                  <th class="sc-subtotal-col">OUT</th>
-                  <th class="sc-subtotal-col">IN</th>
+                  <th v-for="h in 18" :key="`h-${h}`" class="sc-hole-col">{{ h }}</th>
+                  <th class="sc-subtotal-col">C1</th>
+                  <th v-for="h in 18" :key="`h-${h + 18}`" class="sc-hole-col">{{ h + 18 }}</th>
+                  <th class="sc-subtotal-col">C2</th>
                   <th class="sc-total-col">TOT</th>
                 </tr>
                 <tr class="sc-par-row">
                   <td class="sc-player-col sc-label">Par</td>
-                  <td v-for="h in 36" :key="`p-${h}`" class="sc-hole-col">{{ puttPar }}</td>
+                  <td v-for="h in 18" :key="`p-${h}`" class="sc-hole-col">{{ puttPar }}</td>
                   <td class="sc-subtotal-col">{{ puttPar * 18 }}</td>
+                  <td v-for="h in 18" :key="`p-${h + 18}`" class="sc-hole-col">{{ puttPar }}</td>
                   <td class="sc-subtotal-col">{{ puttPar * 18 }}</td>
                   <td class="sc-total-col">{{ puttPar * 36 }}</td>
                 </tr>
@@ -108,7 +110,7 @@
                 <tr v-for="player in puttPuttRows" :key="player.id">
                   <td class="sc-player-col sc-name">{{ player.name }}</td>
                   <td
-                    v-for="h in 36"
+                    v-for="h in 18"
                     :key="`${player.id}-${h}`"
                     class="sc-hole-col"
                     :class="scoreHoleClass(player.scores[h - 1], puttPar)"
@@ -116,6 +118,14 @@
                     {{ player.scores[h - 1] !== null ? player.scores[h - 1] : '' }}
                   </td>
                   <td class="sc-subtotal-col">{{ holeSubtotal(player.scores, 0, 18) }}</td>
+                  <td
+                    v-for="h in 18"
+                    :key="`${player.id}-${h + 18}`"
+                    class="sc-hole-col"
+                    :class="scoreHoleClass(player.scores[h + 17], puttPar)"
+                  >
+                    {{ player.scores[h + 17] !== null ? player.scores[h + 17] : '' }}
+                  </td>
                   <td class="sc-subtotal-col">{{ holeSubtotal(player.scores, 18, 36) }}</td>
                   <td class="sc-total-col">{{ holeSubtotal(player.scores, 0, 36) }}</td>
                 </tr>
@@ -141,15 +151,17 @@
               <thead>
                 <tr class="sc-header-row">
                   <th class="sc-team-col sc-label">Team</th>
-                  <th v-for="h in 18" :key="`h-${h}`" class="sc-hole-col">{{ h }}</th>
+                  <th v-for="h in 9" :key="`h-${h}`" class="sc-hole-col">{{ h }}</th>
                   <th class="sc-subtotal-col">OUT</th>
+                  <th v-for="h in 9" :key="`h-${h + 9}`" class="sc-hole-col">{{ h + 9 }}</th>
                   <th class="sc-subtotal-col">IN</th>
                   <th class="sc-total-col">TOT</th>
                 </tr>
                 <tr class="sc-par-row">
                   <td class="sc-team-col sc-label">Par</td>
-                  <td v-for="(p, i) in scramblePar" :key="`p-${i}`" class="sc-hole-col">{{ p }}</td>
+                  <td v-for="(p, i) in scramblePar.slice(0, 9)" :key="`p-${i}`" class="sc-hole-col">{{ p }}</td>
                   <td class="sc-subtotal-col">{{ scrambleParOut }}</td>
+                  <td v-for="(p, i) in scramblePar.slice(9)" :key="`p-${i + 9}`" class="sc-hole-col">{{ p }}</td>
                   <td class="sc-subtotal-col">{{ scrambleParIn }}</td>
                   <td class="sc-total-col">{{ scrambleParOut + scrambleParIn }}</td>
                 </tr>
@@ -161,7 +173,7 @@
                     <span class="team-members">{{ team.members }}</span>
                   </td>
                   <td
-                    v-for="h in 18"
+                    v-for="h in 9"
                     :key="`${team.num}-${h}`"
                     class="sc-hole-col"
                     :class="scoreHoleClass(team.scores[h - 1], scramblePar[h - 1])"
@@ -169,6 +181,14 @@
                     {{ team.scores[h - 1] !== null ? team.scores[h - 1] : '' }}
                   </td>
                   <td class="sc-subtotal-col">{{ holeSubtotal(team.scores, 0, 9) }}</td>
+                  <td
+                    v-for="h in 9"
+                    :key="`${team.num}-${h + 9}`"
+                    class="sc-hole-col"
+                    :class="scoreHoleClass(team.scores[h + 8], scramblePar[h + 8])"
+                  >
+                    {{ team.scores[h + 8] !== null ? team.scores[h + 8] : '' }}
+                  </td>
                   <td class="sc-subtotal-col">{{ holeSubtotal(team.scores, 9, 18) }}</td>
                   <td class="sc-total-col sc-grand-total">{{ holeSubtotal(team.scores, 0, 18) }}</td>
                 </tr>
@@ -184,7 +204,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import playerData from '../assets/data.json';
-import { PUTT_PAR, SCRAMBLE_PAR } from '../constants/scoring';
+import scorecardData from '../assets/scorecard_data.json';
 
 export default {
   name: 'ResultsView',
@@ -193,8 +213,8 @@ export default {
     return {
       puttPuttOpen: false,
       scrambleOpen: false,
-      puttPar:    PUTT_PAR,
-      scramblePar: SCRAMBLE_PAR,
+      puttPar:    scorecardData.putt_putt.par,
+      scramblePar: scorecardData.scramble.par,
     };
   },
 
@@ -203,7 +223,7 @@ export default {
 
     // ─── Putt Putt ──────────────────────────────────────────────────
     puttPuttRows() {
-      return playerData.map((p) => ({
+      return playerData.players.map((p) => ({
         id:     p.id,
         name:   `${p.user.first_name} ${p.user.last_name}`,
         scores: this.puttPuttHoles[p.id] ?? Array(36).fill(null),
@@ -225,7 +245,7 @@ export default {
     // ─── Scramble ───────────────────────────────────────────────────
     scrambleRows() {
       const teamMap = {};
-      playerData.forEach((p) => {
+      playerData.players.forEach((p) => {
         if (!p.team) return;
         if (!teamMap[p.team]) teamMap[p.team] = [];
         teamMap[p.team].push(`${p.user.first_name} ${p.user.last_name}`);
