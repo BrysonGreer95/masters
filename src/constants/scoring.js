@@ -3,7 +3,9 @@ export const PUTT_PUTT_POINTS = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45
 export const SCRAMBLE_POINTS  = [200, 175, 150, 125, 100, 75, 50];
 export const FANTASY_POINTS   = [300, 285, 270, 255, 240, 225, 210, 195, 180, 165, 150, 135, 120, 105];
 
-export const PUTT_PAR = 2; // par per hole at ParTee Shack
+/** Per-hole pars for each ParTee Shack course. Total: Yellow = 40, Blue = 42. */
+export const PUTT_PAR_YELLOW = [2,2,3,2,3,2,2,2,3,2,3,2,2,2,2,2,2,2];
+export const PUTT_PAR_BLUE   = [3,2,2,2,3,2,2,3,2,2,3,3,2,3,2,2,2,2];
 
 // Reedy Creek Golf Course hole pars (front 9 then back 9)
 export const SCRAMBLE_PAR = [4, 4, 3, 4, 5, 4, 3, 4, 4, 4, 4, 3, 4, 5, 4, 3, 5, 4];
@@ -47,7 +49,7 @@ export function calcRankings(items, pointsTable, tiebreakers = {}) {
       // No tiebreaker available — average points across tied positions
       let totalPts = 0;
       for (let k = i; k < j; k++) totalPts += pointsTable[k] ?? 0;
-      const avgPts = Math.round(totalPts / tiedGroup.length);
+      const avgPts = totalPts / tiedGroup.length;
       tiedGroup.forEach((x) => { result[x.id] = { rank: i + 1, points: avgPts }; });
     } else {
       // Sub-rank within the tie using tiebreakers (lower = better)
@@ -65,7 +67,7 @@ export function calcRankings(items, pointsTable, tiebreakers = {}) {
         // Average only across this sub-tied slice
         let totalPts = 0;
         for (let k = i + si; k < i + sj; k++) totalPts += pointsTable[k] ?? 0;
-        const avgPts = Math.round(totalPts / (sj - si));
+        const avgPts = totalPts / (sj - si);
         for (let k = si; k < sj; k++) {
           result[subRanked[k].id] = { rank: i + si + 1, points: avgPts };
         }

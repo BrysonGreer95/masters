@@ -92,42 +92,39 @@
                 <tr class="sc-header-row">
                   <th class="sc-player-col sc-label">Player</th>
                   <th v-for="h in 18" :key="`h-${h}`" class="sc-hole-col">{{ h }}</th>
-                  <th class="sc-subtotal-col">C1</th>
-                  <th v-for="h in 18" :key="`h-${h + 18}`" class="sc-hole-col">{{ h + 18 }}</th>
-                  <th class="sc-subtotal-col">C2</th>
-                  <th class="sc-total-col">TOT</th>
+                  <th class="sc-total-col">Score</th>
                 </tr>
-                <tr class="sc-par-row">
-                  <td class="sc-player-col sc-label">Par</td>
-                  <td v-for="h in 18" :key="`p-${h}`" class="sc-hole-col">{{ puttPar }}</td>
-                  <td class="sc-subtotal-col">{{ puttPar * 18 }}</td>
-                  <td v-for="h in 18" :key="`p-${h + 18}`" class="sc-hole-col">{{ puttPar }}</td>
-                  <td class="sc-subtotal-col">{{ puttPar * 18 }}</td>
-                  <td class="sc-total-col">{{ puttPar * 36 }}</td>
+                <tr class="sc-par-row sc-par-yellow">
+                  <td class="sc-player-col sc-label"><span class="course-badge course-badge--yellow">Y</span> Par</td>
+                  <td v-for="(p, i) in PUTT_PAR_YELLOW" :key="`py-${i}`" class="sc-hole-col">{{ p }}</td>
+                  <td class="sc-total-col">40</td>
+                </tr>
+                <tr class="sc-par-row sc-par-blue">
+                  <td class="sc-player-col sc-label"><span class="course-badge course-badge--blue">B</span> Par</td>
+                  <td v-for="(p, i) in PUTT_PAR_BLUE" :key="`pb-${i}`" class="sc-hole-col">{{ p }}</td>
+                  <td class="sc-total-col">42</td>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="player in puttPuttRows" :key="player.id">
-                  <td class="sc-player-col sc-name">{{ player.name }}</td>
+                  <td class="sc-player-col sc-name">
+                    {{ player.name }}
+                    <span class="course-badge" :class="player.course === 'blue' ? 'course-badge--blue' : 'course-badge--yellow'">
+                      {{ player.course === 'blue' ? 'B' : 'Y' }}
+                    </span>
+                  </td>
                   <td
                     v-for="h in 18"
                     :key="`${player.id}-${h}`"
                     class="sc-hole-col"
-                    :class="scoreHoleClass(player.scores[h - 1], puttPar)"
+                    :class="scoreHoleClass(player.scores[h - 1], player.par[h - 1])"
                   >
                     {{ player.scores[h - 1] !== null ? player.scores[h - 1] : '' }}
                   </td>
-                  <td class="sc-subtotal-col">{{ holeSubtotal(player.scores, 0, 18) }}</td>
-                  <td
-                    v-for="h in 18"
-                    :key="`${player.id}-${h + 18}`"
-                    class="sc-hole-col"
-                    :class="scoreHoleClass(player.scores[h + 17], puttPar)"
-                  >
-                    {{ player.scores[h + 17] !== null ? player.scores[h + 17] : '' }}
+                  <td class="sc-total-col">
+                    <span class="sc-tot-raw">{{ holeSubtotal(player.scores, 0, 18) }}</span>
+                    <span v-if="holeSubtotal(player.scores, 0, 18) !== '—'" class="sc-tot-rel">{{ relativeToParDisplay(player.scores, player.par) }}</span>
                   </td>
-                  <td class="sc-subtotal-col">{{ holeSubtotal(player.scores, 18, 36) }}</td>
-                  <td class="sc-total-col">{{ holeSubtotal(player.scores, 0, 36) }}</td>
                 </tr>
               </tbody>
             </table>
@@ -206,6 +203,7 @@ import { mapGetters } from 'vuex';
 import playerData from '../assets/data.json';
 import scorecardData from '../assets/scorecard_data.json';
 import config from '../assets/config.json';
+import { PUTT_PAR_YELLOW, PUTT_PAR_BLUE } from '../constants/scoring';
 
 export default {
   name: 'ResultsView',
@@ -214,22 +212,28 @@ export default {
     return {
       puttPuttOpen: false,
       scrambleOpen: false,
-      puttPar:    scorecardData.putt_putt.par,
+      PUTT_PAR_YELLOW,
+      PUTT_PAR_BLUE,
       scramblePar: scorecardData.scramble.par,
       cfg: config,
     };
   },
 
   computed: {
-    ...mapGetters(['puttPuttHoles', 'scrambleHoles', 'puttPuttRankings', 'scrambleRankings']),
+    ...mapGetters(['puttPuttHoles', 'puttCourse', 'scrambleHoles', 'puttPuttRankings', 'scrambleRankings']),
 
     // ─── Putt Putt ──────────────────────────────────────────────────
     puttPuttRows() {
-      return playerData.players.map((p) => ({
-        id:     p.id,
-        name:   `${p.user.first_name} ${p.user.last_name}`,
-        scores: this.puttPuttHoles[p.id] ?? Array(36).fill(null),
-      }));
+      return playerData.players.map((p) => {
+        const course = this.puttCourse[p.id] || 'yellow';
+        return {
+          id:     p.id,
+          name:   `${p.user.first_name} ${p.user.last_name}`,
+          scores: this.puttPuttHoles[p.id] ?? Array(18).fill(null),
+          course,
+          par:    course === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW,
+        };
+      });
     },
 
     puttPuttPlayed() {
@@ -238,7 +242,13 @@ export default {
 
     puttPuttPodium() {
       return [...this.puttPuttRows]
-        .map((p) => ({ ...p, total: this.holeSubtotal(p.scores, 0, 36) }))
+        .map((p) => {
+          const raw = p.scores.every((s) => s === null) ? null
+            : p.scores.reduce((sum, s) => sum + (s ?? 0), 0);
+          if (raw === null) return { ...p, total: null };
+          const parTotal = p.par.reduce((s, v) => s + v, 0);
+          return { ...p, total: raw - parTotal };
+        })
         .filter((p) => p.total !== '—')
         .sort((a, b) => Number(a.total) - Number(b.total))
         .slice(0, 3);
@@ -287,6 +297,16 @@ export default {
       const slice = scores.slice(from, to);
       if (slice.every((s) => s === null)) return '—';
       return slice.reduce((sum, s) => sum + (s ?? 0), 0);
+    },
+
+    relativeToParDisplay(scores, parArr) {
+      if (!scores.some((s) => s !== null)) return '—';
+      let strokes = 0, parSoFar = 0;
+      scores.forEach((s, i) => {
+        if (s !== null) { strokes += s; parSoFar += parArr[i]; }
+      });
+      const rel = strokes - parSoFar;
+      return rel === 0 ? 'E' : rel > 0 ? `+${rel}` : `${rel}`;
     },
 
     scoreHoleClass(score, par) {
@@ -486,6 +506,24 @@ export default {
   }
 }
 
+.sc-par-yellow td { background: rgba(#f5c518, 0.14) !important; }
+.sc-par-blue   td { background: rgba(#1565c0, 0.09) !important; }
+
+// ─── Course badges ────────────────────────────────────────────────────────────
+.course-badge {
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+  line-height: 1.4;
+  margin-left: 4px;
+
+  &--yellow { background: #f5c518; color: #5a3d00; }
+  &--blue   { background: #1565c0; color: white; }
+}
+
 // ─── Column Widths ────────────────────────────────────────────────────────────
 .sc-player-col,
 .sc-team-col {
@@ -521,11 +559,26 @@ export default {
 }
 
 .sc-total-col {
-  min-width: 42px;
+  min-width: 52px;
   font-weight: 700;
   color: $primary;
   background: rgba($masters-accent, 0.06);
   border-left: 2px solid $masters-accent;
+}
+
+.sc-tot-raw {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sc-tot-rel {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #888;
+  line-height: 1.2;
 }
 
 .sc-grand-total {

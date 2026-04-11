@@ -1,13 +1,16 @@
 import { createStore } from 'vuex';
 import defaultData from '../assets/data.json';
+import scorecardData from '../assets/scorecard_data.json';
 import {
   PUTT_PUTT_POINTS, SCRAMBLE_POINTS, FANTASY_POINTS,
+  PUTT_PAR_YELLOW, PUTT_PAR_BLUE,
   holeTotal, calcRankings,
 } from '../constants/scoring';
 
 const STORAGE_KEY        = 'masters-scores';
 const EVENTS_KEY         = 'masters-completed-events';
 const PUTT_HOLES_KEY     = 'masters-putt-holes';
+const PUTT_COURSE_KEY    = 'masters-putt-course';
 const SCRAMBLE_HOLES_KEY = 'masters-scramble-holes';
 const VERSION_KEY        = 'masters-data-version';
 
@@ -21,6 +24,7 @@ function checkVersion() {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(EVENTS_KEY);
       localStorage.removeItem(PUTT_HOLES_KEY);
+      localStorage.removeItem(PUTT_COURSE_KEY);
       localStorage.removeItem(SCRAMBLE_HOLES_KEY);
       localStorage.setItem(VERSION_KEY, String(defaultData._version));
     }
@@ -49,14 +53,30 @@ function loadCompletedEvents() {
 
 function defaultPuttHoles() {
   const holes = {};
-  defaultData.players.forEach((p) => { holes[p.id] = Array(36).fill(null); });
+  defaultData.players.forEach((p) => {
+    holes[p.id] = scorecardData.putt_putt.scores[p.id] ?? Array(18).fill(null);
+  });
   return holes;
+}
+
+function loadPuttCourse() {
+  try {
+    const saved = localStorage.getItem(PUTT_COURSE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return scorecardData.putt_putt.courses ?? {};
+}
+
+function persistPuttCourse(course) {
+  try { localStorage.setItem(PUTT_COURSE_KEY, JSON.stringify(course)); } catch { /* ignore */ }
 }
 
 function defaultScrambleHoles() {
   const holes = {};
   const teams = [...new Set(defaultData.players.map((p) => p.team).filter(Boolean))];
-  teams.forEach((t) => { holes[t] = Array(18).fill(null); });
+  teams.forEach((t) => {
+    holes[t] = scorecardData.scramble.scores[t] ?? Array(18).fill(null);
+  });
   return holes;
 }
 
@@ -98,6 +118,7 @@ export default createStore({
       players:        loadPlayers(),
       completedEvents: loadCompletedEvents(),
       puttPuttHoles:  loadPuttHoles(),
+      puttCourse:     loadPuttCourse(),
       scrambleHoles:  loadScrambleHoles(),
     };
   },
@@ -108,6 +129,7 @@ export default createStore({
     hasLocalOverrides: () => !!localStorage.getItem(STORAGE_KEY),
 
     puttPuttHoles:   (state) => state.puttPuttHoles,
+    puttCourse:      (state) => state.puttCourse,
     scrambleHoles:   (state) => state.scrambleHoles,
 
     sortedByTotal: (state) =>
@@ -119,12 +141,15 @@ export default createStore({
         })
         .map((p, idx) => ({ ...p, _rank: idx + 1 })),
 
-    /** Live rankings computed from putt putt hole scores. { [playerId]: { rank, points } } */
+    /** Live rankings computed from putt putt hole scores, ranked by strokes relative to course par. */
     puttPuttRankings(state) {
-      const totals = state.players.map((p) => ({
-        id:    p.id,
-        total: holeTotal(state.puttPuttHoles[p.id] || []),
-      }));
+      const totals = state.players.map((p) => {
+        const raw = holeTotal(state.puttPuttHoles[p.id] || []);
+        if (raw === null) return { id: p.id, total: null };
+        const parArr = (state.puttCourse[p.id] || 'yellow') === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW;
+        const parTotal = parArr.reduce((s, v) => s + v, 0);
+        return { id: p.id, total: raw - parTotal };
+      });
       return calcRankings(totals, PUTT_PUTT_POINTS);
     },
 
@@ -158,18 +183,25 @@ export default createStore({
       state.players        = JSON.parse(JSON.stringify(defaultData.players));
       state.completedEvents = { parTeeShack: false, scramble: false, fantasy: false };
       state.puttPuttHoles  = defaultPuttHoles();
+      state.puttCourse     = {};
       state.scrambleHoles  = defaultScrambleHoles();
       try {
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(EVENTS_KEY);
         localStorage.removeItem(PUTT_HOLES_KEY);
+        localStorage.removeItem(PUTT_COURSE_KEY);
         localStorage.removeItem(SCRAMBLE_HOLES_KEY);
       } catch { /* ignore */ }
     },
 
+    setPuttCourse(state, { playerId, course }) {
+      state.puttCourse = { ...state.puttCourse, [playerId]: course };
+      persistPuttCourse(state.puttCourse);
+    },
+
     // ─── Hole score mutations ───────────────────────────────────────────────
     updatePuttPuttHole(state, { playerId, holeIndex, value }) {
-      const arr = [...(state.puttPuttHoles[playerId] ?? Array(36).fill(null))];
+      const arr = [...(state.puttPuttHoles[playerId] ?? Array(18).fill(null))];
       arr[holeIndex] = (value === '' || value === null || value === undefined)
         ? null
         : Number(value);
@@ -190,10 +222,13 @@ export default createStore({
 
     /** Compute putt putt rankings from hole scores and write points to each player. */
     applyPuttPuttPoints(state) {
-      const totals = state.players.map((p) => ({
-        id:    p.id,
-        total: holeTotal(state.puttPuttHoles[p.id] || []),
-      }));
+      const totals = state.players.map((p) => {
+        const raw = holeTotal(state.puttPuttHoles[p.id] || []);
+        if (raw === null) return { id: p.id, total: null };
+        const parArr = (state.puttCourse[p.id] || 'yellow') === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW;
+        const parTotal = parArr.reduce((s, v) => s + v, 0);
+        return { id: p.id, total: raw - parTotal };
+      });
       const rankings = calcRankings(totals, PUTT_PUTT_POINTS);
       state.players.forEach((p) => {
         p.parTeeShack = rankings[p.id]?.points ?? 0;

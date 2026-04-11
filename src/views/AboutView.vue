@@ -31,7 +31,7 @@
                 rel="noopener noreferrer">{{ cfg.events.putt_putt.venue }} &rarr;</a>
             </div>
             <p class="event-desc">
-              Two full 18-hole courses (36 holes total). Lowest stroke total wins.
+              Best 18-hole scorecard per player. Lowest stroke total wins.
               Rankings determine points — every shot counts.
             </p>
             <b-collapse v-model="openParTee" aria-id="pts-partee">

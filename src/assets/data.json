@@ -1,5 +1,5 @@
 {
-  "_version": 1,
+  "_version": 4,
   "actual_putts": null,
   "players": [
     {
@@ -9,7 +9,7 @@
         "last_name": "Greer"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 55,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -29,7 +29,7 @@
         "last_name": "Bizzell"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 62.5,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -49,7 +49,7 @@
         "last_name": "Bizzell"
       },
       "list_designation": "A",
-      "parTeeShack": 0,
+      "parTeeShack": 62.5,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -69,7 +69,7 @@
         "last_name": "Bauer"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 50,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -89,7 +89,7 @@
         "last_name": "Myrick"
       },
       "list_designation": "A",
-      "parTeeShack": 0,
+      "parTeeShack": 80,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -109,7 +109,7 @@
         "last_name": "Vogt"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 45,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -129,7 +129,7 @@
         "last_name": "Brach"
       },
       "list_designation": "A",
-      "parTeeShack": 0,
+      "parTeeShack": 100,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -137,7 +137,7 @@
         "Bryson DeChambeau",
         "Ludvig Åberg",
         "Ben Griffin",
-        "Scottie Scheffler"
+        "Cameron Young"
       ],
       "total_putts": 8760,
       "team": 1
@@ -165,7 +165,7 @@
         "last_name": "Greer"
       },
       "list_designation": "A",
-      "parTeeShack": 0,
+      "parTeeShack": 87.5,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -181,7 +181,7 @@
         "last_name": "Dershem"
       },
       "list_designation": "A",
-      "parTeeShack": 0,
+      "parTeeShack": 75,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -201,7 +201,7 @@
         "last_name": "Jones"
       },
       "list_designation": "A",
-      "parTeeShack": 0,
+      "parTeeShack": 87.5,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -221,7 +221,7 @@
         "last_name": "Burk"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 70,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -241,7 +241,7 @@
         "last_name": "Dye"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 95,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [
@@ -261,7 +261,7 @@
         "last_name": "Arias"
       },
       "list_designation": "B",
-      "parTeeShack": 0,
+      "parTeeShack": 40,
       "scramble": 0,
       "fantasy": 0,
       "fantasy_picks": [

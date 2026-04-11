@@ -110,8 +110,10 @@
       <!-- ═══════════ PUTT PUTT SCORECARD TAB ═══════════ -->
       <div v-if="tab === 'putt'">
         <div class="sc-controls">
-          <p class="sc-hint">Enter strokes per hole. Rankings and points update live. Click <strong>Apply</strong> when finished to push points to the leaderboard.</p>
-          <button class="btn-apply" @click="confirmApplyPutt">Apply Points to Leaderboard</button>
+          <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
+          <div class="sc-control-btns">
+            <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+          </div>
         </div>
 
         <div class="scorecard-entry-wrap">
@@ -120,27 +122,40 @@
               <tr class="et-header">
                 <th class="et-name-col">Player</th>
                 <th v-for="h in 18" :key="`ph-${h}`" class="et-hole-col">{{ h }}</th>
-                <th class="et-sub-col">OUT</th>
-                <th v-for="h in 18" :key="`ph-${h + 18}`" class="et-hole-col">{{ h + 18 }}</th>
-                <th class="et-sub-col">IN</th>
-                <th class="et-tot-col">TOT</th>
+                <th class="et-tot-col">+/-</th>
                 <th class="et-rank-col">Rank</th>
                 <th class="et-pts-col">Pts</th>
               </tr>
-              <tr class="et-par-row">
-                <td class="et-name-col">Par</td>
-                <td v-for="h in 36" :key="`pp-${h}`" class="et-hole-col">{{ PUTT_PAR }}</td>
-                <td class="et-sub-col">{{ PUTT_PAR * 18 }}</td>
-                <td class="et-sub-col"></td><!-- placeholder for IN label spacing -->
-                <td class="et-tot-col">{{ PUTT_PAR * 36 }}</td>
+              <tr class="et-par-row et-par-yellow">
+                <td class="et-name-col"><span class="course-badge course-badge--yellow">Y</span> Par (40)</td>
+                <td v-for="(p, i) in PUTT_PAR_YELLOW" :key="`py-${i}`" class="et-hole-col">{{ p }}</td>
+                <td class="et-tot-col">40</td>
+                <td class="et-rank-col"></td>
+                <td class="et-pts-col"></td>
+              </tr>
+              <tr class="et-par-row et-par-blue">
+                <td class="et-name-col"><span class="course-badge course-badge--blue">B</span> Par (42)</td>
+                <td v-for="(p, i) in PUTT_PAR_BLUE" :key="`pb-${i}`" class="et-hole-col">{{ p }}</td>
+                <td class="et-tot-col">42</td>
                 <td class="et-rank-col"></td>
                 <td class="et-pts-col"></td>
               </tr>
             </thead>
             <tbody>
               <tr v-for="player in puttPuttEntryRows" :key="player.id">
-                <td class="et-name-col et-name">{{ player.name }}</td>
-                <!-- Front 18 -->
+                <td class="et-name-col et-name">
+                  {{ player.name }}
+                  <div class="course-toggle">
+                    <button
+                      :class="['course-btn', 'course-btn--yellow', player.course !== 'blue' ? 'course-btn--active' : '']"
+                      @click="setCourse(player.id, 'yellow')"
+                    >Y</button>
+                    <button
+                      :class="['course-btn', 'course-btn--blue', player.course === 'blue' ? 'course-btn--active' : '']"
+                      @click="setCourse(player.id, 'blue')"
+                    >B</button>
+                  </div>
+                </td>
                 <td v-for="h in 18" :key="`f-${player.id}-${h}`" class="et-hole-col">
                   <input
                     type="number"
@@ -150,19 +165,7 @@
                     @change="setPuttHole(player.id, h - 1, $event.target.value)"
                   />
                 </td>
-                <td class="et-sub-col et-computed">{{ subtotal(player.scores, 0, 18) }}</td>
-                <!-- Back 18 -->
-                <td v-for="h in 18" :key="`b-${player.id}-${h}`" class="et-hole-col">
-                  <input
-                    type="number"
-                    class="hole-input"
-                    min="1" max="20"
-                    :value="player.scores[h + 17] ?? ''"
-                    @change="setPuttHole(player.id, h + 17, $event.target.value)"
-                  />
-                </td>
-                <td class="et-sub-col et-computed">{{ subtotal(player.scores, 18, 36) }}</td>
-                <td class="et-tot-col et-computed et-total">{{ subtotal(player.scores, 0, 36) }}</td>
+                <td class="et-tot-col et-computed et-total">{{ relativeToParDisplay(player.scores, player.par) }}</td>
                 <td class="et-rank-col et-computed">
                   <span v-if="puttPuttRankings[player.id]?.rank">{{ puttPuttRankings[player.id].rank }}</span>
                   <span v-else class="et-na">—</span>
@@ -182,8 +185,10 @@
       <!-- ═══════════ SCRAMBLE SCORECARD TAB ═══════════ -->
       <div v-if="tab === 'scramble'">
         <div class="sc-controls">
-          <p class="sc-hint">Enter team strokes per hole. Rankings and points update live. Click <strong>Apply</strong> when finished to push points to the leaderboard.</p>
-          <button class="btn-apply" @click="confirmApplyScramble">Apply Points to Leaderboard</button>
+          <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
+          <div class="sc-control-btns">
+            <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+          </div>
         </div>
 
         <div class="scorecard-entry-wrap">
@@ -265,7 +270,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import playerData from '../assets/data.json';
 import scorecardData from '../assets/scorecard_data.json';
 import config from '../assets/config.json';
-import { holeTotal } from '../constants/scoring';
+import { PUTT_PAR_YELLOW, PUTT_PAR_BLUE } from '../constants/scoring';
 
 export default {
   name: 'AdminView',
@@ -277,7 +282,9 @@ export default {
       authError: false,
       tab: 'points',
       copyLabel: 'Copy JSON',
-      PUTT_PAR:    scorecardData.putt_putt.par,
+      scorecardCopyLabel: 'Copy Scorecard JSON',
+      PUTT_PAR_YELLOW,
+      PUTT_PAR_BLUE,
       SCRAMBLE_PAR: scorecardData.scramble.par,
     };
   },
@@ -291,7 +298,7 @@ export default {
   computed: {
     ...mapGetters([
       'sortedByTotal', 'players', 'hasLocalOverrides', 'completedEvents',
-      'puttPuttHoles', 'scrambleHoles', 'puttPuttRankings', 'scrambleRankings',
+      'puttPuttHoles', 'puttCourse', 'scrambleHoles', 'puttPuttRankings', 'scrambleRankings',
     ]),
 
     events: () => [
@@ -301,11 +308,16 @@ export default {
     ],
 
     puttPuttEntryRows() {
-      return playerData.players.map((p) => ({
-        id:     p.id,
-        name:   `${p.user.first_name} ${p.user.last_name}`,
-        scores: this.puttPuttHoles[p.id] ?? Array(36).fill(null),
-      }));
+      return playerData.players.map((p) => {
+        const course = this.puttCourse[p.id] || 'yellow';
+        return {
+          id:     p.id,
+          name:   `${p.user.first_name} ${p.user.last_name}`,
+          scores: this.puttPuttHoles[p.id] ?? Array(18).fill(null),
+          course,
+          par:    course === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW,
+        };
+      });
     },
 
     scrambleEntryRows() {
@@ -337,8 +349,7 @@ export default {
   methods: {
     ...mapMutations([
       'updateScore', 'resetScores', 'toggleEventCompleted',
-      'updatePuttPuttHole', 'updateScrambleHole',
-      'applyPuttPuttPoints', 'applyScramblePoints',
+      'updatePuttPuttHole', 'setPuttCourse', 'updateScrambleHole',
     ]),
 
     tryLogin() {
@@ -365,6 +376,20 @@ export default {
       this.updatePuttPuttHole({ playerId, holeIndex, value });
     },
 
+    setCourse(playerId, course) {
+      this.setPuttCourse({ playerId, course });
+    },
+
+    relativeToParDisplay(scores, parArr) {
+      if (!scores.some((s) => s !== null)) return '—';
+      let strokes = 0, parSoFar = 0;
+      scores.forEach((s, i) => {
+        if (s !== null) { strokes += s; parSoFar += parArr[i]; }
+      });
+      const rel = strokes - parSoFar;
+      return rel === 0 ? 'E' : rel > 0 ? `+${rel}` : `${rel}`;
+    },
+
     setScrambleHole(teamNum, holeIndex, value) {
       this.updateScrambleHole({ teamNum, holeIndex, value });
     },
@@ -375,24 +400,46 @@ export default {
       return slice.reduce((sum, s) => sum + (s ?? 0), 0);
     },
 
-    confirmApplyPutt() {
-      if (confirm('Apply calculated ParTee Shack points to the leaderboard? This will overwrite current ParTee Shack scores.')) {
-        this.applyPuttPuttPoints();
-        this.tab = 'points';
-      }
-    },
-
-    confirmApplyScramble() {
-      if (confirm('Apply calculated Scramble points to the leaderboard? This will overwrite current Scramble scores for all players.')) {
-        this.applyScramblePoints();
-        this.tab = 'points';
-      }
-    },
-
     confirmReset() {
       if (confirm('Reset ALL scores and hole data to defaults? This cannot be undone.')) {
         this.resetScores();
       }
+    },
+
+    async copyScorecardJson() {
+      const puttScores = Object.fromEntries(
+        playerData.players.map((p) => [String(p.id), this.puttPuttHoles[p.id] ?? Array(18).fill(null)])
+      );
+      const puttCourses = Object.fromEntries(
+        playerData.players.map((p) => [String(p.id), this.puttCourse[p.id] || 'yellow'])
+      );
+      const scrambleTeams = [...new Set(playerData.players.map((p) => p.team).filter(Boolean))].sort((a, b) => a - b);
+      const scrambleScores = Object.fromEntries(
+        scrambleTeams.map((t) => [String(t), this.scrambleHoles[t] ?? Array(18).fill(null)])
+      );
+      const json = JSON.stringify({
+        putt_putt: {
+          par: { yellow: PUTT_PAR_YELLOW, blue: PUTT_PAR_BLUE },
+          courses: puttCourses,
+          scores: puttScores,
+        },
+        scramble: {
+          par: this.SCRAMBLE_PAR,
+          scores: scrambleScores,
+        },
+      }, null, 2);
+      try {
+        await navigator.clipboard.writeText(json);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = json;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      this.scorecardCopyLabel = 'Copied!';
+      setTimeout(() => { this.scorecardCopyLabel = 'Copy Scorecard JSON'; }, 2000);
     },
 
     async copyJson() {
@@ -629,6 +676,12 @@ export default {
   flex: 1;
 }
 
+.sc-control-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
 .scorecard-entry-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -666,6 +719,12 @@ export default {
   font-weight: 600;
   padding: 0.3rem;
 }
+
+.et-par-yellow td { background: rgba(#f5c518, 0.12) !important; }
+.et-par-blue td   { background: rgba(#1565c0, 0.08) !important; }
+
+.et-par-yellow .et-name-col,
+.et-par-blue   .et-name-col { background: inherit !important; }
 
 // ─── Entry table column widths ────────────────────────────────────────────────
 .et-name-col, .et-team-col {
@@ -706,6 +765,43 @@ export default {
   font-weight: 600;
   color: $primary;
   font-size: 0.82rem;
+}
+
+// ─── Course selector ──────────────────────────────────────────────────────────
+.course-toggle {
+  display: flex;
+  gap: 3px;
+  margin-top: 3px;
+}
+
+.course-btn {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  color: #888;
+  cursor: pointer;
+  border-radius: 2px;
+  line-height: 1.4;
+
+  &--yellow.course-btn--active { background: #f5c518; border-color: #c9a000; color: #5a3d00; }
+  &--blue.course-btn--active   { background: #1565c0; border-color: #0d47a1; color: white; }
+}
+
+// ─── Course badges (par rows & Results scorecard) ─────────────────────────────
+.course-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+  line-height: 1.4;
+  margin-right: 3px;
+
+  &--yellow { background: #f5c518; color: #5a3d00; }
+  &--blue   { background: #1565c0; color: white; }
 }
 
 .et-computed {
