@@ -41,11 +41,11 @@ describe('holeTotal', () => {
 
 describe('calcRankings — Putt Putt', () => {
   test('clean standings: all 14 players receive their exact point value', () => {
-    const items = Array.from({ length: 14 }, (_, i) => ({ id: i + 1, total: 60 + i }));
+    const items = Array.from({ length: 14 }, (_, index) => ({ id: index + 1, total: 60 + index }));
     const result = calcRankings(items, PUTT_PUTT_POINTS);
-    PUTT_PUTT_POINTS.forEach((pts, idx) => {
-      expect(result[idx + 1].points).toBe(pts);
-      expect(result[idx + 1].rank).toBe(idx + 1);
+    PUTT_PUTT_POINTS.forEach((pts, index) => {
+      expect(result[index + 1].points).toBe(pts);
+      expect(result[index + 1].rank).toBe(index + 1);
     });
   });
 
@@ -55,26 +55,26 @@ describe('calcRankings — Putt Putt', () => {
   });
 
   test('14th place gets 35 pts', () => {
-    const items = Array.from({ length: 14 }, (_, i) => ({ id: i + 1, total: 60 + i }));
+    const items = Array.from({ length: 14 }, (_, index) => ({ id: index + 1, total: 60 + index }));
     expect(calcRankings(items, PUTT_PUTT_POINTS)[14]).toEqual({ rank: 14, points: 35 });
   });
 
-  test('2-way tie averages (100+95)/2 = 98', () => {
+  test('2-way tie for 1st splits (100+95)/2 = 97.5 each', () => {
     const items = [
       { id: 1, total: 60 },
       { id: 2, total: 60 },
       { id: 3, total: 65 },
     ];
     const result = calcRankings(items, PUTT_PUTT_POINTS);
-    expect(result[1].points).toBe(Math.round((100 + 95) / 2)); // 98
-    expect(result[2].points).toBe(Math.round((100 + 95) / 2));
+    expect(result[1].points).toBe(97.5);
+    expect(result[2].points).toBe(97.5);
     expect(result[1].rank).toBe(1);
     expect(result[2].rank).toBe(1);
     expect(result[3].rank).toBe(3);
     expect(result[3].points).toBe(90);
   });
 
-  test('3-way tie averages (100+95+90)/3 = 95', () => {
+  test('3-way tie for 1st splits (100+95+90)/3 = 95 each', () => {
     const items = [
       { id: 1, total: 60 },
       { id: 2, total: 60 },
@@ -82,10 +82,9 @@ describe('calcRankings — Putt Putt', () => {
       { id: 4, total: 70 },
     ];
     const result = calcRankings(items, PUTT_PUTT_POINTS);
-    const expected = Math.round((100 + 95 + 90) / 3); // 95
-    expect(result[1].points).toBe(expected);
-    expect(result[2].points).toBe(expected);
-    expect(result[3].points).toBe(expected);
+    expect(result[1].points).toBe(95);
+    expect(result[2].points).toBe(95);
+    expect(result[3].points).toBe(95);
     expect(result[4].rank).toBe(4);
     expect(result[4].points).toBe(85);
   });
@@ -111,35 +110,35 @@ describe('calcRankings — Putt Putt', () => {
 
 describe('calcRankings — Scramble', () => {
   test('clean standings: all 7 teams receive their exact point value', () => {
-    const items = Array.from({ length: 7 }, (_, i) => ({ id: i + 1, total: 65 + i }));
+    const items = Array.from({ length: 7 }, (_, index) => ({ id: index + 1, total: 65 + index }));
     const result = calcRankings(items, SCRAMBLE_POINTS);
-    SCRAMBLE_POINTS.forEach((pts, idx) => {
-      expect(result[idx + 1].points).toBe(pts);
-      expect(result[idx + 1].rank).toBe(idx + 1);
+    SCRAMBLE_POINTS.forEach((pts, index) => {
+      expect(result[index + 1].points).toBe(pts);
+      expect(result[index + 1].rank).toBe(index + 1);
     });
   });
 
   test('1st place gets 200 pts, 7th gets 50 pts', () => {
-    const items = Array.from({ length: 7 }, (_, i) => ({ id: i + 1, total: 65 + i }));
+    const items = Array.from({ length: 7 }, (_, index) => ({ id: index + 1, total: 65 + index }));
     const result = calcRankings(items, SCRAMBLE_POINTS);
     expect(result[1]).toEqual({ rank: 1, points: 200 });
     expect(result[7]).toEqual({ rank: 7, points: 50 });
   });
 
-  test('2-way tie for 1st averages (200+175)/2 = 188', () => {
+  test('2-way tie for 1st splits (200+175)/2 = 187.5 each', () => {
     const items = [
       { id: 1, total: 65 },
       { id: 2, total: 65 },
       { id: 3, total: 70 },
     ];
     const result = calcRankings(items, SCRAMBLE_POINTS);
-    expect(result[1].points).toBe(Math.round((200 + 175) / 2)); // 188
-    expect(result[2].points).toBe(Math.round((200 + 175) / 2));
+    expect(result[1].points).toBe(187.5);
+    expect(result[2].points).toBe(187.5);
     expect(result[3].rank).toBe(3);
     expect(result[3].points).toBe(150);
   });
 
-  test('mid-pack 2-way tie for 3rd averages (150+125)/2 = 138', () => {
+  test('mid-pack 2-way tie for 3rd splits (150+125)/2 = 137.5 each', () => {
     const items = [
       { id: 1, total: 63 },
       { id: 2, total: 64 },
@@ -148,8 +147,8 @@ describe('calcRankings — Scramble', () => {
       { id: 5, total: 70 },
     ];
     const result = calcRankings(items, SCRAMBLE_POINTS);
-    expect(result[3].points).toBe(Math.round((150 + 125) / 2)); // 138
-    expect(result[4].points).toBe(Math.round((150 + 125) / 2));
+    expect(result[3].points).toBe(137.5);
+    expect(result[4].points).toBe(137.5);
     expect(result[3].rank).toBe(3);
     expect(result[4].rank).toBe(3);
     expect(result[5].rank).toBe(5);
@@ -161,11 +160,11 @@ describe('calcRankings — Scramble', () => {
 
 describe('calcRankings — Fantasy', () => {
   test('clean standings: all 14 players receive their exact point value', () => {
-    const items = Array.from({ length: 14 }, (_, i) => ({ id: i + 1, total: -20 + i }));
+    const items = Array.from({ length: 14 }, (_, index) => ({ id: index + 1, total: -20 + index }));
     const result = calcRankings(items, FANTASY_POINTS);
-    FANTASY_POINTS.forEach((pts, idx) => {
-      expect(result[idx + 1].points).toBe(pts);
-      expect(result[idx + 1].rank).toBe(idx + 1);
+    FANTASY_POINTS.forEach((pts, index) => {
+      expect(result[index + 1].points).toBe(pts);
+      expect(result[index + 1].rank).toBe(index + 1);
     });
   });
 
@@ -181,15 +180,15 @@ describe('calcRankings — Fantasy', () => {
     expect(result[3].rank).toBe(3);
   });
 
-  test('2-way tie with no tiebreaker averages (300+285)/2 = 293', () => {
+  test('2-way tie with no tiebreaker splits (300+285)/2 = 292.5 each', () => {
     const items = [
       { id: 1, total: -12 },
       { id: 2, total: -12 },
       { id: 3, total: -8 },
     ];
     const result = calcRankings(items, FANTASY_POINTS);
-    expect(result[1].points).toBe(Math.round((300 + 285) / 2)); // 293
-    expect(result[2].points).toBe(Math.round((300 + 285) / 2));
+    expect(result[1].points).toBe(292.5);
+    expect(result[2].points).toBe(292.5);
   });
 
   // Tiebreaker = |prediction - actual_putts|, lower diff wins.
@@ -237,7 +236,7 @@ describe('calcRankings — Fantasy', () => {
     expect(result[4].points).toBe(255);
   });
 
-  test('tiebreaker sub-tie: identical prediction diff still averages those two', () => {
+  test('tiebreaker sub-tie: identical prediction diff still splits those two', () => {
     const actual = 9000;
     const items = [
       { id: 1, total: -12 },
@@ -247,8 +246,8 @@ describe('calcRankings — Fantasy', () => {
     // both predicted exactly 9000 — diff 0 for both
     const tiebreakers = { 1: Math.abs(9000 - actual), 2: Math.abs(9000 - actual), 3: 50 };
     const result = calcRankings(items, FANTASY_POINTS, tiebreakers);
-    expect(result[1].points).toBe(Math.round((300 + 285) / 2)); // 293
-    expect(result[2].points).toBe(Math.round((300 + 285) / 2));
+    expect(result[1].points).toBe(292.5);
+    expect(result[2].points).toBe(292.5);
   });
 
   test('tiebreaker only resolves the tied group, not surrounding ranks', () => {
@@ -295,20 +294,20 @@ describe('point tables', () => {
   });
 
   test('PUTT_PUTT_POINTS is strictly descending', () => {
-    for (let i = 1; i < PUTT_PUTT_POINTS.length; i++) {
-      expect(PUTT_PUTT_POINTS[i]).toBeLessThan(PUTT_PUTT_POINTS[i - 1]);
+    for (let index = 1; index < PUTT_PUTT_POINTS.length; index++) {
+      expect(PUTT_PUTT_POINTS[index]).toBeLessThan(PUTT_PUTT_POINTS[index - 1]);
     }
   });
 
   test('SCRAMBLE_POINTS is strictly descending', () => {
-    for (let i = 1; i < SCRAMBLE_POINTS.length; i++) {
-      expect(SCRAMBLE_POINTS[i]).toBeLessThan(SCRAMBLE_POINTS[i - 1]);
+    for (let index = 1; index < SCRAMBLE_POINTS.length; index++) {
+      expect(SCRAMBLE_POINTS[index]).toBeLessThan(SCRAMBLE_POINTS[index - 1]);
     }
   });
 
   test('FANTASY_POINTS is strictly descending', () => {
-    for (let i = 1; i < FANTASY_POINTS.length; i++) {
-      expect(FANTASY_POINTS[i]).toBeLessThan(FANTASY_POINTS[i - 1]);
+    for (let index = 1; index < FANTASY_POINTS.length; index++) {
+      expect(FANTASY_POINTS[index]).toBeLessThan(FANTASY_POINTS[index - 1]);
     }
   });
 });

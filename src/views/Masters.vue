@@ -7,23 +7,17 @@
     </div>
 
     <div class="league-bar">
-      <a
-        :href="cfg.events.fantasy.league_url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="league-link"
-      >Join the Fantasy League &rarr;</a>
+      <a :href="cfg.events.fantasy.league_url" target="_blank" rel="noopener noreferrer" class="league-link">Join the
+        Fantasy League &rarr;</a>
     </div>
 
     <div class="table-wrap">
-      <div class="table-responsive masters-table-vertical-lines">
-        <b-table
-          striped
-          bordered
-          :data="tableData"
-          default-sort="totalNum"
-          default-sort-direction="asc"
-        >
+      <div v-if="isLoading" class="loading-container">
+        <div class="spinner" aria-hidden="true"></div>
+      </div>
+
+      <div v-else class="table-responsive masters-table-vertical-lines">
+        <b-table striped bordered :data="tableData" default-sort="totalNum" default-sort-direction="asc">
           <b-table-column field="_rank" label="Pos" numeric v-slot="props">
             <span class="pos-num">{{ props.row._rank }}</span>
           </b-table-column>
@@ -40,7 +34,8 @@
           <b-table-column field="past_champ" label="Past Champ" v-slot="props">
             <div class="pick-cell">
               <span>{{ props.row.past_champ.name }}</span>
-              <span v-if="props.row.past_champ.score !== null" :class="scoreClass(props.row.past_champ.score)" class="pick-score">
+              <span v-if="props.row.past_champ.score !== null" :class="scoreClass(props.row.past_champ.score)"
+                class="pick-score">
                 {{ formatScore(props.row.past_champ.score) }}
               </span>
             </div>
@@ -56,7 +51,8 @@
           <b-table-column field="international" label="International" v-slot="props">
             <div class="pick-cell">
               <span>{{ props.row.international.name }}</span>
-              <span v-if="props.row.international.score !== null" :class="scoreClass(props.row.international.score)" class="pick-score">
+              <span v-if="props.row.international.score !== null" :class="scoreClass(props.row.international.score)"
+                class="pick-score">
                 {{ formatScore(props.row.international.score) }}
               </span>
             </div>
@@ -64,7 +60,8 @@
           <b-table-column field="first_timer" label="First Timer" v-slot="props">
             <div class="pick-cell">
               <span>{{ props.row.first_timer.name }}</span>
-              <span v-if="props.row.first_timer.score !== null" :class="scoreClass(props.row.first_timer.score)" class="pick-score">
+              <span v-if="props.row.first_timer.score !== null" :class="scoreClass(props.row.first_timer.score)"
+                class="pick-score">
                 {{ formatScore(props.row.first_timer.score) }}
               </span>
             </div>
@@ -72,12 +69,13 @@
           <b-table-column field="wild_card" label="Wild Card" v-slot="props">
             <div class="pick-cell">
               <span>{{ props.row.wild_card.name }}</span>
-              <span v-if="props.row.wild_card.score !== null" :class="scoreClass(props.row.wild_card.score)" class="pick-score">
+              <span v-if="props.row.wild_card.score !== null" :class="scoreClass(props.row.wild_card.score)"
+                class="pick-score">
                 {{ formatScore(props.row.wild_card.score) }}
               </span>
             </div>
           </b-table-column>
-          <b-table-column field="total_putts" label="Total Putts" numeric sortable v-slot="props">
+          <b-table-column field="total_putts" label="Total Putts" numeric v-slot="props">
             {{ props.row.total_putts || '—' }}
           </b-table-column>
         </b-table>
@@ -95,6 +93,7 @@ export default {
   data() {
     return {
       leaderboard: [],
+      isLoading: true,
       scoresLoaded: false,
       cfg: config,
     };
@@ -111,21 +110,21 @@ export default {
         }));
         while (picks.length < 5) picks.push({ name: '', score: null });
 
-        const hasPicks = picks.some((p) => p.name.trim());
+        const hasPicks = picks.some((pick) => pick.name.trim());
         const totalNum = hasPicks
-          ? picks.reduce((sum, p) => p.name.trim() && p.score !== null ? sum + p.score : sum, 0)
+          ? picks.reduce((sum, pick) => pick.name.trim() && pick.score !== null ? sum + pick.score : sum, 0)
           : Infinity;
 
         return {
-          player:        `${player.user.first_name} ${player.user.last_name}`,
+          player: `${player.user.first_name} ${player.user.last_name}`,
           totalNum,
           hasPicks,
-          past_champ:    picks[0],
-          us:            picks[1],
+          past_champ: picks[0],
+          us: picks[1],
           international: picks[2],
-          first_timer:   picks[3],
-          wild_card:     picks[4],
-          total_putts:   player.total_putts || '',
+          first_timer: picks[3],
+          wild_card: picks[4],
+          total_putts: player.total_putts || '',
         };
       });
 
@@ -134,7 +133,7 @@ export default {
           if (a.hasPicks !== b.hasPicks) return a.hasPicks ? -1 : 1;
           return a.totalNum - b.totalNum;
         })
-        .map((r, i) => ({ ...r, _rank: i + 1 }));
+        .map((row, index) => ({ ...row, _rank: index + 1 }));
     },
   },
 
@@ -162,7 +161,7 @@ export default {
         if (!this.completedEvents.fantasy && isTournamentComplete(rows, currentRound, roundStatus)) {
           const scoreTotals = this.players.map((player) => {
             const picks = (player.fantasy_picks ?? []).slice(0, 5);
-            const hasPicks = picks.some((n) => n.trim());
+            const hasPicks = picks.some((name) => name.trim());
             if (!hasPicks) return { id: player.id, total: null };
             const total = picks.reduce((sum, name) => sum + (this.lookupScore(name) ?? 0), 0);
             return { id: player.id, total };
@@ -177,6 +176,7 @@ export default {
 
   async created() {
     await this.loadScores();
+    this.isLoading = false;
   },
 };
 </script>
@@ -246,6 +246,25 @@ export default {
 .fantasy-total {
   font-size: 1rem;
   font-weight: 700;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.08);
+  border-top-color: $primary;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .score-loading {

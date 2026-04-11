@@ -4,17 +4,9 @@
 
     <!-- Desktop table -->
     <div class="table-responsive is-hidden-mobile">
-      <b-table
-        bordered
-        id="table"
-        :key="tableDataKey"
-        :data="sortedByTotal"
-        :default-sort-direction="defaultSortDirection"
-        :sort-icon="sortIcon"
-        :sort-icon-size="sortIconSize"
-        default-sort="_rank"
-        striped
-      >
+      <b-table bordered id="table" :key="tableDataKey" :data="sortedByTotal"
+        :default-sort-direction="defaultSortDirection" :sort-icon="sortIcon" :sort-icon-size="sortIconSize"
+        default-sort="_rank" striped>
         <b-table-column field="_rank" numeric label="Pos" sortable v-slot="props">
           <span class="pos-num">{{ props.row._rank }}</span>
         </b-table-column>
@@ -27,16 +19,21 @@
           }}</span>
         </b-table-column>
         <b-table-column field="parTeeShack" sortable numeric>
-          <template #header><span :class="{ 'col--completed': completedEvents.parTeeShack }">ParTee Shack</span></template>
-          <template #default="props"><span :class="{ 'score--completed': completedEvents.parTeeShack }">{{ props.row.parTeeShack }}</span></template>
+          <template #header><span :class="{ 'col--completed': completedEvents.parTeeShack }">ParTee
+              Shack</span></template>
+          <template #default="props"><span :class="{ 'score--completed': completedEvents.parTeeShack }">{{
+            props.row.parTeeShack }}</span></template>
         </b-table-column>
         <b-table-column field="scramble" sortable numeric>
           <template #header><span :class="{ 'col--completed': completedEvents.scramble }">Scramble</span></template>
-          <template #default="props"><span :class="{ 'score--completed': completedEvents.scramble }">{{ props.row.scramble }}</span></template>
+          <template #default="props"><span :class="{ 'score--completed': completedEvents.scramble }">{{
+            props.row.scramble }}</span></template>
         </b-table-column>
         <b-table-column field="fantasy" sortable numeric>
           <template #header><span :class="{ 'col--completed': completedEvents.fantasy }">Fantasy</span></template>
-          <template #default="props"><span :class="{ 'score--completed': completedEvents.fantasy, 'score--no-picks': !hasFantasyPicks(props.row) }">{{ props.row.fantasy }}</span></template>
+          <template #default="props"><span
+              :class="{ 'score--completed': completedEvents.fantasy, 'score--no-picks': !hasFantasyPicks(props.row) }">{{
+                props.row.fantasy }}</span></template>
         </b-table-column>
       </b-table>
     </div>
@@ -60,7 +57,8 @@
           </div>
           <div class="score-row" :class="{ 'row--completed': completedEvents.fantasy }">
             <span class="score-label">Fantasy</span>
-            <span class="score-value" :class="{ 'score--no-picks': !hasFantasyPicks(player) }">{{ player.fantasy }}</span>
+            <span class="score-value" :class="{ 'score--no-picks': !hasFantasyPicks(player) }">{{ player.fantasy
+            }}</span>
           </div>
         </div>
       </div>
@@ -77,7 +75,7 @@ export default {
   },
   methods: {
     hasFantasyPicks(player) {
-      return player.fantasy_picks && player.fantasy_picks.some((p) => p.trim() !== '');
+      return player.fantasy_picks && player.fantasy_picks.some((pick) => pick.trim() !== '');
     },
   },
   data() {
@@ -203,6 +201,7 @@ export default {
 }
 
 .row--completed {
+
   .score-label,
   .score-value {
     color: #bbb;
@@ -211,11 +210,18 @@ export default {
 
 // ─── Show/Hide ────────────────────────────────────────────────────────────────
 @media (min-width: 641px) {
-  .leaderboard-cards { display: none; }
+  .leaderboard-cards {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
-  .leaderboard-container { padding: 1.5rem 1rem; }
-  :deep(.table-responsive) { display: none; }
+  .leaderboard-container {
+    padding: 1.5rem 1rem;
+  }
+
+  :deep(.table-responsive) {
+    display: none;
+  }
 }
 </style>

@@ -15,12 +15,7 @@
       <div v-else>
         <!-- Search bar -->
         <div class="search-bar-wrap">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="Search player..."
-            class="player-search"
-          />
+          <input v-model="searchQuery" type="text" placeholder="Search player..." class="player-search" />
           <span v-if="searchQuery" class="search-clear" @click="searchQuery = ''">&times;</span>
         </div>
 
@@ -73,168 +68,134 @@
 </template>
 
 <script>
-let tournID = "014";
-import axios from "axios";
-import config from "../assets/config.json";
-
-const API_YEAR = config.events.fantasy.api_year;
+import { getCurrentTournId, fetchLeaderboard, fetchTournament, scoreClass } from '@/api/golf.js';
 
 export default {
-  async created() {
-    await this.getSchedule();
-    await this.getTournament();
-    await this.getScore();
-    this.startAutoRefresh();
-    this.isLoading = false;
+  data() {
+    return {
+      leaderboardRows: [],
+      tournament: {},
+      refreshTimer: null,
+      refreshIntervalMs: 30000,
+      lastUpdated: '',
+      isLoading: true,
+      searchQuery: '',
+    };
   },
+
   computed: {
     sortedScores() {
-      if (!this.currentScore || !Array.isArray(this.currentScore)) return [];
-      const parsePos = (pos) => {
-        const n = parseInt(String(pos ?? '').replace(/\D/g, ''), 10);
-        return isNaN(n) || n <= 0 ? 9999 : n;
+      if (!Array.isArray(this.leaderboardRows)) return [];
+
+      const parsePosition = (position) => {
+        const num = parseInt(String(position ?? '').replace(/\D/g, ''), 10);
+        return isNaN(num) || num <= 0 ? 9999 : num;
       };
-      return [...this.currentScore]
-        .sort((a, b) => parsePos(a.position) - parsePos(b.position))
-        .map(p => ({
-          ...p,
-          playerName: `${p.firstName} ${p.lastName}`,
-          positionNum: parsePos(p.position),
-          totalNum: p.total === "E" || !p.total ? 0 : (parseInt(p.total) || 0),
+
+      return [...this.leaderboardRows]
+        .sort((a, b) => parsePosition(a.position) - parsePosition(b.position))
+        .map((player) => ({
+          ...player,
+          playerName: `${player.firstName} ${player.lastName}`,
+          positionNum: parsePosition(player.position),
+          totalNum: player.total === 'E' || !player.total ? 0 : (parseInt(player.total) || 0),
         }));
     },
+
     filteredScores() {
-      if (!this.searchQuery.trim()) return this.sortedScores;
-      const q = this.searchQuery.toLowerCase();
-      return this.sortedScores.filter(p =>
-        `${p.firstName} ${p.lastName}`.toLowerCase().includes(q)
+      const query = this.searchQuery.trim().toLowerCase();
+      if (!query) return this.sortedScores;
+      return this.sortedScores.filter((player) =>
+        `${player.firstName} ${player.lastName}`.toLowerCase().includes(query)
       );
     },
+
     tournamentDisplayName() {
-      return this.tournament && (this.tournament.name || this.tournament.tournamentName)
-        ? (this.tournament.name || this.tournament.tournamentName)
-        : "Current Tournament";
+      const name = this.tournament?.name || this.tournament?.tournamentName;
+      return name || 'Current Tournament';
     },
+
     tournamentDate() {
-      if (!this.tournament || !this.tournament.date) return "";
-      const { start, end } = this.tournament.date;
-      if (!start && !end) return "";
+      const date = this.tournament?.date;
+      if (!date?.start && !date?.end) return '';
       try {
-        const opts = { timeZone: "America/New_York", month: "long", day: "numeric" };
-        const s = start ? new Date(start).toLocaleDateString("en-US", opts) : "";
-        const e = end   ? new Date(end).toLocaleDateString("en-US", { ...opts, year: "numeric" }) : "";
-        return s && e ? `${s} – ${e}` : s || e;
+        const dateOptions = { timeZone: 'America/New_York', month: 'long', day: 'numeric' };
+        const startStr = date.start
+          ? new Date(date.start).toLocaleDateString('en-US', dateOptions)
+          : '';
+        const endStr = date.end
+          ? new Date(date.end).toLocaleDateString('en-US', { ...dateOptions, year: 'numeric' })
+          : '';
+        return startStr && endStr ? `${startStr} – ${endStr}` : startStr || endStr;
       } catch {
-        return "";
+        return '';
       }
     },
   },
+
   methods: {
-    scoreClass(score) {
-      if (!score || score === "E") return "golf-score even-par";
-      const n = parseInt(score);
-      if (isNaN(n)) return "golf-score even-par";
-      if (n < 0) return "golf-score under-par";
-      if (n > 0) return "golf-score over-par";
-      return "golf-score even-par";
-    },
-    async getSchedule() {
+    scoreClass,
+
+    async loadData() {
       try {
-        const response = await axios.get("https://live-golf-data.p.rapidapi.com/schedule", {
-          params: { orgId: "1", year: API_YEAR },
-          headers: {
-            "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
-            "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
-          },
-        });
-        const schedule = (response.data && response.data.schedule) || [];
-        const today = new Date();
-        const inProgress = schedule.find(s => {
-          if (!s.date) return false;
-          const start = s.date.start ? new Date(s.date.start) : null;
-          const end   = s.date.end   ? new Date(s.date.end)   : null;
-          return start && end && today >= start && today <= end;
-        });
-        if (inProgress) {
-          tournID = inProgress.tournId || tournID;
-        } else {
-          const upcoming = schedule
-            .filter(s => s.date && s.date.start && new Date(s.date.start) > today)
-            .sort((a, b) => new Date(a.date.start) - new Date(b.date.start));
-          if (upcoming.length) {
-            tournID = upcoming[0].tournId || tournID;
-          } else {
-            const past = schedule
-              .filter(s => s.date && s.date.end && new Date(s.date.end) < today)
-              .sort((a, b) => new Date(b.date.end) - new Date(a.date.end));
-            if (past.length) tournID = past[0].tournId || tournID;
-          }
-        }
-        this.selectedTournId = tournID;
-      } catch (error) {
-        console.error("Error fetching schedule:", error);
-        this.selectedTournId = tournID;
-      }
-    },
-    async getScore() {
-      try {
-        const response = await axios.get("https://live-golf-data.p.rapidapi.com/leaderboard", {
-          params: { orgId: "1", tournId: tournID, year: API_YEAR },
-          headers: {
-            "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
-            "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
-          },
-        });
-        this.currentScore = response.data?.leaderboardRows ?? [];
-        const lu = response.data?.lastUpdated ?? new Date().toISOString();
+        const tournId = await getCurrentTournId();
+
+        const [leaderboardData, tournamentData] = await Promise.all([
+          fetchLeaderboard(tournId),
+          fetchTournament(tournId),
+        ]);
+
+        this.leaderboardRows = leaderboardData.rows;
+        this.tournament = tournamentData;
+
         try {
-          this.lastUpdated = new Date(lu).toLocaleString("en-US", { timeZone: "America/New_York" });
+          const rawDate = leaderboardData.lastUpdated ?? new Date().toISOString();
+          this.lastUpdated = new Date(rawDate).toLocaleString('en-US', { timeZone: 'America/New_York' });
         } catch {
-          this.lastUpdated = lu;
+          this.lastUpdated = leaderboardData.lastUpdated ?? '';
         }
       } catch (error) {
-        console.error("Error fetching leaderboard:", error);
-        this.currentScore = [];
-      }
-    },
-    async getTournament() {
-      try {
-        const response = await axios.get("https://live-golf-data.p.rapidapi.com/tournament", {
-          params: { orgId: "1", tournId: tournID, year: API_YEAR },
-          headers: {
-            "X-RapidAPI-Key": "6df9d41375msh7ea88695de29f7bp1ad8a6jsnf5f951f3046f",
-            "X-RapidAPI-Host": "live-golf-data.p.rapidapi.com",
-          },
-        });
-        this.tournament = response.data || {};
-      } catch (error) {
-        console.error("Error fetching tournament:", error);
+        console.error('Error loading Masters leaderboard:', error);
+        this.leaderboardRows = [];
         this.tournament = {};
       }
     },
+
     startAutoRefresh() {
       this.stopAutoRefresh();
-      this.refreshTimer = setInterval(() => this.getScore(), this.refreshIntervalMs);
+      this.refreshTimer = setInterval(() => this.refreshScores(), this.refreshIntervalMs);
     },
+
     stopAutoRefresh() {
       if (this.refreshTimer) {
         clearInterval(this.refreshTimer);
         this.refreshTimer = null;
       }
     },
+
+    async refreshScores() {
+      try {
+        const tournId = await getCurrentTournId();
+        const { rows, lastUpdated } = await fetchLeaderboard(tournId);
+        this.leaderboardRows = rows;
+        try {
+          const rawDate = lastUpdated ?? new Date().toISOString();
+          this.lastUpdated = new Date(rawDate).toLocaleString('en-US', { timeZone: 'America/New_York' });
+        } catch {
+          this.lastUpdated = lastUpdated ?? '';
+        }
+      } catch (error) {
+        console.error('Error refreshing leaderboard scores:', error);
+      }
+    },
   },
-  data() {
-    return {
-      currentScore: [],
-      tournament: {},
-      selectedTournId: tournID,
-      refreshIntervalMs: 30000,
-      refreshTimer: null,
-      lastUpdated: "",
-      isLoading: true,
-      searchQuery: "",
-    };
+
+  async created() {
+    await this.loadData();
+    this.startAutoRefresh();
+    this.isLoading = false;
   },
+
   beforeUnmount() {
     this.stopAutoRefresh();
   },
@@ -400,16 +361,25 @@ export default {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // ─── Show/Hide ────────────────────────────────────────────────────────────────
 @media (min-width: 641px) {
-  .score-cards { display: none; }
+  .score-cards {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
-  .leaderboard-body { padding: 1.25rem 1rem; }
-  :deep(.table-responsive) { display: none; }
+  .leaderboard-body {
+    padding: 1.25rem 1rem;
+  }
+
+  :deep(.table-responsive) {
+    display: none;
+  }
 }
 </style>

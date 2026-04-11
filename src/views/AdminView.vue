@@ -6,260 +6,226 @@
       <form class="auth-card" @submit.prevent="tryLogin">
         <h2 class="auth-title">Score Entry</h2>
         <p class="auth-subtitle">Enter password to continue</p>
-        <input
-          v-model="passwordInput"
-          type="password"
-          class="auth-input"
-          placeholder="Password"
-          autocomplete="current-password"
-          ref="pwInput"
-        />
+        <input v-model="passwordInput" type="password" class="auth-input" placeholder="Password"
+          autocomplete="current-password" ref="pwInput" />
         <p v-if="authError" class="auth-error">Incorrect password</p>
         <button type="submit" class="auth-btn">Enter</button>
       </form>
     </div>
 
     <template v-else>
-    <div class="page-header">
-      <h1>Score Entry</h1>
-      <p class="page-subtitle">Changes save automatically &mdash; no rebuild needed</p>
-    </div>
-
-    <div class="admin-body">
-      <!-- Tab navigation -->
-      <div class="admin-tabs">
-        <button class="tab-btn" :class="{ active: tab === 'points' }" @click="tab = 'points'">Points</button>
-        <button class="tab-btn" :class="{ active: tab === 'putt' }"   @click="tab = 'putt'">ParTee Shack</button>
-        <button class="tab-btn" :class="{ active: tab === 'scramble' }" @click="tab = 'scramble'">Scramble</button>
+      <div class="page-header">
+        <h1>Score Entry</h1>
+        <p class="page-subtitle">Changes save automatically &mdash; no rebuild needed</p>
       </div>
 
-      <!-- ═══════════ POINTS TAB (existing) ═══════════ -->
-      <div v-if="tab === 'points'">
-        <div class="status-bar">
-          <span class="status-indicator" :class="{ active: hasLocalOverrides }">
-            {{ hasLocalOverrides ? 'Using saved scores' : 'Using default data.json scores' }}
-          </span>
-          <div class="admin-actions">
-            <button class="btn-reset" @click="confirmReset">Reset All</button>
-            <button class="btn-export" @click="copyJson">{{ copyLabel }}</button>
+      <div class="admin-body">
+        <!-- Tab navigation -->
+        <div class="admin-tabs">
+          <button class="tab-btn" :class="{ active: tab === 'points' }" @click="tab = 'points'">Points</button>
+          <button class="tab-btn" :class="{ active: tab === 'putt' }" @click="tab = 'putt'">ParTee Shack</button>
+          <button class="tab-btn" :class="{ active: tab === 'scramble' }" @click="tab = 'scramble'">Scramble</button>
+        </div>
+
+        <!-- ═══════════ POINTS TAB (existing) ═══════════ -->
+        <div v-if="tab === 'points'">
+          <div class="status-bar">
+            <span class="status-indicator" :class="{ active: hasLocalOverrides }">
+              {{ hasLocalOverrides ? 'Using saved scores' : 'Using default data.json scores' }}
+            </span>
+            <div class="admin-actions">
+              <button class="btn-reset" @click="confirmReset">Reset All</button>
+              <button class="btn-export" @click="copyJson">{{ copyLabel }}</button>
+            </div>
+          </div>
+
+          <div class="event-toggles">
+            <span class="event-toggles-label">Mark event complete:</span>
+            <button v-for="event in events" :key="event.field" class="event-toggle-btn"
+              :class="{ completed: completedEvents[event.field] }" @click="toggleEventCompleted(event.field)">
+              {{ event.label }}
+            </button>
+          </div>
+
+          <div class="score-table-wrap">
+            <table class="score-table">
+              <thead>
+                <tr>
+                  <th class="col-player">Player</th>
+                  <th class="col-score">ParTee Shack</th>
+                  <th class="col-score">Scramble</th>
+                  <th class="col-score">Fantasy</th>
+                  <th class="col-total">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="player in sortedByTotal" :key="player.id" class="player-row">
+                  <td class="col-player">
+                    <span class="rank">{{ player._rank }}</span>
+                    {{ player.user.first_name }} {{ player.user.last_name }}
+                  </td>
+                  <td class="col-score">
+                    <input type="number" class="score-input" min="0" :value="player.parTeeShack"
+                      @change="update(player.id, 'parTeeShack', $event.target.value)" />
+                  </td>
+                  <td class="col-score">
+                    <input type="number" class="score-input" min="0" :value="player.scramble"
+                      @change="update(player.id, 'scramble', $event.target.value)" />
+                  </td>
+                  <td class="col-score">
+                    <input type="number" class="score-input" min="0"
+                      :class="{ 'score-input--locked': !hasFantasyPicks(player) }" :value="player.fantasy"
+                      :disabled="!hasFantasyPicks(player)"
+                      @change="update(player.id, 'fantasy', $event.target.value)" />
+                  </td>
+                  <td class="col-total">{{ player.parTeeShack + player.scramble + player.fantasy }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="export-hint">
+            Use <strong>Reset All</strong> to clear all scores and hole data.
+            Use <strong>Copy JSON</strong> to export <code>data.json</code> with current scores for permanent storage.
+          </p>
+        </div>
+
+        <!-- ═══════════ PUTT PUTT SCORECARD TAB ═══════════ -->
+        <div v-if="tab === 'putt'">
+          <div class="sc-controls">
+            <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
+            <div class="sc-control-btns">
+              <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+            </div>
+          </div>
+
+          <div class="scorecard-entry-wrap">
+            <table class="entry-table">
+              <thead>
+                <tr class="et-header">
+                  <th class="et-name-col">Player</th>
+                  <th v-for="h in 18" :key="`ph-${h}`" class="et-hole-col">{{ h }}</th>
+                  <th class="et-tot-col">+/-</th>
+                  <th class="et-rank-col">Rank</th>
+                  <th class="et-pts-col">Pts</th>
+                </tr>
+                <tr class="et-par-row et-par-yellow">
+                  <td class="et-name-col"><span class="course-badge course-badge--yellow">Y</span> Par (40)</td>
+                  <td v-for="(p, i) in PUTT_PAR_YELLOW" :key="`py-${i}`" class="et-hole-col">{{ p }}</td>
+                  <td class="et-tot-col">40</td>
+                  <td class="et-rank-col"></td>
+                  <td class="et-pts-col"></td>
+                </tr>
+                <tr class="et-par-row et-par-blue">
+                  <td class="et-name-col"><span class="course-badge course-badge--blue">B</span> Par (42)</td>
+                  <td v-for="(p, i) in PUTT_PAR_BLUE" :key="`pb-${i}`" class="et-hole-col">{{ p }}</td>
+                  <td class="et-tot-col">42</td>
+                  <td class="et-rank-col"></td>
+                  <td class="et-pts-col"></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="player in puttPuttEntryRows" :key="player.id">
+                  <td class="et-name-col et-name">
+                    {{ player.name }}
+                    <div class="course-toggle">
+                      <button
+                        :class="['course-btn', 'course-btn--yellow', player.course !== 'blue' ? 'course-btn--active' : '']"
+                        @click="setCourse(player.id, 'yellow')">Y</button>
+                      <button
+                        :class="['course-btn', 'course-btn--blue', player.course === 'blue' ? 'course-btn--active' : '']"
+                        @click="setCourse(player.id, 'blue')">B</button>
+                    </div>
+                  </td>
+                  <td v-for="h in 18" :key="`f-${player.id}-${h}`" class="et-hole-col">
+                    <input type="number" class="hole-input" min="1" max="20" :value="player.scores[h - 1] ?? ''"
+                      @change="setPuttHole(player.id, h - 1, $event.target.value)" />
+                  </td>
+                  <td class="et-tot-col et-computed et-total">{{ relativeToParDisplay(player.scores, player.par) }}</td>
+                  <td class="et-rank-col et-computed">
+                    <span v-if="puttPuttRankings[player.id]?.rank">{{ puttPuttRankings[player.id].rank }}</span>
+                    <span v-else class="et-na">—</span>
+                  </td>
+                  <td class="et-pts-col et-computed">
+                    <span v-if="puttPuttRankings[player.id]?.points" class="et-pts-val">
+                      {{ puttPuttRankings[player.id].points }}
+                    </span>
+                    <span v-else class="et-na">—</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <div class="event-toggles">
-          <span class="event-toggles-label">Mark event complete:</span>
-          <button
-            v-for="event in events"
-            :key="event.field"
-            class="event-toggle-btn"
-            :class="{ completed: completedEvents[event.field] }"
-            @click="toggleEventCompleted(event.field)"
-          >
-            {{ event.label }}
-          </button>
-        </div>
+        <!-- ═══════════ SCRAMBLE SCORECARD TAB ═══════════ -->
+        <div v-if="tab === 'scramble'">
+          <div class="sc-controls">
+            <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
+            <div class="sc-control-btns">
+              <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+            </div>
+          </div>
 
-        <div class="score-table-wrap">
-          <table class="score-table">
-            <thead>
-              <tr>
-                <th class="col-player">Player</th>
-                <th class="col-score">ParTee Shack</th>
-                <th class="col-score">Scramble</th>
-                <th class="col-score">Fantasy</th>
-                <th class="col-total">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="player in sortedByTotal" :key="player.id" class="player-row">
-                <td class="col-player">
-                  <span class="rank">{{ player._rank }}</span>
-                  {{ player.user.first_name }} {{ player.user.last_name }}
-                </td>
-                <td class="col-score">
-                  <input type="number" class="score-input" min="0"
-                    :value="player.parTeeShack"
-                    @change="update(player.id, 'parTeeShack', $event.target.value)"
-                  />
-                </td>
-                <td class="col-score">
-                  <input type="number" class="score-input" min="0"
-                    :value="player.scramble"
-                    @change="update(player.id, 'scramble', $event.target.value)"
-                  />
-                </td>
-                <td class="col-score">
-                  <input type="number" class="score-input" min="0"
-                    :class="{ 'score-input--locked': !hasFantasyPicks(player) }"
-                    :value="player.fantasy"
-                    :disabled="!hasFantasyPicks(player)"
-                    @change="update(player.id, 'fantasy', $event.target.value)"
-                  />
-                </td>
-                <td class="col-total">{{ player.parTeeShack + player.scramble + player.fantasy }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p class="export-hint">
-          Use <strong>Reset All</strong> to clear all scores and hole data.
-          Use <strong>Copy JSON</strong> to export <code>data.json</code> with current scores for permanent storage.
-        </p>
-      </div>
-
-      <!-- ═══════════ PUTT PUTT SCORECARD TAB ═══════════ -->
-      <div v-if="tab === 'putt'">
-        <div class="sc-controls">
-          <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
-          <div class="sc-control-btns">
-            <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+          <div class="scorecard-entry-wrap">
+            <table class="entry-table">
+              <thead>
+                <tr class="et-header">
+                  <th class="et-team-col">Team</th>
+                  <th v-for="h in 9" :key="`sh-${h}`" class="et-hole-col">{{ h }}</th>
+                  <th class="et-sub-col">OUT</th>
+                  <th v-for="h in 9" :key="`sh-${h + 9}`" class="et-hole-col">{{ h + 9 }}</th>
+                  <th class="et-sub-col">IN</th>
+                  <th class="et-tot-col">TOT</th>
+                  <th class="et-rank-col">Rank</th>
+                  <th class="et-pts-col">Pts</th>
+                </tr>
+                <tr class="et-par-row">
+                  <td class="et-team-col">Par</td>
+                  <td v-for="(p, i) in SCRAMBLE_PAR" :key="`sp-${i}`" class="et-hole-col">{{ p }}</td>
+                  <td class="et-sub-col">{{ scrambleParOut }}</td>
+                  <td class="et-sub-col">{{ scrambleParIn }}</td>
+                  <td class="et-tot-col">{{ scrambleParOut + scrambleParIn }}</td>
+                  <td class="et-rank-col"></td>
+                  <td class="et-pts-col"></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="team in scrambleEntryRows" :key="team.num">
+                  <td class="et-team-col et-name">
+                    <span class="team-label">{{ team.num }}</span>
+                    <span class="team-members-small">{{ team.members }}</span>
+                  </td>
+                  <!-- Front 9 -->
+                  <td v-for="h in 9" :key="`sf-${team.num}-${h}`" class="et-hole-col">
+                    <input type="number" class="hole-input" min="1" max="15" :value="team.scores[h - 1] ?? ''"
+                      @change="setScrambleHole(team.num, h - 1, $event.target.value)" />
+                  </td>
+                  <td class="et-sub-col et-computed">{{ subtotal(team.scores, 0, 9) }}</td>
+                  <!-- Back 9 -->
+                  <td v-for="h in 9" :key="`sb-${team.num}-${h}`" class="et-hole-col">
+                    <input type="number" class="hole-input" min="1" max="15" :value="team.scores[h + 8] ?? ''"
+                      @change="setScrambleHole(team.num, h + 8, $event.target.value)" />
+                  </td>
+                  <td class="et-sub-col et-computed">{{ subtotal(team.scores, 9, 18) }}</td>
+                  <td class="et-tot-col et-computed et-total">{{ subtotal(team.scores, 0, 18) }}</td>
+                  <td class="et-rank-col et-computed">
+                    <span v-if="scrambleRankings[team.num]?.rank">{{ scrambleRankings[team.num].rank }}</span>
+                    <span v-else class="et-na">—</span>
+                  </td>
+                  <td class="et-pts-col et-computed">
+                    <span v-if="scrambleRankings[team.num]?.points" class="et-pts-val">
+                      {{ scrambleRankings[team.num].points }}
+                    </span>
+                    <span v-else class="et-na">—</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <div class="scorecard-entry-wrap">
-          <table class="entry-table">
-            <thead>
-              <tr class="et-header">
-                <th class="et-name-col">Player</th>
-                <th v-for="h in 18" :key="`ph-${h}`" class="et-hole-col">{{ h }}</th>
-                <th class="et-tot-col">+/-</th>
-                <th class="et-rank-col">Rank</th>
-                <th class="et-pts-col">Pts</th>
-              </tr>
-              <tr class="et-par-row et-par-yellow">
-                <td class="et-name-col"><span class="course-badge course-badge--yellow">Y</span> Par (40)</td>
-                <td v-for="(p, i) in PUTT_PAR_YELLOW" :key="`py-${i}`" class="et-hole-col">{{ p }}</td>
-                <td class="et-tot-col">40</td>
-                <td class="et-rank-col"></td>
-                <td class="et-pts-col"></td>
-              </tr>
-              <tr class="et-par-row et-par-blue">
-                <td class="et-name-col"><span class="course-badge course-badge--blue">B</span> Par (42)</td>
-                <td v-for="(p, i) in PUTT_PAR_BLUE" :key="`pb-${i}`" class="et-hole-col">{{ p }}</td>
-                <td class="et-tot-col">42</td>
-                <td class="et-rank-col"></td>
-                <td class="et-pts-col"></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="player in puttPuttEntryRows" :key="player.id">
-                <td class="et-name-col et-name">
-                  {{ player.name }}
-                  <div class="course-toggle">
-                    <button
-                      :class="['course-btn', 'course-btn--yellow', player.course !== 'blue' ? 'course-btn--active' : '']"
-                      @click="setCourse(player.id, 'yellow')"
-                    >Y</button>
-                    <button
-                      :class="['course-btn', 'course-btn--blue', player.course === 'blue' ? 'course-btn--active' : '']"
-                      @click="setCourse(player.id, 'blue')"
-                    >B</button>
-                  </div>
-                </td>
-                <td v-for="h in 18" :key="`f-${player.id}-${h}`" class="et-hole-col">
-                  <input
-                    type="number"
-                    class="hole-input"
-                    min="1" max="20"
-                    :value="player.scores[h - 1] ?? ''"
-                    @change="setPuttHole(player.id, h - 1, $event.target.value)"
-                  />
-                </td>
-                <td class="et-tot-col et-computed et-total">{{ relativeToParDisplay(player.scores, player.par) }}</td>
-                <td class="et-rank-col et-computed">
-                  <span v-if="puttPuttRankings[player.id]?.rank">{{ puttPuttRankings[player.id].rank }}</span>
-                  <span v-else class="et-na">—</span>
-                </td>
-                <td class="et-pts-col et-computed">
-                  <span v-if="puttPuttRankings[player.id]?.points" class="et-pts-val">
-                    {{ puttPuttRankings[player.id].points }}
-                  </span>
-                  <span v-else class="et-na">—</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
-
-      <!-- ═══════════ SCRAMBLE SCORECARD TAB ═══════════ -->
-      <div v-if="tab === 'scramble'">
-        <div class="sc-controls">
-          <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
-          <div class="sc-control-btns">
-            <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
-          </div>
-        </div>
-
-        <div class="scorecard-entry-wrap">
-          <table class="entry-table">
-            <thead>
-              <tr class="et-header">
-                <th class="et-team-col">Team</th>
-                <th v-for="h in 9" :key="`sh-${h}`" class="et-hole-col">{{ h }}</th>
-                <th class="et-sub-col">OUT</th>
-                <th v-for="h in 9" :key="`sh-${h + 9}`" class="et-hole-col">{{ h + 9 }}</th>
-                <th class="et-sub-col">IN</th>
-                <th class="et-tot-col">TOT</th>
-                <th class="et-rank-col">Rank</th>
-                <th class="et-pts-col">Pts</th>
-              </tr>
-              <tr class="et-par-row">
-                <td class="et-team-col">Par</td>
-                <td v-for="(p, i) in SCRAMBLE_PAR" :key="`sp-${i}`" class="et-hole-col">{{ p }}</td>
-                <td class="et-sub-col">{{ scrambleParOut }}</td>
-                <td class="et-sub-col">{{ scrambleParIn }}</td>
-                <td class="et-tot-col">{{ scrambleParOut + scrambleParIn }}</td>
-                <td class="et-rank-col"></td>
-                <td class="et-pts-col"></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="team in scrambleEntryRows" :key="team.num">
-                <td class="et-team-col et-name">
-                  <span class="team-label">{{ team.num }}</span>
-                  <span class="team-members-small">{{ team.members }}</span>
-                </td>
-                <!-- Front 9 -->
-                <td v-for="h in 9" :key="`sf-${team.num}-${h}`" class="et-hole-col">
-                  <input
-                    type="number"
-                    class="hole-input"
-                    min="1" max="15"
-                    :value="team.scores[h - 1] ?? ''"
-                    @change="setScrambleHole(team.num, h - 1, $event.target.value)"
-                  />
-                </td>
-                <td class="et-sub-col et-computed">{{ subtotal(team.scores, 0, 9) }}</td>
-                <!-- Back 9 -->
-                <td v-for="h in 9" :key="`sb-${team.num}-${h}`" class="et-hole-col">
-                  <input
-                    type="number"
-                    class="hole-input"
-                    min="1" max="15"
-                    :value="team.scores[h + 8] ?? ''"
-                    @change="setScrambleHole(team.num, h + 8, $event.target.value)"
-                  />
-                </td>
-                <td class="et-sub-col et-computed">{{ subtotal(team.scores, 9, 18) }}</td>
-                <td class="et-tot-col et-computed et-total">{{ subtotal(team.scores, 0, 18) }}</td>
-                <td class="et-rank-col et-computed">
-                  <span v-if="scrambleRankings[team.num]?.rank">{{ scrambleRankings[team.num].rank }}</span>
-                  <span v-else class="et-na">—</span>
-                </td>
-                <td class="et-pts-col et-computed">
-                  <span v-if="scrambleRankings[team.num]?.points" class="et-pts-val">
-                    {{ scrambleRankings[team.num].points }}
-                  </span>
-                  <span v-else class="et-na">—</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
     </template><!-- end v-else authenticated -->
 
   </div>
@@ -303,19 +269,19 @@ export default {
 
     events: () => [
       { field: 'parTeeShack', label: 'ParTee Shack' },
-      { field: 'scramble',    label: 'Scramble'     },
-      { field: 'fantasy',     label: 'Fantasy'      },
+      { field: 'scramble', label: 'Scramble' },
+      { field: 'fantasy', label: 'Fantasy' },
     ],
 
     puttPuttEntryRows() {
       return playerData.players.map((p) => {
         const course = this.puttCourse[p.id] || 'yellow';
         return {
-          id:     p.id,
-          name:   `${p.user.first_name} ${p.user.last_name}`,
+          id: p.id,
+          name: `${p.user.first_name} ${p.user.last_name}`,
           scores: this.puttPuttHoles[p.id] ?? Array(18).fill(null),
           course,
-          par:    course === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW,
+          par: course === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW,
         };
       });
     },
@@ -333,7 +299,7 @@ export default {
         .map((num) => ({
           num,
           members: teamMap[num].join(' / '),
-          scores:  this.scrambleHoles[num] ?? Array(18).fill(null),
+          scores: this.scrambleHoles[num] ?? Array(18).fill(null),
         }));
     },
 
@@ -408,14 +374,14 @@ export default {
 
     async copyScorecardJson() {
       const puttScores = Object.fromEntries(
-        playerData.players.map((p) => [String(p.id), this.puttPuttHoles[p.id] ?? Array(18).fill(null)])
+        playerData.players.map((player) => [String(player.id), this.puttPuttHoles[player.id] ?? Array(18).fill(null)])
       );
       const puttCourses = Object.fromEntries(
-        playerData.players.map((p) => [String(p.id), this.puttCourse[p.id] || 'yellow'])
+        playerData.players.map((player) => [String(player.id), this.puttCourse[player.id] || 'yellow'])
       );
-      const scrambleTeams = [...new Set(playerData.players.map((p) => p.team).filter(Boolean))].sort((a, b) => a - b);
+      const scrambleTeams = [...new Set(playerData.players.map((player) => player.team).filter(Boolean))].sort((a, b) => a - b);
       const scrambleScores = Object.fromEntries(
-        scrambleTeams.map((t) => [String(t), this.scrambleHoles[t] ?? Array(18).fill(null)])
+        scrambleTeams.map((teamNum) => [String(teamNum), this.scrambleHoles[teamNum] ?? Array(18).fill(null)])
       );
       const json = JSON.stringify({
         putt_putt: {
@@ -464,7 +430,9 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/_variables.scss';
 
-.admin { width: 100%; }
+.admin {
+  width: 100%;
+}
 
 .admin-body {
   max-width: 100%;
@@ -498,7 +466,9 @@ export default {
   font-family: $body-font-stack;
   transition: color 0.15s, border-color 0.15s;
 
-  &:hover { color: $primary; }
+  &:hover {
+    color: $primary;
+  }
 
   &.active {
     color: $primary;
@@ -524,13 +494,24 @@ export default {
   font-weight: 600;
   color: #999;
 
-  &.active { color: $masters-accent; }
-  &.active::before { content: '● '; color: $masters-accent; }
+  &.active {
+    color: $masters-accent;
+  }
+
+  &.active::before {
+    content: '● ';
+    color: $masters-accent;
+  }
 }
 
-.admin-actions { display: flex; gap: 0.75rem; }
+.admin-actions {
+  display: flex;
+  gap: 0.75rem;
+}
 
-.btn-reset, .btn-export, .btn-apply {
+.btn-reset,
+.btn-export,
+.btn-apply {
   padding: 0.45rem 1rem;
   font-size: 0.8rem;
   font-weight: 600;
@@ -542,9 +523,33 @@ export default {
   transition: background 0.15s;
 }
 
-.btn-reset  { background: #f0f0f0; color: #555; &:hover { background: #e0e0e0; } }
-.btn-export { background: $primary; color: white; &:hover { background: darken($primary, 6%); } }
-.btn-apply  { background: $masters-accent; color: white; padding: 0.5rem 1.25rem; &:hover { background: darken($masters-accent, 8%); } }
+.btn-reset {
+  background: #f0f0f0;
+  color: #555;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+.btn-export {
+  background: $primary;
+  color: white;
+
+  &:hover {
+    background: darken($primary, 6%);
+  }
+}
+
+.btn-apply {
+  background: $masters-accent;
+  color: white;
+  padding: 0.5rem 1.25rem;
+
+  &:hover {
+    background: darken($masters-accent, 8%);
+  }
+}
 
 // ─── Event Toggles ────────────────────────────────────────────────────────────
 .event-toggles {
@@ -576,8 +581,16 @@ export default {
   font-family: $body-font-stack;
   transition: all 0.15s;
 
-  &:hover { border-color: $masters-accent; color: $masters-accent; }
-  &.completed { background: $masters-accent; border-color: $masters-accent; color: white; }
+  &:hover {
+    border-color: $masters-accent;
+    color: $masters-accent;
+  }
+
+  &.completed {
+    background: $masters-accent;
+    border-color: $masters-accent;
+    color: white;
+  }
 }
 
 // ─── Points Score Table ───────────────────────────────────────────────────────
@@ -610,12 +623,27 @@ export default {
     vertical-align: middle;
   }
 
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba($masters-accent, 0.02); }
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: rgba($masters-accent, 0.02);
+  }
 }
 
-.col-score { text-align: center; width: 120px; }
-.col-total { text-align: center; width: 80px; font-weight: 700; color: $primary; font-size: 1rem; }
+.col-score {
+  text-align: center;
+  width: 120px;
+}
+
+.col-total {
+  text-align: center;
+  width: 80px;
+  font-weight: 700;
+  color: $primary;
+  font-size: 1rem;
+}
 
 .rank {
   display: inline-flex;
@@ -643,9 +671,23 @@ export default {
   font-family: $body-font-stack;
   transition: border-color 0.15s;
 
-  &:focus { outline: none; border-color: $masters-accent; background: white; }
-  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button { opacity: 1; }
-  &--locked { background: #f0f0f0; color: #aaa; border-color: rgba(0,0,0,0.08); cursor: not-allowed; }
+  &:focus {
+    outline: none;
+    border-color: $masters-accent;
+    background: white;
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    opacity: 1;
+  }
+
+  &--locked {
+    background: #f0f0f0;
+    color: #aaa;
+    border-color: rgba(0, 0, 0, 0.08);
+    cursor: not-allowed;
+  }
 }
 
 .export-hint {
@@ -653,10 +695,15 @@ export default {
   font-size: 0.82rem;
   color: #999;
   line-height: 1.6;
-  border-top: 1px solid rgba(0,0,0,0.07);
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
   padding-top: 1rem;
 
-  code { background: #f0f0f0; padding: 0.1rem 0.3rem; font-size: 0.8rem; color: $primary; }
+  code {
+    background: #f0f0f0;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.8rem;
+    color: $primary;
+  }
 }
 
 // ─── Scorecard Entry (shared by putt putt and scramble tabs) ─────────────────
@@ -694,7 +741,8 @@ export default {
   width: max-content;
   font-size: 0.8rem;
 
-  th, td {
+  th,
+  td {
     border: 1px solid rgba(0, 0, 0, 0.09);
     padding: 0;
     text-align: center;
@@ -720,14 +768,22 @@ export default {
   padding: 0.3rem;
 }
 
-.et-par-yellow td { background: rgba(#f5c518, 0.12) !important; }
-.et-par-blue td   { background: rgba(#1565c0, 0.08) !important; }
+.et-par-yellow td {
+  background: rgba(#f5c518, 0.12) !important;
+}
+
+.et-par-blue td {
+  background: rgba(#1565c0, 0.08) !important;
+}
 
 .et-par-yellow .et-name-col,
-.et-par-blue   .et-name-col { background: inherit !important; }
+.et-par-blue .et-name-col {
+  background: inherit !important;
+}
 
 // ─── Entry table column widths ────────────────────────────────────────────────
-.et-name-col, .et-team-col {
+.et-name-col,
+.et-team-col {
   text-align: left !important;
   min-width: 130px;
   position: sticky;
@@ -736,7 +792,9 @@ export default {
   background: white;
   padding: 0.4rem 0.6rem !important;
 
-  &.et-header { background: $primary !important; }
+  &.et-header {
+    background: $primary !important;
+  }
 }
 
 .et-par-row .et-name-col,
@@ -744,11 +802,14 @@ export default {
   background: rgba($masters-accent, 0.07) !important;
 }
 
-.et-hole-col { width: 36px; min-width: 36px; }
+.et-hole-col {
+  width: 36px;
+  min-width: 36px;
+}
 
 .et-sub-col {
   min-width: 38px;
-  background: rgba(0,0,0,0.02);
+  background: rgba(0, 0, 0, 0.02);
   border-left: 2px solid rgba($masters-accent, 0.25) !important;
 }
 
@@ -757,8 +818,14 @@ export default {
   border-left: 2px solid $masters-accent !important;
 }
 
-.et-rank-col { min-width: 36px; border-left: 2px solid rgba($masters-gold, 0.4) !important; }
-.et-pts-col  { min-width: 44px; }
+.et-rank-col {
+  min-width: 36px;
+  border-left: 2px solid rgba($masters-gold, 0.4) !important;
+}
+
+.et-pts-col {
+  min-width: 44px;
+}
 
 // ─── Entry table cells ────────────────────────────────────────────────────────
 .et-name {
@@ -785,8 +852,17 @@ export default {
   border-radius: 2px;
   line-height: 1.4;
 
-  &--yellow.course-btn--active { background: #f5c518; border-color: #c9a000; color: #5a3d00; }
-  &--blue.course-btn--active   { background: #1565c0; border-color: #0d47a1; color: white; }
+  &--yellow.course-btn--active {
+    background: #f5c518;
+    border-color: #c9a000;
+    color: #5a3d00;
+  }
+
+  &--blue.course-btn--active {
+    background: #1565c0;
+    border-color: #0d47a1;
+    color: white;
+  }
 }
 
 // ─── Course badges (par rows & Results scorecard) ─────────────────────────────
@@ -800,8 +876,15 @@ export default {
   line-height: 1.4;
   margin-right: 3px;
 
-  &--yellow { background: #f5c518; color: #5a3d00; }
-  &--blue   { background: #1565c0; color: white; }
+  &--yellow {
+    background: #f5c518;
+    color: #5a3d00;
+  }
+
+  &--blue {
+    background: #1565c0;
+    color: white;
+  }
 }
 
 .et-computed {
@@ -811,14 +894,19 @@ export default {
   font-weight: 600;
 }
 
-.et-total { font-weight: 700; color: $primary; }
+.et-total {
+  font-weight: 700;
+  color: $primary;
+}
 
 .et-pts-val {
   font-weight: 700;
   color: $masters-accent;
 }
 
-.et-na { color: #ccc; }
+.et-na {
+  color: #ccc;
+}
 
 .team-label {
   font-weight: 700;
@@ -853,7 +941,9 @@ export default {
   }
 
   &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button { display: none; }
+  &::-webkit-outer-spin-button {
+    display: none;
+  }
 
   // Hide spinners on Firefox
   -moz-appearance: textfield;
@@ -932,6 +1022,8 @@ export default {
   margin-top: 0.25rem;
   transition: background 0.15s;
 
-  &:hover { background: $masters-accent; }
+  &:hover {
+    background: $masters-accent;
+  }
 }
 </style>

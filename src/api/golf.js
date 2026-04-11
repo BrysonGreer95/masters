@@ -15,24 +15,24 @@ export async function getCurrentTournId() {
       params: { orgId: '1', year: API_YEAR },
       headers: HEADERS,
     });
-    const schedule = data?.schedule || [];
+    const schedule = data?.schedule ?? [];
     const today = new Date();
-    const toDate = (s) => (s ? new Date(s) : null);
+    const toDate = (dateString) => (dateString ? new Date(dateString) : null);
 
-    const inProgress = schedule.find(({ date }) => {
-      const start = toDate(date?.start);
-      const end = toDate(date?.end);
+    const inProgress = schedule.find((tournament) => {
+      const start = toDate(tournament.date?.start);
+      const end = toDate(tournament.date?.end);
       return start && end && today >= start && today <= end;
     });
     if (inProgress) return inProgress.tournId || DEFAULT_TOURN_ID;
 
     const upcoming = schedule
-      .filter((s) => toDate(s.date?.start) > today)
+      .filter((tournament) => toDate(tournament.date?.start) > today)
       .sort((a, b) => toDate(a.date.start) - toDate(b.date.start));
     if (upcoming.length) return upcoming[0].tournId || DEFAULT_TOURN_ID;
 
     const past = schedule
-      .filter((s) => toDate(s.date?.end) < today)
+      .filter((tournament) => toDate(tournament.date?.end) < today)
       .sort((a, b) => toDate(b.date.end) - toDate(a.date.end));
     if (past.length) return past[0].tournId || DEFAULT_TOURN_ID;
   } catch { /* ignore */ }
@@ -45,11 +45,19 @@ export async function fetchLeaderboard(tournId) {
     headers: HEADERS,
   });
   return {
-    rows:         data?.leaderboardRows ?? [],
-    currentRound: data?.currentRound    ?? null,
-    roundStatus:  data?.roundStatus     ?? null,
-    lastUpdated:  data?.lastUpdated     ?? null,
+    rows: data?.leaderboardRows ?? [],
+    currentRound: data?.currentRound ?? null,
+    roundStatus: data?.roundStatus ?? null,
+    lastUpdated: data?.lastUpdated ?? null,
   };
+}
+
+export async function fetchTournament(tournId) {
+  const { data } = await axios.get(`${BASE_URL}/tournament`, {
+    params: { orgId: '1', tournId, year: API_YEAR },
+    headers: HEADERS,
+  });
+  return data ?? {};
 }
 
 /**
@@ -61,16 +69,16 @@ export function isTournamentComplete(rows, currentRound, roundStatus) {
   if (roundStatus && roundStatus.toLowerCase() === 'official') return true;
   if (currentRound !== null && currentRound !== 4) return false;
   if (!rows.length) return false;
-  const finished = rows.filter((r) => r.thru === 'F').length;
-  return finished / rows.length >= 0.7;
+  const finishedCount = rows.filter((row) => row.thru === 'F').length;
+  return finishedCount / rows.length >= 0.7;
 }
 
 /** Parse an API score string ("E", "+3", "-2", 0) into a number. Returns null if unknown. */
 export function parseScore(val) {
   if (val === null || val === undefined || val === '') return null;
   if (val === 'E') return 0;
-  const n = parseInt(String(val).replace('+', ''), 10);
-  return isNaN(n) ? null : n;
+  const parsed = parseInt(String(val).replace('+', ''), 10);
+  return isNaN(parsed) ? null : parsed;
 }
 
 /** Format a numeric score back to golf convention: 0 → "E", 3 → "+3", -2 → "-2", null → "--" */

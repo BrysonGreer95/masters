@@ -3,7 +3,8 @@
   <div id="scramble_table">
     <div class="page-header">
       <h1>Scramble Teams</h1>
-      <p class="page-subtitle">{{ cfg.events.scramble.date }} &bull; {{ cfg.events.scramble.time }} &bull; {{ cfg.events.scramble.venue }}</p>
+      <p class="page-subtitle">{{ cfg.events.scramble.date }} &bull; {{ cfg.events.scramble.time }} &bull; {{
+        cfg.events.scramble.venue }}</p>
     </div>
 
     <div class="content-wrap">
@@ -66,7 +67,7 @@ export default {
     return {
       cfg: config,
       columns: [
-        { field: "team",     label: "Team",     numeric: true },
+        { field: "team", label: "Team", numeric: true },
         { field: "member_1", label: "Member 1" },
         { field: "member_2", label: "Member 2", sortable: false },
         { field: "tee_time", label: "Tee Time" },
@@ -75,10 +76,10 @@ export default {
   },
   computed: {
     aListPlayers() {
-      return playerData.players.filter(p => p.list_designation === "A");
+      return playerData.players.filter((player) => player.list_designation === 'A');
     },
     bListPlayers() {
-      return playerData.players.filter(p => p.list_designation === "B");
+      return playerData.players.filter((player) => player.list_designation === 'B');
     },
     tableData() {
       const teamMap = {};
@@ -91,7 +92,7 @@ export default {
       return Object.keys(teamMap)
         .sort((a, b) => a - b)
         .map(teamNum => ({
-          team:     teamNum,
+          team: teamNum,
           member_1: `${teamMap[teamNum][0].user.first_name} ${teamMap[teamNum][0].user.last_name}`,
           member_2: `${teamMap[teamNum][1].user.first_name} ${teamMap[teamNum][1].user.last_name}`,
           tee_time: TEE_TIMES[teamNum - 1],

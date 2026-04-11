@@ -13,9 +13,5 @@ export default {
   components: {
     MastersLeaderboard,
   },
-  data() {
-    return {};
-  },
 };
 </script>
-
