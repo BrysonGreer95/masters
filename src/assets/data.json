@@ -1,5 +1,5 @@
 {
-  "_version": 4,
+  "_version": 5,
   "actual_putts": null,
   "players": [
     {
@@ -10,7 +10,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 55,
-      "scramble": 0,
+      "scramble": 100,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -30,7 +30,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 62.5,
-      "scramble": 0,
+      "scramble": 175,
       "fantasy": 0,
       "fantasy_picks": [
         "Jon Rahm",
@@ -50,7 +50,7 @@
       },
       "list_designation": "A",
       "parTeeShack": 62.5,
-      "scramble": 0,
+      "scramble": 125,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -70,7 +70,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 50,
-      "scramble": 0,
+      "scramble": 200,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -90,7 +90,7 @@
       },
       "list_designation": "A",
       "parTeeShack": 80,
-      "scramble": 0,
+      "scramble": 200,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -110,7 +110,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 45,
-      "scramble": 0,
+      "scramble": 75,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -130,7 +130,7 @@
       },
       "list_designation": "A",
       "parTeeShack": 100,
-      "scramble": 0,
+      "scramble": 75,
       "fantasy": 0,
       "fantasy_picks": [
         "Jon Rahm",
@@ -166,7 +166,7 @@
       },
       "list_designation": "A",
       "parTeeShack": 87.5,
-      "scramble": 0,
+      "scramble": 100,
       "fantasy": 0,
       "fantasy_picks": [
         ""
@@ -182,7 +182,7 @@
       },
       "list_designation": "A",
       "parTeeShack": 75,
-      "scramble": 0,
+      "scramble": 175,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -202,7 +202,7 @@
       },
       "list_designation": "A",
       "parTeeShack": 87.5,
-      "scramble": 0,
+      "scramble": 150,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -222,7 +222,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 70,
-      "scramble": 0,
+      "scramble": 125,
       "fantasy": 0,
       "fantasy_picks": [
         "Scottie Scheffler",
@@ -242,7 +242,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 95,
-      "scramble": 0,
+      "scramble": 150,
       "fantasy": 0,
       "fantasy_picks": [
         "Rory McIlroy",
@@ -262,7 +262,7 @@
       },
       "list_designation": "B",
       "parTeeShack": 40,
-      "scramble": 0,
+      "scramble": 50,
       "fantasy": 0,
       "fantasy_picks": [
         "Rory McIlroy",
