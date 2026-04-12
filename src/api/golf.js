@@ -40,16 +40,27 @@ export async function getCurrentTournId() {
 }
 
 export async function fetchLeaderboard(tournId) {
-  const { data } = await axios.get(`${BASE_URL}/leaderboard`, {
-    params: { orgId: '1', tournId, year: API_YEAR },
-    headers: HEADERS,
-  });
-  return {
-    rows: data?.leaderboardRows ?? [],
-    currentRound: data?.currentRound ?? null,
-    roundStatus: data?.roundStatus ?? null,
-    lastUpdated: data?.lastUpdated ?? null,
+  const fetchFor = async (id) => {
+    const { data } = await axios.get(`${BASE_URL}/leaderboard`, {
+      params: { orgId: '1', tournId: id, year: API_YEAR },
+      headers: HEADERS,
+    });
+    return {
+      rows: data?.leaderboardRows ?? [],
+      currentRound: data?.currentRound ?? null,
+      roundStatus: data?.roundStatus ?? null,
+      lastUpdated: data?.lastUpdated ?? null,
+    };
   };
+
+  try {
+    return await fetchFor(tournId);
+  } catch (err) {
+    if (err?.response?.status === 400 && tournId !== DEFAULT_TOURN_ID) {
+      return await fetchFor(DEFAULT_TOURN_ID);
+    }
+    throw err;
+  }
 }
 
 export async function fetchTournament(tournId) {
