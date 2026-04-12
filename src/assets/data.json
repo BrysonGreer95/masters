@@ -1,6 +1,23 @@
 {
-  "_version": 6,
+  "_version": 7,
   "actual_putts": null,
+  "completed_events": { "parTeeShack": true, "scramble": true, "fantasy": true },
+  "fantasy_points": {
+    "1": 150,
+    "2": 202.5,
+    "3": 285,
+    "4": 255,
+    "5": 180,
+    "6": 202.5,
+    "7": 165,
+    "8": 0,
+    "9": 0,
+    "10": 240,
+    "11": 270,
+    "12": 300,
+    "13": 225,
+    "14": 135
+  },
   "players": [
     {
       "id": 1,

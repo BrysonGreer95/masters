@@ -60,7 +60,7 @@ function loadCompletedEvents() {
     const saved = localStorage.getItem(EVENTS_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return { parTeeShack: false, scramble: false, fantasy: false };
+  return defaultData.completed_events ?? { parTeeShack: false, scramble: false, fantasy: false };
 }
 
 function loadPuttHoles() {
@@ -92,7 +92,7 @@ function loadFantasyPoints() {
     const saved = localStorage.getItem(FANTASY_POINTS_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return {};
+  return defaultData.fantasy_points ?? {};
 }
 
 // ─── Persist helpers ──────────────────────────────────────────────────────────
