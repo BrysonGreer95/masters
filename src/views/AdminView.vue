@@ -22,80 +22,26 @@
       <div class="admin-body">
         <!-- Tab navigation -->
         <div class="admin-tabs">
-          <button class="tab-btn" :class="{ active: tab === 'points' }" @click="tab = 'points'">Points</button>
           <button class="tab-btn" :class="{ active: tab === 'putt' }" @click="tab = 'putt'">ParTee Shack</button>
           <button class="tab-btn" :class="{ active: tab === 'scramble' }" @click="tab = 'scramble'">Scramble</button>
-        </div>
-
-        <!-- ═══════════ POINTS TAB (existing) ═══════════ -->
-        <div v-if="tab === 'points'">
-          <div class="status-bar">
-            <span class="status-indicator" :class="{ active: hasLocalOverrides }">
-              {{ hasLocalOverrides ? 'Using saved scores' : 'Using default data.json scores' }}
-            </span>
-            <div class="admin-actions">
-              <button class="btn-reset" @click="confirmReset">Reset All</button>
-              <button class="btn-export" @click="copyJson">{{ copyLabel }}</button>
-            </div>
-          </div>
-
-          <div class="event-toggles">
-            <span class="event-toggles-label">Mark event complete:</span>
-            <button v-for="event in events" :key="event.field" class="event-toggle-btn"
-              :class="{ completed: completedEvents[event.field] }" @click="toggleEventCompleted(event.field)">
-              {{ event.label }}
-            </button>
-          </div>
-
-          <div class="score-table-wrap">
-            <table class="score-table">
-              <thead>
-                <tr>
-                  <th class="col-player">Player</th>
-                  <th class="col-score">ParTee Shack</th>
-                  <th class="col-score">Scramble</th>
-                  <th class="col-score">Fantasy</th>
-                  <th class="col-total">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="player in sortedByTotal" :key="player.id" class="player-row">
-                  <td class="col-player">
-                    <span class="rank">{{ player._rank }}</span>
-                    {{ player.user.first_name }} {{ player.user.last_name }}
-                  </td>
-                  <td class="col-score">
-                    <input type="number" class="score-input" min="0" :value="player.parTeeShack"
-                      @change="update(player.id, 'parTeeShack', $event.target.value)" />
-                  </td>
-                  <td class="col-score">
-                    <input type="number" class="score-input" min="0" :value="player.scramble"
-                      @change="update(player.id, 'scramble', $event.target.value)" />
-                  </td>
-                  <td class="col-score">
-                    <input type="number" class="score-input" min="0"
-                      :class="{ 'score-input--locked': !hasFantasyPicks(player) }" :value="player.fantasy"
-                      :disabled="!hasFantasyPicks(player)"
-                      @change="update(player.id, 'fantasy', $event.target.value)" />
-                  </td>
-                  <td class="col-total">{{ player.parTeeShack + player.scramble + player.fantasy }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p class="export-hint">
-            Use <strong>Reset All</strong> to clear all scores and hole data.
-            Use <strong>Copy JSON</strong> to export <code>data.json</code> with current scores for permanent storage.
-          </p>
         </div>
 
         <!-- ═══════════ PUTT PUTT SCORECARD TAB ═══════════ -->
         <div v-if="tab === 'putt'">
           <div class="sc-controls">
-            <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
+            <div class="sc-controls-left">
+              <p class="sc-hint">Rankings and points update live from hole scores.</p>
+              <div class="event-toggles">
+                <span class="event-toggles-label">Mark complete:</span>
+                <button class="event-toggle-btn" :class="{ completed: completedEvents.parTeeShack }"
+                  @click="toggleEventCompleted('parTeeShack')">
+                  ParTee Shack
+                </button>
+              </div>
+            </div>
             <div class="sc-control-btns">
-              <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+              <button class="btn-reset" @click="confirmReset">Reset All</button>
+              <button class="btn-export" @click="copyDataJson">{{ exportLabel }}</button>
             </div>
           </div>
 
@@ -161,9 +107,19 @@
         <!-- ═══════════ SCRAMBLE SCORECARD TAB ═══════════ -->
         <div v-if="tab === 'scramble'">
           <div class="sc-controls">
-            <p class="sc-hint">Rankings and points update live from scorecard_data.json.</p>
+            <div class="sc-controls-left">
+              <p class="sc-hint">Rankings and points update live from hole scores.</p>
+              <div class="event-toggles">
+                <span class="event-toggles-label">Mark complete:</span>
+                <button class="event-toggle-btn" :class="{ completed: completedEvents.scramble }"
+                  @click="toggleEventCompleted('scramble')">
+                  Scramble
+                </button>
+              </div>
+            </div>
             <div class="sc-control-btns">
-              <button class="btn-export" @click="copyScorecardJson">{{ scorecardCopyLabel }}</button>
+              <button class="btn-reset" @click="confirmReset">Reset All</button>
+              <button class="btn-export" @click="copyDataJson">{{ exportLabel }}</button>
             </div>
           </div>
 
@@ -234,9 +190,8 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import playerData from '../assets/data.json';
-import scorecardData from '../assets/scorecard_data.json';
 import config from '../assets/config.json';
-import { PUTT_PAR_YELLOW, PUTT_PAR_BLUE } from '../constants/scoring';
+import { PUTT_PAR_YELLOW, PUTT_PAR_BLUE, SCRAMBLE_PAR } from '../constants/scoring';
 
 export default {
   name: 'AdminView',
@@ -246,12 +201,11 @@ export default {
       authenticated: sessionStorage.getItem('admin-auth') === '1',
       passwordInput: '',
       authError: false,
-      tab: 'points',
-      copyLabel: 'Copy JSON',
-      scorecardCopyLabel: 'Copy Scorecard JSON',
+      tab: 'putt',
+      exportLabel: 'Copy data.json',
       PUTT_PAR_YELLOW,
       PUTT_PAR_BLUE,
-      SCRAMBLE_PAR: scorecardData.scramble.par,
+      SCRAMBLE_PAR,
     };
   },
 
@@ -263,15 +217,9 @@ export default {
 
   computed: {
     ...mapGetters([
-      'sortedByTotal', 'players', 'hasLocalOverrides', 'completedEvents',
+      'players', 'completedEvents',
       'puttPuttHoles', 'puttCourse', 'scrambleHoles', 'puttPuttRankings', 'scrambleRankings',
     ]),
-
-    events: () => [
-      { field: 'parTeeShack', label: 'ParTee Shack' },
-      { field: 'scramble', label: 'Scramble' },
-      { field: 'fantasy', label: 'Fantasy' },
-    ],
 
     puttPuttEntryRows() {
       return playerData.players.map((p) => {
@@ -304,17 +252,17 @@ export default {
     },
 
     scrambleParOut() {
-      return this.SCRAMBLE_PAR.slice(0, 9).reduce((s, v) => s + v, 0);
+      return SCRAMBLE_PAR.slice(0, 9).reduce((s, v) => s + v, 0);
     },
 
     scrambleParIn() {
-      return this.SCRAMBLE_PAR.slice(9).reduce((s, v) => s + v, 0);
+      return SCRAMBLE_PAR.slice(9).reduce((s, v) => s + v, 0);
     },
   },
 
   methods: {
     ...mapMutations([
-      'updateScore', 'resetScores', 'toggleEventCompleted',
+      'resetScores', 'toggleEventCompleted',
       'updatePuttPuttHole', 'setPuttCourse', 'updateScrambleHole',
     ]),
 
@@ -328,14 +276,6 @@ export default {
         this.passwordInput = '';
         this.$nextTick(() => this.$refs.pwInput?.focus());
       }
-    },
-
-    hasFantasyPicks(player) {
-      return player.fantasy_picks?.some((p) => p.trim() !== '');
-    },
-
-    update(id, field, value) {
-      this.updateScore({ id, field, value });
     },
 
     setPuttHole(playerId, holeIndex, value) {
@@ -372,44 +312,29 @@ export default {
       }
     },
 
-    async copyScorecardJson() {
+    async copyDataJson() {
       const puttScores = Object.fromEntries(
-        playerData.players.map((player) => [String(player.id), this.puttPuttHoles[player.id] ?? Array(18).fill(null)])
+        playerData.players.map((p) => [String(p.id), this.puttPuttHoles[p.id] ?? Array(18).fill(null)])
       );
       const puttCourses = Object.fromEntries(
-        playerData.players.map((player) => [String(player.id), this.puttCourse[player.id] || 'yellow'])
+        playerData.players.map((p) => [String(p.id), this.puttCourse[p.id] || 'yellow'])
       );
-      const scrambleTeams = [...new Set(playerData.players.map((player) => player.team).filter(Boolean))].sort((a, b) => a - b);
+      const scrambleTeams = [...new Set(playerData.players.map((p) => p.team).filter(Boolean))].sort((a, b) => a - b);
       const scrambleScores = Object.fromEntries(
-        scrambleTeams.map((teamNum) => [String(teamNum), this.scrambleHoles[teamNum] ?? Array(18).fill(null)])
+        scrambleTeams.map((num) => [String(num), this.scrambleHoles[num] ?? Array(18).fill(null)])
       );
-      const json = JSON.stringify({
-        putt_putt: {
-          par: { yellow: PUTT_PAR_YELLOW, blue: PUTT_PAR_BLUE },
-          courses: puttCourses,
-          scores: puttScores,
-        },
-        scramble: {
-          par: this.SCRAMBLE_PAR,
-          scores: scrambleScores,
-        },
-      }, null, 2);
-      try {
-        await navigator.clipboard.writeText(json);
-      } catch {
-        const ta = document.createElement('textarea');
-        ta.value = json;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
-      this.scorecardCopyLabel = 'Copied!';
-      setTimeout(() => { this.scorecardCopyLabel = 'Copy Scorecard JSON'; }, 2000);
-    },
 
-    async copyJson() {
-      const json = JSON.stringify(this.players, null, 2);
+      const output = {
+        _version: playerData._version,
+        actual_putts: playerData.actual_putts,
+        players: playerData.players,
+        scorecard: {
+          putt_putt: { courses: puttCourses, scores: puttScores },
+          scramble:  { scores: scrambleScores },
+        },
+      };
+
+      const json = JSON.stringify(output, null, 2);
       try {
         await navigator.clipboard.writeText(json);
       } catch {
@@ -420,8 +345,8 @@ export default {
         document.execCommand('copy');
         document.body.removeChild(ta);
       }
-      this.copyLabel = 'Copied!';
-      setTimeout(() => { this.copyLabel = 'Copy JSON'; }, 2000);
+      this.exportLabel = 'Copied!';
+      setTimeout(() => { this.exportLabel = 'Copy data.json'; }, 2000);
     },
   },
 };
@@ -476,79 +401,34 @@ export default {
   }
 }
 
-// ─── Status Bar ───────────────────────────────────────────────────────────────
-.status-bar {
+// ─── Scorecard Controls ───────────────────────────────────────────────────────
+.sc-controls {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1rem;
-  background: #fafafa;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
-.status-indicator {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #999;
-
-  &.active {
-    color: $masters-accent;
-  }
-
-  &.active::before {
-    content: '● ';
-    color: $masters-accent;
-  }
-}
-
-.admin-actions {
+.sc-controls-left {
   display: flex;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
 }
 
-.btn-reset,
-.btn-export,
-.btn-apply {
-  padding: 0.45rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  font-family: $body-font-stack;
-  transition: background 0.15s;
+.sc-hint {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0;
 }
 
-.btn-reset {
-  background: #f0f0f0;
-  color: #555;
-
-  &:hover {
-    background: #e0e0e0;
-  }
-}
-
-.btn-export {
-  background: $primary;
-  color: white;
-
-  &:hover {
-    background: darken($primary, 6%);
-  }
-}
-
-.btn-apply {
-  background: $masters-accent;
-  color: white;
-  padding: 0.5rem 1.25rem;
-
-  &:hover {
-    background: darken($masters-accent, 8%);
-  }
+.sc-control-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  align-items: flex-start;
 }
 
 // ─── Event Toggles ────────────────────────────────────────────────────────────
@@ -557,7 +437,6 @@ export default {
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
 }
 
 .event-toggles-label {
@@ -593,142 +472,39 @@ export default {
   }
 }
 
-// ─── Points Score Table ───────────────────────────────────────────────────────
-.score-table-wrap {
-  overflow-x: auto;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: white;
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.btn-reset,
+.btn-export {
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-family: $body-font-stack;
+  transition: background 0.15s;
 }
 
-.score-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
+.btn-reset {
+  background: #f0f0f0;
+  color: #555;
 
-  th {
-    background: #f7f7f7;
-    color: #666;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    padding: 0.65rem 1rem;
-    border-bottom: 2px solid rgba($masters-accent, 0.2);
-    text-align: left;
-  }
-
-  td {
-    padding: 0.55rem 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    vertical-align: middle;
-  }
-
-  tr:last-child td {
-    border-bottom: none;
-  }
-
-  tr:hover td {
-    background: rgba($masters-accent, 0.02);
+  &:hover {
+    background: #e0e0e0;
   }
 }
 
-.col-score {
-  text-align: center;
-  width: 120px;
-}
-
-.col-total {
-  text-align: center;
-  width: 80px;
-  font-weight: 700;
-  color: $primary;
-  font-size: 1rem;
-}
-
-.rank {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
+.btn-export {
   background: $primary;
   color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  margin-right: 0.5rem;
-  vertical-align: middle;
-}
 
-.score-input {
-  width: 80px;
-  padding: 0.4rem 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: #fafafa;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: $primary;
-  text-align: center;
-  font-family: $body-font-stack;
-  transition: border-color 0.15s;
-
-  &:focus {
-    outline: none;
-    border-color: $masters-accent;
-    background: white;
-  }
-
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    opacity: 1;
-  }
-
-  &--locked {
-    background: #f0f0f0;
-    color: #aaa;
-    border-color: rgba(0, 0, 0, 0.08);
-    cursor: not-allowed;
-  }
-}
-
-.export-hint {
-  margin-top: 1.5rem;
-  font-size: 0.82rem;
-  color: #999;
-  line-height: 1.6;
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  padding-top: 1rem;
-
-  code {
-    background: #f0f0f0;
-    padding: 0.1rem 0.3rem;
-    font-size: 0.8rem;
-    color: $primary;
+  &:hover {
+    background: darken($primary, 6%);
   }
 }
 
 // ─── Scorecard Entry (shared by putt putt and scramble tabs) ─────────────────
-.sc-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.sc-hint {
-  font-size: 0.85rem;
-  color: #888;
-  margin: 0;
-  flex: 1;
-}
-
-.sc-control-btns {
-  display: flex;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
 .scorecard-entry-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;

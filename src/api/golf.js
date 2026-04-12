@@ -16,24 +16,26 @@ export async function getCurrentTournId() {
       headers: HEADERS,
     });
     const schedule = data?.schedule ?? [];
-    const today = new Date();
-    const toDate = (dateString) => (dateString ? new Date(dateString) : null);
+    // Compare calendar dates only — tournaments run Thu–Sun and the API
+    // returns times as T00:00:00, so time-of-day is irrelevant.
+    const toDateStr = (dateString) => (dateString ? dateString.slice(0, 10) : null);
+    const todayStr = new Date().toISOString().slice(0, 10);
 
     const inProgress = schedule.find((tournament) => {
-      const start = toDate(tournament.date?.start);
-      const end = toDate(tournament.date?.end);
-      return start && end && today >= start && today <= end;
+      const start = toDateStr(tournament.date?.start);
+      const end = toDateStr(tournament.date?.end);
+      return start && end && todayStr >= start && todayStr <= end;
     });
     if (inProgress) return inProgress.tournId || DEFAULT_TOURN_ID;
 
     const upcoming = schedule
-      .filter((tournament) => toDate(tournament.date?.start) > today)
-      .sort((a, b) => toDate(a.date.start) - toDate(b.date.start));
+      .filter((t) => toDateStr(t.date?.start) > todayStr)
+      .sort((a, b) => toDateStr(a.date.start).localeCompare(toDateStr(b.date.start)));
     if (upcoming.length) return upcoming[0].tournId || DEFAULT_TOURN_ID;
 
     const past = schedule
-      .filter((tournament) => toDate(tournament.date?.end) < today)
-      .sort((a, b) => toDate(b.date.end) - toDate(a.date.end));
+      .filter((t) => toDateStr(t.date?.end) < todayStr)
+      .sort((a, b) => toDateStr(b.date.end).localeCompare(toDateStr(a.date.end)));
     if (past.length) return past[0].tournId || DEFAULT_TOURN_ID;
   } catch { /* ignore */ }
   return DEFAULT_TOURN_ID;
@@ -72,16 +74,13 @@ export async function fetchTournament(tournId) {
 }
 
 /**
- * Returns true when round 4 is finished.
- * Uses roundStatus "Official" when available; falls back to checking
- * whether ≥70% of players show thru="F".
+ * Returns true only when the API explicitly marks the tournament as official.
+ * We do not use any heuristic fallbacks (e.g. "70% of players finished") because
+ * those fire prematurely — players finishing round 4 shows thru="F" while the
+ * tournament is still in progress. Only "Official" is definitive.
  */
-export function isTournamentComplete(rows, currentRound, roundStatus) {
-  if (roundStatus && roundStatus.toLowerCase() === 'official') return true;
-  if (currentRound !== null && currentRound !== 4) return false;
-  if (!rows.length) return false;
-  const finishedCount = rows.filter((row) => row.thru === 'F').length;
-  return finishedCount / rows.length >= 0.7;
+export function isTournamentComplete(_rows, _currentRound, roundStatus) {
+  return !!(roundStatus && roundStatus.toLowerCase() === 'official');
 }
 
 /** Parse an API score string ("E", "+3", "-2", 0) into a number. Returns null if unknown. */

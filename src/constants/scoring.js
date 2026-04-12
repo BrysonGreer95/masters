@@ -8,7 +8,7 @@ export const PUTT_PAR_YELLOW = [2, 2, 3, 2, 3, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 2, 
 export const PUTT_PAR_BLUE = [3, 2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 3, 2, 3, 2, 2, 2, 2];
 
 // Reedy Creek Golf Course hole pars (front 9 then back 9)
-export const SCRAMBLE_PAR = [4, 4, 3, 4, 5, 4, 3, 4, 4, 4, 4, 3, 4, 5, 4, 3, 5, 4];
+export const SCRAMBLE_PAR = [4, 4, 3, 5, 4, 3, 5, 4, 4, 3, 4, 5, 4, 4, 5, 3, 4, 4];
 
 /**
  * Sum all non-null scores in an array.

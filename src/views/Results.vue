@@ -201,9 +201,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import playerData from '../assets/data.json';
-import scorecardData from '../assets/scorecard_data.json';
 import config from '../assets/config.json';
-import { PUTT_PAR_YELLOW, PUTT_PAR_BLUE } from '../constants/scoring';
+import { PUTT_PAR_YELLOW, PUTT_PAR_BLUE, SCRAMBLE_PAR } from '../constants/scoring';
 
 export default {
   name: 'ResultsView',
@@ -214,7 +213,7 @@ export default {
       scrambleOpen: false,
       PUTT_PAR_YELLOW,
       PUTT_PAR_BLUE,
-      scramblePar: scorecardData.scramble.par,
+      scramblePar: SCRAMBLE_PAR,
       cfg: config,
     };
   },

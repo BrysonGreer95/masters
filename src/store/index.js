@@ -1,17 +1,16 @@
 import { createStore } from 'vuex';
 import defaultData from '../assets/data.json';
-import scorecardData from '../assets/scorecard_data.json';
 import {
   PUTT_PUTT_POINTS, SCRAMBLE_POINTS, FANTASY_POINTS,
   PUTT_PAR_YELLOW, PUTT_PAR_BLUE,
   holeTotal, calcRankings,
 } from '../constants/scoring';
 
-const STORAGE_KEY        = 'masters-scores';
 const EVENTS_KEY         = 'masters-completed-events';
 const PUTT_HOLES_KEY     = 'masters-putt-holes';
 const PUTT_COURSE_KEY    = 'masters-putt-course';
 const SCRAMBLE_HOLES_KEY = 'masters-scramble-holes';
+const FANTASY_POINTS_KEY = 'masters-fantasy-points';
 const VERSION_KEY        = 'masters-data-version';
 
 // ─── Version check ────────────────────────────────────────────────────────────
@@ -21,11 +20,11 @@ function checkVersion() {
   try {
     const storedVersion = Number(localStorage.getItem(VERSION_KEY));
     if (storedVersion !== defaultData._version) {
-      localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(EVENTS_KEY);
       localStorage.removeItem(PUTT_HOLES_KEY);
       localStorage.removeItem(PUTT_COURSE_KEY);
       localStorage.removeItem(SCRAMBLE_HOLES_KEY);
+      localStorage.removeItem(FANTASY_POINTS_KEY);
       localStorage.setItem(VERSION_KEY, String(defaultData._version));
     }
   } catch { /* ignore */ }
@@ -34,35 +33,27 @@ function checkVersion() {
 checkVersion();
 
 // ─── Default builders ─────────────────────────────────────────────────────────
-// These seed from scorecard_data.json so manually-entered scores survive a
-// version bump without needing to re-enter them via the admin UI.
+// These seed from data.json's scorecard section so entered scores survive a
+// page refresh without needing to re-enter them via the admin UI.
 
 function defaultPuttHoles() {
   const holes = {};
   defaultData.players.forEach((player) => {
-    holes[player.id] = scorecardData.putt_putt.scores[player.id] ?? Array(18).fill(null);
+    holes[player.id] = defaultData.scorecard.putt_putt.scores[player.id] ?? Array(18).fill(null);
   });
   return holes;
 }
 
 function defaultScrambleHoles() {
   const holes = {};
-  const teamNumbers = [...new Set(defaultData.players.map((player) => player.team).filter(Boolean))];
+  const teamNumbers = [...new Set(defaultData.players.map((p) => p.team).filter(Boolean))];
   teamNumbers.forEach((teamNum) => {
-    holes[teamNum] = scorecardData.scramble.scores[teamNum] ?? Array(18).fill(null);
+    holes[teamNum] = defaultData.scorecard.scramble.scores[teamNum] ?? Array(18).fill(null);
   });
   return holes;
 }
 
 // ─── Load helpers ─────────────────────────────────────────────────────────────
-
-function loadPlayers() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch { /* ignore */ }
-  return JSON.parse(JSON.stringify(defaultData.players));
-}
 
 function loadCompletedEvents() {
   try {
@@ -85,7 +76,7 @@ function loadPuttCourse() {
     const saved = localStorage.getItem(PUTT_COURSE_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return scorecardData.putt_putt.courses ?? {};
+  return defaultData.scorecard.putt_putt.courses ?? {};
 }
 
 function loadScrambleHoles() {
@@ -96,11 +87,15 @@ function loadScrambleHoles() {
   return defaultScrambleHoles();
 }
 
-// ─── Persist helpers ──────────────────────────────────────────────────────────
-
-function persistPlayers(players) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(players)); } catch { /* ignore */ }
+function loadFantasyPoints() {
+  try {
+    const saved = localStorage.getItem(FANTASY_POINTS_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return {};
 }
+
+// ─── Persist helpers ──────────────────────────────────────────────────────────
 
 function persistPuttHoles(holes) {
   try { localStorage.setItem(PUTT_HOLES_KEY, JSON.stringify(holes)); } catch { /* ignore */ }
@@ -114,36 +109,46 @@ function persistScrambleHoles(holes) {
   try { localStorage.setItem(SCRAMBLE_HOLES_KEY, JSON.stringify(holes)); } catch { /* ignore */ }
 }
 
+function persistFantasyPoints(points) {
+  try { localStorage.setItem(FANTASY_POINTS_KEY, JSON.stringify(points)); } catch { /* ignore */ }
+}
+
 // ─── Store ────────────────────────────────────────────────────────────────────
 
 export default createStore({
   state() {
     return {
-      players:         loadPlayers(),
+      players:         JSON.parse(JSON.stringify(defaultData.players)),
       completedEvents: loadCompletedEvents(),
       puttPuttHoles:   loadPuttHoles(),
       puttCourse:      loadPuttCourse(),
       scrambleHoles:   loadScrambleHoles(),
+      fantasyPoints:   loadFantasyPoints(),
     };
   },
 
   getters: {
-    players:           (state) => state.players,
-    completedEvents:   (state) => state.completedEvents,
-    hasLocalOverrides: ()      => !!localStorage.getItem(STORAGE_KEY),
+    players:         (state) => state.players,
+    completedEvents: (state) => state.completedEvents,
 
     puttPuttHoles:  (state) => state.puttPuttHoles,
     puttCourse:     (state) => state.puttCourse,
     scrambleHoles:  (state) => state.scrambleHoles,
 
-    sortedByTotal: (state) =>
-      [...state.players]
-        .sort((a, b) => {
-          const totalA = a.parTeeShack + a.scramble + a.fantasy;
-          const totalB = b.parTeeShack + b.scramble + b.fantasy;
-          return totalB - totalA;
-        })
-        .map((player, index) => ({ ...player, _rank: index + 1 })),
+    /** Overall standings — injects computed parTeeShack/scramble/fantasy so consumers don't change. */
+    sortedByTotal(state, getters) {
+      return [...state.players]
+        .map((player) => ({
+          ...player,
+          parTeeShack: getters.puttPuttRankings[player.id]?.points ?? 0,
+          scramble:    getters.scrambleRankings[player.team]?.points ?? 0,
+          fantasy:     state.fantasyPoints[player.id] ?? 0,
+        }))
+        .sort((a, b) =>
+          (b.parTeeShack + b.scramble + b.fantasy) - (a.parTeeShack + a.scramble + a.fantasy)
+        )
+        .map((player, index) => ({ ...player, _rank: index + 1 }));
+    },
 
     /** Live rankings computed from putt putt hole scores, ranked by strokes relative to course par. */
     puttPuttRankings(state) {
@@ -159,7 +164,7 @@ export default createStore({
 
     /** Live rankings computed from scramble hole scores. { [teamNum]: { rank, points } } */
     scrambleRankings(state) {
-      const teamNumbers = [...new Set(state.players.map((player) => player.team).filter(Boolean))];
+      const teamNumbers = [...new Set(state.players.map((p) => p.team).filter(Boolean))];
       const totals = teamNumbers.map((teamNum) => ({
         id:    teamNum,
         total: holeTotal(state.scrambleHoles[teamNum] || []),
@@ -169,14 +174,6 @@ export default createStore({
   },
 
   mutations: {
-    updateScore(state, { id, field, value }) {
-      const player = state.players.find((player) => player.id === id);
-      if (player && ['parTeeShack', 'scramble', 'fantasy'].includes(field)) {
-        player[field] = Math.max(0, parseInt(value) || 0);
-        persistPlayers(state.players);
-      }
-    },
-
     toggleEventCompleted(state, event) {
       state.completedEvents[event] = !state.completedEvents[event];
       try { localStorage.setItem(EVENTS_KEY, JSON.stringify(state.completedEvents)); } catch { /* ignore */ }
@@ -186,14 +183,15 @@ export default createStore({
       state.players        = JSON.parse(JSON.stringify(defaultData.players));
       state.completedEvents = { parTeeShack: false, scramble: false, fantasy: false };
       state.puttPuttHoles  = defaultPuttHoles();
-      state.puttCourse     = scorecardData.putt_putt.courses ?? {};
+      state.puttCourse     = defaultData.scorecard.putt_putt.courses ?? {};
       state.scrambleHoles  = defaultScrambleHoles();
+      state.fantasyPoints  = {};
       try {
-        localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(EVENTS_KEY);
         localStorage.removeItem(PUTT_HOLES_KEY);
         localStorage.removeItem(PUTT_COURSE_KEY);
         localStorage.removeItem(SCRAMBLE_HOLES_KEY);
+        localStorage.removeItem(FANTASY_POINTS_KEY);
       } catch { /* ignore */ }
     },
 
@@ -221,21 +219,22 @@ export default createStore({
     },
 
     /**
-     * Apply fantasy points from a pre-computed scores array.
-     * Called automatically by Masters.vue once the tournament is officially over.
+     * Compute and lock in fantasy points from a pre-computed score totals array.
+     * Called automatically by Masters.vue once roundStatus is "Official".
+     * Points are ranked, tiebroken by closeness to actual_putts when available.
      * @param {Array<{id: number, total: number|null}>} scoreTotals
      */
     applyFantasyPoints(state, scoreTotals) {
       const actualPutts = defaultData.actual_putts;
       const tiebreakers = actualPutts != null
-        ? Object.fromEntries(state.players.map((player) => [player.id, Math.abs((player.total_putts || 0) - actualPutts)]))
+        ? Object.fromEntries(state.players.map((p) => [p.id, Math.abs((p.total_putts || 0) - actualPutts)]))
         : {};
       const rankings = calcRankings(scoreTotals, FANTASY_POINTS, tiebreakers);
-      state.players.forEach((player) => {
-        player.fantasy = rankings[player.id]?.points ?? 0;
-      });
+      state.fantasyPoints = Object.fromEntries(
+        state.players.map((p) => [p.id, rankings[p.id]?.points ?? 0])
+      );
       state.completedEvents.fantasy = true;
-      persistPlayers(state.players);
+      persistFantasyPoints(state.fantasyPoints);
       try { localStorage.setItem(EVENTS_KEY, JSON.stringify(state.completedEvents)); } catch { /* ignore */ }
     },
   },

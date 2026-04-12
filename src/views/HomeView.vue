@@ -2,9 +2,6 @@
   <div class="home">
     <div class="page-header">
       <h1>The 3rd Annual Masters Week Competition</h1>
-      <p class="page-subtitle">
-        Experience excellence in competition across ParTee Shack, Scramble, and Fantasy picks
-      </p>
     </div>
     <div class="leaderboard-section">
       <LeaderBoard id="leaderboard" />
