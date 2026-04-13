@@ -5,6 +5,7 @@
       <div class="nav-brand">
         <span class="nav-title">Masters Week {{ cfg.year }}</span>
       </div>
+      <!-- nav-links hidden for off-season
       <div class="nav-links">
         <router-link to="/" class="nav-link">Home</router-link>
         <router-link to="/about" class="nav-link">About</router-link>
@@ -14,6 +15,7 @@
         <router-link to="/masters-score" class="nav-link">Live Score</router-link>
         <router-link to="/final-prize" class="nav-link">Prize</router-link>
       </div>
+      -->
     </nav>
 
     <!-- Main Content -->
