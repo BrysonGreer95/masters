@@ -1,9 +1,10 @@
 {
   "_comment": "Update this file each year — all event details, dates, and settings flow from here.",
-  "year": "",
-  "edition": "3rd Annual",
+  "year": "2027",
+  "edition": "4th Annual",
   "title": "Masters Week Competition",
-  "admin_password": "mastersweek2026",
+  "admin_password": "mastersweek2027",
+  "watch_party_bonus": 50,
   "events": {
     "putt_putt": {
       "name": "ParTee Shack Mini Golf",
@@ -11,38 +12,40 @@
       "venue": "ParTee Shack North Raleigh",
       "address": "6231 Triangle Plantation Drive, Raleigh, NC 27616",
       "maps_url": "https://maps.google.com/?q=6231+Triangle+Plantation+Drive+Raleigh+NC+27616",
-      "date": "Friday, April 10",
-      "time": "6–8 PM",
-      "holes": 36
+      "date": "TBD",
+      "time": "TBD",
+      "holes": 36,
+      "scoring": "best-of-18"
     },
-    "scramble": {
-      "name": "Scramble Tournament",
-      "short_name": "Scramble",
+    "scramble1": {
+      "name": "Scramble 1",
+      "short_name": "Scramble 1",
       "venue": "Reedy Creek Golf Course",
       "address": "585 Reedy Creek Rd, Four Oaks, NC 27524",
       "maps_url": "https://maps.google.com/?q=585+Reedy+Creek+Rd+Four+Oaks+NC+27524",
-      "date": "Saturday, April 11",
-      "time": "12 PM",
-      "holes": 18,
-      "tee_times": [
-        "12:12 PM",
-        "12:12 PM",
-        "12:20 PM",
-        "12:20 PM",
-        "12:28 PM",
-        "12:28 PM",
-        "11:00 AM"
-      ]
+      "date": "TBD",
+      "time": "TBD",
+      "holes": 18
+    },
+    "scramble2": {
+      "name": "Scramble 2",
+      "short_name": "Scramble 2",
+      "venue": "TBD",
+      "address": "TBD",
+      "maps_url": "",
+      "date": "TBD",
+      "time": "TBD",
+      "holes": 18
     },
     "fantasy": {
       "name": "Masters Fantasy League",
       "short_name": "Masters Fantasy",
-      "watch_party_host": "Greer House",
-      "date": "Sunday, April 12",
-      "time": "2 PM",
-      "picks_deadline": "April 9th",
-      "league_url": "https://www.masters.com/en_US/fantasy?leagueJoinToken=09a845f0e8&leagueId=13604",
-      "api_year": "2026"
+      "watch_party_host": "TBD",
+      "date": "TBD",
+      "time": "4 PM – end",
+      "picks_deadline": "TBD",
+      "league_url": "",
+      "api_year": "2027"
     }
   }
 }

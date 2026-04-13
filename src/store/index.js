@@ -2,29 +2,31 @@ import { createStore } from 'vuex';
 import defaultData from '../assets/data.json';
 import {
   PUTT_PUTT_POINTS, SCRAMBLE_POINTS, FANTASY_POINTS,
-  PUTT_PAR_YELLOW, PUTT_PAR_BLUE,
-  holeTotal, calcRankings,
+  PUTT_PAR_ALL,
+  bestOf18Score, holeTotal, calcRankings,
 } from '../constants/scoring';
 
-const EVENTS_KEY         = 'masters-completed-events';
-const PUTT_HOLES_KEY     = 'masters-putt-holes';
-const PUTT_COURSE_KEY    = 'masters-putt-course';
-const SCRAMBLE_HOLES_KEY = 'masters-scramble-holes';
-const FANTASY_POINTS_KEY = 'masters-fantasy-points';
-const VERSION_KEY        = 'masters-data-version';
+const EVENTS_KEY          = 'masters-completed-events';
+const PUTT_HOLES_KEY      = 'masters-putt-holes';
+const SCRAMBLE1_HOLES_KEY = 'masters-scramble1-holes';
+const SCRAMBLE2_HOLES_KEY = 'masters-scramble2-holes';
+const FANTASY_POINTS_KEY  = 'masters-fantasy-points';
+const WATCH_PARTY_KEY     = 'masters-watch-party';
+const ACTUAL_PUTTS_KEY    = 'masters-actual-putts';
+const VERSION_KEY         = 'masters-data-version';
 
 // ─── Version check ────────────────────────────────────────────────────────────
-// If data.json's _version doesn't match localStorage, nuke all stale caches.
-
 function checkVersion() {
   try {
     const storedVersion = Number(localStorage.getItem(VERSION_KEY));
     if (storedVersion !== defaultData._version) {
       localStorage.removeItem(EVENTS_KEY);
       localStorage.removeItem(PUTT_HOLES_KEY);
-      localStorage.removeItem(PUTT_COURSE_KEY);
-      localStorage.removeItem(SCRAMBLE_HOLES_KEY);
+      localStorage.removeItem(SCRAMBLE1_HOLES_KEY);
+      localStorage.removeItem(SCRAMBLE2_HOLES_KEY);
       localStorage.removeItem(FANTASY_POINTS_KEY);
+      localStorage.removeItem(WATCH_PARTY_KEY);
+      localStorage.removeItem(ACTUAL_PUTTS_KEY);
       localStorage.setItem(VERSION_KEY, String(defaultData._version));
     }
   } catch { /* ignore */ }
@@ -33,22 +35,29 @@ function checkVersion() {
 checkVersion();
 
 // ─── Default builders ─────────────────────────────────────────────────────────
-// These seed from data.json's scorecard section so entered scores survive a
-// page refresh without needing to re-enter them via the admin UI.
 
 function defaultPuttHoles() {
   const holes = {};
   defaultData.players.forEach((player) => {
-    holes[player.id] = defaultData.scorecard.putt_putt.scores[player.id] ?? Array(18).fill(null);
+    holes[player.id] = defaultData.scorecard.putt_putt.scores[player.id] ?? Array(36).fill(null);
   });
   return holes;
 }
 
-function defaultScrambleHoles() {
+function defaultScramble1Holes() {
   const holes = {};
-  const teamNumbers = [...new Set(defaultData.players.map((p) => p.team).filter(Boolean))];
+  const teamNumbers = [...new Set(defaultData.players.map((p) => p.scramble1_team).filter(Boolean))];
   teamNumbers.forEach((teamNum) => {
-    holes[teamNum] = defaultData.scorecard.scramble.scores[teamNum] ?? Array(18).fill(null);
+    holes[teamNum] = defaultData.scorecard.scramble1?.scores?.[teamNum] ?? Array(18).fill(null);
+  });
+  return holes;
+}
+
+function defaultScramble2Holes() {
+  const holes = {};
+  const teamNumbers = [...new Set(defaultData.players.map((p) => p.scramble2_team).filter(Boolean))];
+  teamNumbers.forEach((teamNum) => {
+    holes[teamNum] = defaultData.scorecard.scramble2?.scores?.[teamNum] ?? Array(18).fill(null);
   });
   return holes;
 }
@@ -60,7 +69,7 @@ function loadCompletedEvents() {
     const saved = localStorage.getItem(EVENTS_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return defaultData.completed_events ?? { parTeeShack: false, scramble: false, fantasy: false };
+  return defaultData.completed_events ?? { parTeeShack: false, scramble1: false, scramble2: false, fantasy: false };
 }
 
 function loadPuttHoles() {
@@ -71,20 +80,20 @@ function loadPuttHoles() {
   return defaultPuttHoles();
 }
 
-function loadPuttCourse() {
+function loadScramble1Holes() {
   try {
-    const saved = localStorage.getItem(PUTT_COURSE_KEY);
+    const saved = localStorage.getItem(SCRAMBLE1_HOLES_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return defaultData.scorecard.putt_putt.courses ?? {};
+  return defaultScramble1Holes();
 }
 
-function loadScrambleHoles() {
+function loadScramble2Holes() {
   try {
-    const saved = localStorage.getItem(SCRAMBLE_HOLES_KEY);
+    const saved = localStorage.getItem(SCRAMBLE2_HOLES_KEY);
     if (saved) return JSON.parse(saved);
   } catch { /* ignore */ }
-  return defaultScrambleHoles();
+  return defaultScramble2Holes();
 }
 
 function loadFantasyPoints() {
@@ -95,22 +104,26 @@ function loadFantasyPoints() {
   return defaultData.fantasy_points ?? {};
 }
 
+function loadWatchParty() {
+  try {
+    const saved = localStorage.getItem(WATCH_PARTY_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return defaultData.watch_party ?? { bonus_points: 40, attendees: {} };
+}
+
+function loadActualPutts() {
+  try {
+    const saved = localStorage.getItem(ACTUAL_PUTTS_KEY);
+    if (saved !== null) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return defaultData.actual_putts ?? null;
+}
+
 // ─── Persist helpers ──────────────────────────────────────────────────────────
 
-function persistPuttHoles(holes) {
-  try { localStorage.setItem(PUTT_HOLES_KEY, JSON.stringify(holes)); } catch { /* ignore */ }
-}
-
-function persistPuttCourse(course) {
-  try { localStorage.setItem(PUTT_COURSE_KEY, JSON.stringify(course)); } catch { /* ignore */ }
-}
-
-function persistScrambleHoles(holes) {
-  try { localStorage.setItem(SCRAMBLE_HOLES_KEY, JSON.stringify(holes)); } catch { /* ignore */ }
-}
-
-function persistFantasyPoints(points) {
-  try { localStorage.setItem(FANTASY_POINTS_KEY, JSON.stringify(points)); } catch { /* ignore */ }
+function persist(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
 }
 
 // ─── Store ────────────────────────────────────────────────────────────────────
@@ -121,53 +134,71 @@ export default createStore({
       players:         JSON.parse(JSON.stringify(defaultData.players)),
       completedEvents: loadCompletedEvents(),
       puttPuttHoles:   loadPuttHoles(),
-      puttCourse:      loadPuttCourse(),
-      scrambleHoles:   loadScrambleHoles(),
+      scramble1Holes:  loadScramble1Holes(),
+      scramble2Holes:  loadScramble2Holes(),
       fantasyPoints:   loadFantasyPoints(),
+      watchParty:      loadWatchParty(),
+      actualPutts:     loadActualPutts(),
     };
   },
 
   getters: {
     players:         (state) => state.players,
     completedEvents: (state) => state.completedEvents,
+    puttPuttHoles:   (state) => state.puttPuttHoles,
+    scramble1Holes:  (state) => state.scramble1Holes,
+    scramble2Holes:  (state) => state.scramble2Holes,
+    watchParty:      (state) => state.watchParty,
+    actualPutts:     (state) => state.actualPutts,
 
-    puttPuttHoles:  (state) => state.puttPuttHoles,
-    puttCourse:     (state) => state.puttCourse,
-    scrambleHoles:  (state) => state.scrambleHoles,
-
-    /** Overall standings — injects computed parTeeShack/scramble/fantasy so consumers don't change. */
+    /** Overall standings — includes all five scoring categories. */
     sortedByTotal(state, getters) {
       return [...state.players]
-        .map((player) => ({
-          ...player,
-          parTeeShack: getters.puttPuttRankings[player.id]?.points ?? 0,
-          scramble:    getters.scrambleRankings[player.team]?.points ?? 0,
-          fantasy:     state.fantasyPoints[player.id] ?? 0,
-        }))
+        .map((player) => {
+          const watchBonus = state.watchParty.attendees[player.id]
+            ? (state.watchParty.bonus_points || 0)
+            : 0;
+          return {
+            ...player,
+            parTeeShack: getters.puttPuttRankings[player.id]?.points ?? 0,
+            scramble1:   getters.scramble1Rankings[player.scramble1_team]?.points ?? 0,
+            scramble2:   getters.scramble2Rankings[player.scramble2_team]?.points ?? 0,
+            fantasy:     state.fantasyPoints[player.id] ?? 0,
+            watchParty:  watchBonus,
+          };
+        })
         .sort((a, b) =>
-          (b.parTeeShack + b.scramble + b.fantasy) - (a.parTeeShack + a.scramble + a.fantasy)
+          (b.parTeeShack + b.scramble1 + b.scramble2 + b.fantasy + b.watchParty) -
+          (a.parTeeShack + a.scramble1 + a.scramble2 + a.fantasy + a.watchParty)
         )
         .map((player, index) => ({ ...player, _rank: index + 1 }));
     },
 
-    /** Live rankings computed from putt putt hole scores, ranked by strokes relative to course par. */
+    /** Live rankings from ParTee Shack best-of-18 across both courses. */
     puttPuttRankings(state) {
-      const totals = state.players.map((player) => {
-        const raw = holeTotal(state.puttPuttHoles[player.id] || []);
-        if (raw === null) return { id: player.id, total: null };
-        const parArray = (state.puttCourse[player.id] || 'yellow') === 'blue' ? PUTT_PAR_BLUE : PUTT_PAR_YELLOW;
-        const parTotal = parArray.reduce((sum, par) => sum + par, 0);
-        return { id: player.id, total: raw - parTotal };
-      });
+      const totals = state.players.map((player) => ({
+        id:    player.id,
+        total: bestOf18Score(state.puttPuttHoles[player.id] ?? Array(36).fill(null), PUTT_PAR_ALL),
+      }));
       return calcRankings(totals, PUTT_PUTT_POINTS);
     },
 
-    /** Live rankings computed from scramble hole scores. { [teamNum]: { rank, points } } */
-    scrambleRankings(state) {
-      const teamNumbers = [...new Set(state.players.map((p) => p.team).filter(Boolean))];
+    /** Live rankings from Scramble 1 hole scores. { [teamNum]: { rank, points } } */
+    scramble1Rankings(state) {
+      const teamNumbers = [...new Set(state.players.map((p) => p.scramble1_team).filter(Boolean))];
       const totals = teamNumbers.map((teamNum) => ({
         id:    teamNum,
-        total: holeTotal(state.scrambleHoles[teamNum] || []),
+        total: holeTotal(state.scramble1Holes[teamNum] || []),
+      }));
+      return calcRankings(totals, SCRAMBLE_POINTS);
+    },
+
+    /** Live rankings from Scramble 2 hole scores. { [teamNum]: { rank, points } } */
+    scramble2Rankings(state) {
+      const teamNumbers = [...new Set(state.players.map((p) => p.scramble2_team).filter(Boolean))];
+      const totals = teamNumbers.map((teamNum) => ({
+        id:    teamNum,
+        total: holeTotal(state.scramble2Holes[teamNum] || []),
       }));
       return calcRankings(totals, SCRAMBLE_POINTS);
     },
@@ -176,56 +207,60 @@ export default createStore({
   mutations: {
     toggleEventCompleted(state, event) {
       state.completedEvents[event] = !state.completedEvents[event];
-      try { localStorage.setItem(EVENTS_KEY, JSON.stringify(state.completedEvents)); } catch { /* ignore */ }
+      persist(EVENTS_KEY, state.completedEvents);
     },
 
     resetScores(state) {
       state.players        = JSON.parse(JSON.stringify(defaultData.players));
-      state.completedEvents = { parTeeShack: false, scramble: false, fantasy: false };
+      state.completedEvents = { parTeeShack: false, scramble1: false, scramble2: false, fantasy: false };
       state.puttPuttHoles  = defaultPuttHoles();
-      state.puttCourse     = defaultData.scorecard.putt_putt.courses ?? {};
-      state.scrambleHoles  = defaultScrambleHoles();
+      state.scramble1Holes = defaultScramble1Holes();
+      state.scramble2Holes = defaultScramble2Holes();
       state.fantasyPoints  = {};
+      state.watchParty     = defaultData.watch_party ?? { bonus_points: 40, attendees: {} };
+      state.actualPutts    = defaultData.actual_putts ?? null;
       try {
         localStorage.removeItem(EVENTS_KEY);
         localStorage.removeItem(PUTT_HOLES_KEY);
-        localStorage.removeItem(PUTT_COURSE_KEY);
-        localStorage.removeItem(SCRAMBLE_HOLES_KEY);
+        localStorage.removeItem(SCRAMBLE1_HOLES_KEY);
+        localStorage.removeItem(SCRAMBLE2_HOLES_KEY);
         localStorage.removeItem(FANTASY_POINTS_KEY);
+        localStorage.removeItem(WATCH_PARTY_KEY);
+        localStorage.removeItem(ACTUAL_PUTTS_KEY);
       } catch { /* ignore */ }
     },
 
-    setPuttCourse(state, { playerId, course }) {
-      state.puttCourse = { ...state.puttCourse, [playerId]: course };
-      persistPuttCourse(state.puttCourse);
-    },
-
     updatePuttPuttHole(state, { playerId, holeIndex, value }) {
-      const scores = [...(state.puttPuttHoles[playerId] ?? Array(18).fill(null))];
+      const scores = [...(state.puttPuttHoles[playerId] ?? Array(36).fill(null))];
       scores[holeIndex] = (value === '' || value === null || value === undefined)
-        ? null
-        : Number(value);
+        ? null : Number(value);
       state.puttPuttHoles = { ...state.puttPuttHoles, [playerId]: scores };
-      persistPuttHoles(state.puttPuttHoles);
+      persist(PUTT_HOLES_KEY, state.puttPuttHoles);
     },
 
-    updateScrambleHole(state, { teamNum, holeIndex, value }) {
-      const scores = [...(state.scrambleHoles[teamNum] ?? Array(18).fill(null))];
+    updateScramble1Hole(state, { teamNum, holeIndex, value }) {
+      const scores = [...(state.scramble1Holes[teamNum] ?? Array(18).fill(null))];
       scores[holeIndex] = (value === '' || value === null || value === undefined)
-        ? null
-        : Number(value);
-      state.scrambleHoles = { ...state.scrambleHoles, [teamNum]: scores };
-      persistScrambleHoles(state.scrambleHoles);
+        ? null : Number(value);
+      state.scramble1Holes = { ...state.scramble1Holes, [teamNum]: scores };
+      persist(SCRAMBLE1_HOLES_KEY, state.scramble1Holes);
+    },
+
+    updateScramble2Hole(state, { teamNum, holeIndex, value }) {
+      const scores = [...(state.scramble2Holes[teamNum] ?? Array(18).fill(null))];
+      scores[holeIndex] = (value === '' || value === null || value === undefined)
+        ? null : Number(value);
+      state.scramble2Holes = { ...state.scramble2Holes, [teamNum]: scores };
+      persist(SCRAMBLE2_HOLES_KEY, state.scramble2Holes);
     },
 
     /**
-     * Compute and lock in fantasy points from a pre-computed score totals array.
-     * Called automatically by Masters.vue once roundStatus is "Official".
-     * Points are ranked, tiebroken by closeness to actual_putts when available.
+     * Compute and lock in fantasy points from manually-entered score totals.
+     * Called from AdminView's Masters tab after entering each player's fantasy score.
      * @param {Array<{id: number, total: number|null}>} scoreTotals
      */
     applyFantasyPoints(state, scoreTotals) {
-      const actualPutts = defaultData.actual_putts;
+      const actualPutts = state.actualPutts;
       const tiebreakers = actualPutts != null
         ? Object.fromEntries(state.players.map((p) => [p.id, Math.abs((p.total_putts || 0) - actualPutts)]))
         : {};
@@ -234,8 +269,25 @@ export default createStore({
         state.players.map((p) => [p.id, rankings[p.id]?.points ?? 0])
       );
       state.completedEvents.fantasy = true;
-      persistFantasyPoints(state.fantasyPoints);
-      try { localStorage.setItem(EVENTS_KEY, JSON.stringify(state.completedEvents)); } catch { /* ignore */ }
+      persist(FANTASY_POINTS_KEY, state.fantasyPoints);
+      persist(EVENTS_KEY, state.completedEvents);
+    },
+
+    setActualPutts(state, value) {
+      state.actualPutts = value === '' || value === null ? null : Number(value);
+      persist(ACTUAL_PUTTS_KEY, state.actualPutts);
+    },
+
+    toggleWatchParty(state, playerId) {
+      const attendees = { ...state.watchParty.attendees };
+      attendees[playerId] = !attendees[playerId];
+      state.watchParty = { ...state.watchParty, attendees };
+      persist(WATCH_PARTY_KEY, state.watchParty);
+    },
+
+    setWatchPartyBonus(state, value) {
+      state.watchParty = { ...state.watchParty, bonus_points: Number(value) || 0 };
+      persist(WATCH_PARTY_KEY, state.watchParty);
     },
   },
 });
