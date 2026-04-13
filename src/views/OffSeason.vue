@@ -1,7 +1,6 @@
 <template>
   <div class="offseason">
     <div class="offseason-card">
-      <div class="logo-mark">⛳</div>
       <h1 class="headline">See You Next Year</h1>
       <p class="subhead">Masters Week 2027</p>
       <div class="divider" />
